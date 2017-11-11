@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722C1FB6F228004267BC /* AppDelegate.m */; };
+		24E172301FB6F228004267BC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722F1FB6F228004267BC /* ViewController.m */; };
+		24E172331FB6F228004267BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24E172311FB6F228004267BC /* Main.storyboard */; };
+		24E172351FB6F228004267BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24E172341FB6F228004267BC /* Assets.xcassets */; };
+		24E172381FB6F228004267BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24E172361FB6F228004267BC /* LaunchScreen.storyboard */; };
+		24E1723B1FB6F228004267BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1723A1FB6F228004267BC /* main.m */; };
+		24E172451FB6F228004267BC /* FYImageManagerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172441FB6F228004267BC /* FYImageManagerDemoTests.m */; };
+		24E172501FB6F228004267BC /* FYImageManagerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1724F1FB6F228004267BC /* FYImageManagerDemoUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		24E172411FB6F228004267BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 24E172201FB6F227004267BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 24E172271FB6F227004267BC;
+			remoteInfo = FYImageManagerDemo;
+		};
+		24E1724C1FB6F228004267BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 24E172201FB6F227004267BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 24E172271FB6F227004267BC;
+			remoteInfo = FYImageManagerDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		24E172281FB6F227004267BC /* FYImageManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYImageManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		24E1722B1FB6F227004267BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		24E1722C1FB6F228004267BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		24E1722E1FB6F228004267BC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		24E1722F1FB6F228004267BC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		24E172321FB6F228004267BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		24E172341FB6F228004267BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		24E172371FB6F228004267BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		24E172391FB6F228004267BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24E1723A1FB6F228004267BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		24E172401FB6F228004267BC /* FYImageManagerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FYImageManagerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24E172441FB6F228004267BC /* FYImageManagerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImageManagerDemoTests.m; sourceTree = "<group>"; };
+		24E172461FB6F228004267BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24E1724B1FB6F228004267BC /* FYImageManagerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FYImageManagerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24E1724F1FB6F228004267BC /* FYImageManagerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImageManagerDemoUITests.m; sourceTree = "<group>"; };
+		24E172511FB6F228004267BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		24E172251FB6F227004267BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E1723D1FB6F228004267BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E172481FB6F228004267BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		24E1721F1FB6F227004267BC = {
+			isa = PBXGroup;
+			children = (
+				24E1725E1FB6F257004267BC /* FYImageManager */,
+				24E1722A1FB6F227004267BC /* FYImageManagerDemo */,
+				24E172431FB6F228004267BC /* FYImageManagerDemoTests */,
+				24E1724E1FB6F228004267BC /* FYImageManagerDemoUITests */,
+				24E172291FB6F227004267BC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		24E172291FB6F227004267BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				24E172281FB6F227004267BC /* FYImageManagerDemo.app */,
+				24E172401FB6F228004267BC /* FYImageManagerDemoTests.xctest */,
+				24E1724B1FB6F228004267BC /* FYImageManagerDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		24E1722A1FB6F227004267BC /* FYImageManagerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				24E1722B1FB6F227004267BC /* AppDelegate.h */,
+				24E1722C1FB6F228004267BC /* AppDelegate.m */,
+				24E1722E1FB6F228004267BC /* ViewController.h */,
+				24E1722F1FB6F228004267BC /* ViewController.m */,
+				24E172311FB6F228004267BC /* Main.storyboard */,
+				24E172341FB6F228004267BC /* Assets.xcassets */,
+				24E172361FB6F228004267BC /* LaunchScreen.storyboard */,
+				24E172391FB6F228004267BC /* Info.plist */,
+				24E1723A1FB6F228004267BC /* main.m */,
+			);
+			path = FYImageManagerDemo;
+			sourceTree = "<group>";
+		};
+		24E172431FB6F228004267BC /* FYImageManagerDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				24E172441FB6F228004267BC /* FYImageManagerDemoTests.m */,
+				24E172461FB6F228004267BC /* Info.plist */,
+			);
+			path = FYImageManagerDemoTests;
+			sourceTree = "<group>";
+		};
+		24E1724E1FB6F228004267BC /* FYImageManagerDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				24E1724F1FB6F228004267BC /* FYImageManagerDemoUITests.m */,
+				24E172511FB6F228004267BC /* Info.plist */,
+			);
+			path = FYImageManagerDemoUITests;
+			sourceTree = "<group>";
+		};
+		24E1725E1FB6F257004267BC /* FYImageManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FYImageManager;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		24E172271FB6F227004267BC /* FYImageManagerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24E172541FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemo" */;
+			buildPhases = (
+				24E172241FB6F227004267BC /* Sources */,
+				24E172251FB6F227004267BC /* Frameworks */,
+				24E172261FB6F227004267BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FYImageManagerDemo;
+			productName = FYImageManagerDemo;
+			productReference = 24E172281FB6F227004267BC /* FYImageManagerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		24E1723F1FB6F228004267BC /* FYImageManagerDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24E172571FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemoTests" */;
+			buildPhases = (
+				24E1723C1FB6F228004267BC /* Sources */,
+				24E1723D1FB6F228004267BC /* Frameworks */,
+				24E1723E1FB6F228004267BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24E172421FB6F228004267BC /* PBXTargetDependency */,
+			);
+			name = FYImageManagerDemoTests;
+			productName = FYImageManagerDemoTests;
+			productReference = 24E172401FB6F228004267BC /* FYImageManagerDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		24E1724A1FB6F228004267BC /* FYImageManagerDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24E1725A1FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemoUITests" */;
+			buildPhases = (
+				24E172471FB6F228004267BC /* Sources */,
+				24E172481FB6F228004267BC /* Frameworks */,
+				24E172491FB6F228004267BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24E1724D1FB6F228004267BC /* PBXTargetDependency */,
+			);
+			name = FYImageManagerDemoUITests;
+			productName = FYImageManagerDemoUITests;
+			productReference = 24E1724B1FB6F228004267BC /* FYImageManagerDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		24E172201FB6F227004267BC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = tongfy;
+				TargetAttributes = {
+					24E172271FB6F227004267BC = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+					24E1723F1FB6F228004267BC = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 24E172271FB6F227004267BC;
+					};
+					24E1724A1FB6F228004267BC = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 24E172271FB6F227004267BC;
+					};
+				};
+			};
+			buildConfigurationList = 24E172231FB6F227004267BC /* Build configuration list for PBXProject "FYImageManagerDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 24E1721F1FB6F227004267BC;
+			productRefGroup = 24E172291FB6F227004267BC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				24E172271FB6F227004267BC /* FYImageManagerDemo */,
+				24E1723F1FB6F228004267BC /* FYImageManagerDemoTests */,
+				24E1724A1FB6F228004267BC /* FYImageManagerDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		24E172261FB6F227004267BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24E172381FB6F228004267BC /* LaunchScreen.storyboard in Resources */,
+				24E172351FB6F228004267BC /* Assets.xcassets in Resources */,
+				24E172331FB6F228004267BC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E1723E1FB6F228004267BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E172491FB6F228004267BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		24E172241FB6F227004267BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24E172301FB6F228004267BC /* ViewController.m in Sources */,
+				24E1723B1FB6F228004267BC /* main.m in Sources */,
+				24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E1723C1FB6F228004267BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24E172451FB6F228004267BC /* FYImageManagerDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24E172471FB6F228004267BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24E172501FB6F228004267BC /* FYImageManagerDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24E172421FB6F228004267BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 24E172271FB6F227004267BC /* FYImageManagerDemo */;
+			targetProxy = 24E172411FB6F228004267BC /* PBXContainerItemProxy */;
+		};
+		24E1724D1FB6F228004267BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 24E172271FB6F227004267BC /* FYImageManagerDemo */;
+			targetProxy = 24E1724C1FB6F228004267BC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		24E172311FB6F228004267BC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24E172321FB6F228004267BC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		24E172361FB6F228004267BC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				24E172371FB6F228004267BC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		24E172521FB6F228004267BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		24E172531FB6F228004267BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		24E172551FB6F228004267BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		24E172561FB6F228004267BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		24E172581FB6F228004267BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FYImageManagerDemo.app/FYImageManagerDemo";
+			};
+			name = Debug;
+		};
+		24E172591FB6F228004267BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FYImageManagerDemo.app/FYImageManagerDemo";
+			};
+			name = Release;
+		};
+		24E1725B1FB6F228004267BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FYImageManagerDemo;
+			};
+			name = Debug;
+		};
+		24E1725C1FB6F228004267BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				INFOPLIST_FILE = FYImageManagerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FYImageManagerDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		24E172231FB6F227004267BC /* Build configuration list for PBXProject "FYImageManagerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24E172521FB6F228004267BC /* Debug */,
+				24E172531FB6F228004267BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24E172541FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24E172551FB6F228004267BC /* Debug */,
+				24E172561FB6F228004267BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24E172571FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24E172581FB6F228004267BC /* Debug */,
+				24E172591FB6F228004267BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24E1725A1FB6F228004267BC /* Build configuration list for PBXNativeTarget "FYImageManagerDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24E1725B1FB6F228004267BC /* Debug */,
+				24E1725C1FB6F228004267BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 24E172201FB6F227004267BC /* Project object */;
+}
