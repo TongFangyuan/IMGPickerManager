@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D31FB96729009DE712 /* FYThumbCell.m */; };
+		24CC84D71FB97293009DE712 /* FYAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D61FB97293009DE712 /* FYAsset.m */; };
 		24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722C1FB6F228004267BC /* AppDelegate.m */; };
 		24E172301FB6F228004267BC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722F1FB6F228004267BC /* ViewController.m */; };
 		24E172331FB6F228004267BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24E172311FB6F228004267BC /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 		24E1723B1FB6F228004267BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1723A1FB6F228004267BC /* main.m */; };
 		24E172451FB6F228004267BC /* FYImageManagerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172441FB6F228004267BC /* FYImageManagerDemoTests.m */; };
 		24E172501FB6F228004267BC /* FYImageManagerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1724F1FB6F228004267BC /* FYImageManagerDemoUITests.m */; };
+		24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172601FB6F7D3004267BC /* FYImagePickerController.m */; };
+		24E172641FB6F812004267BC /* FYImageFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172631FB6F812004267BC /* FYImageFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24CC84D21FB96729009DE712 /* FYThumbCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYThumbCell.h; sourceTree = "<group>"; };
+		24CC84D31FB96729009DE712 /* FYThumbCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYThumbCell.m; sourceTree = "<group>"; };
+		24CC84D51FB97293009DE712 /* FYAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYAsset.h; sourceTree = "<group>"; };
+		24CC84D61FB97293009DE712 /* FYAsset.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYAsset.m; sourceTree = "<group>"; };
 		24E172281FB6F227004267BC /* FYImageManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYImageManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24E1722B1FB6F227004267BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		24E1722C1FB6F228004267BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +59,10 @@
 		24E1724B1FB6F228004267BC /* FYImageManagerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FYImageManagerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24E1724F1FB6F228004267BC /* FYImageManagerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImageManagerDemoUITests.m; sourceTree = "<group>"; };
 		24E172511FB6F228004267BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24E1725F1FB6F7D3004267BC /* FYImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYImagePickerController.h; sourceTree = "<group>"; };
+		24E172601FB6F7D3004267BC /* FYImagePickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImagePickerController.m; sourceTree = "<group>"; };
+		24E172621FB6F812004267BC /* FYImageFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYImageFlowLayout.h; sourceTree = "<group>"; };
+		24E172631FB6F812004267BC /* FYImageFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImageFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +148,14 @@
 		24E1725E1FB6F257004267BC /* FYImageManager */ = {
 			isa = PBXGroup;
 			children = (
+				24E1725F1FB6F7D3004267BC /* FYImagePickerController.h */,
+				24E172601FB6F7D3004267BC /* FYImagePickerController.m */,
+				24CC84D51FB97293009DE712 /* FYAsset.h */,
+				24CC84D61FB97293009DE712 /* FYAsset.m */,
+				24CC84D21FB96729009DE712 /* FYThumbCell.h */,
+				24CC84D31FB96729009DE712 /* FYThumbCell.m */,
+				24E172621FB6F812004267BC /* FYImageFlowLayout.h */,
+				24E172631FB6F812004267BC /* FYImageFlowLayout.m */,
 			);
 			path = FYImageManager;
 			sourceTree = "<group>";
@@ -207,7 +227,7 @@
 				TargetAttributes = {
 					24E172271FB6F227004267BC = {
 						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					24E1723F1FB6F228004267BC = {
 						CreatedOnToolsVersion = 9.0.1;
@@ -273,7 +293,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24E172641FB6F812004267BC /* FYImageFlowLayout.m in Sources */,
+				24CC84D71FB97293009DE712 /* FYAsset.m in Sources */,
+				24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,
+				24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */,
 				24E1723B1FB6F228004267BC /* main.m in Sources */,
 				24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */,
 			);
@@ -438,12 +462,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 393LMJAQ8W;
 				INFOPLIST_FILE = FYImageManagerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b170b6cd-7d3f-4b94-860c-47d029c243f1";
+				PROVISIONING_PROFILE_SPECIFIER = ppq_deve_wildcard_20170517;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -452,12 +479,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4P78C7E8TY;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = FYImageManagerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

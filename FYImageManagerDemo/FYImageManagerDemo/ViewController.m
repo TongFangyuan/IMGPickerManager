@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "FYImagePickerController.h"
 
 @interface ViewController ()
+
+- (IBAction)takePhotoAction:(id)sender;
 
 @end
 
@@ -25,5 +28,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)takePhotoAction:(id)sender {
+    
+    [self presentViewController:[FYImagePickerController new] animated:YES completion:nil];
+}
 
 @end
