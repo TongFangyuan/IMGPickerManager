@@ -22,7 +22,7 @@
 - (CGSize)itemSize
 {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    CGFloat width = floor((screenSize.width-3)/4.0);
+    CGFloat width = (screenSize.width-3)/4.0;
     return CGSizeMake(width, width);
 }
 
