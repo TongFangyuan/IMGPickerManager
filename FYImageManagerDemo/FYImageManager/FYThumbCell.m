@@ -35,7 +35,9 @@
         button.layer.borderColor = [UIColor whiteColor].CGColor;
         button.frame = CGRectMake(frame.size.width-22-2, 2, 22, 22);
         button.layer.cornerRadius = 11;
-        
+        [button setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
+
         [self.contentView addSubview:button];
         _button = button;
         
@@ -70,11 +72,9 @@
     _button.selected = selected;
     
     if (selected) {
-        [_button setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateNormal];
         _button.backgroundColor = [UIColor clearColor];
         _button.layer.borderWidth = 0;
     } else {
-        [_button setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
         _button.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
         _button.layer.borderWidth = 1;
     }

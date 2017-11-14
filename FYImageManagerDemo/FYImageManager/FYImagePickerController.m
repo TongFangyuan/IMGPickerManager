@@ -25,10 +25,17 @@ UICollectionViewDataSource
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UIView *contentView;
-@property (nonatomic,strong) NSArray<FYAsset *> *assets;
 @property (nonatomic,strong) PickerTopBar *topBar;
 @property (nonatomic,strong) PickerBottomBar *bottomBar;
+
+/// FYAsset 资源数组
+@property (nonatomic,strong) NSArray<FYAsset *> *assets;
+/// 选中的 FYAsset
 @property (nonatomic,strong) NSMutableArray<FYAsset *> *selectedAssets;
+/// PHAssetCollection 资源数组
+@property (nonatomic,strong) NSArray<PHAssetCollection *> *assetCollections;
+/// 当前选中的 PHAssetCollection
+@property (nonatomic,strong) PHAssetCollection *selectedAssetCollection;
 
 @end
 
@@ -42,6 +49,7 @@ UICollectionViewDataSource
         _maxCount = 9;
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
+        _assetCollections = [NSArray array];
     }
     return self;
 }
@@ -53,7 +61,7 @@ UICollectionViewDataSource
     [self setNeedsStatusBarAppearanceUpdate];
    
     [self initSubviews];
-    [self requestData];
+    [self fetchAssetCollections];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -133,14 +141,59 @@ UICollectionViewDataSource
 }
 
 /// 获取相册数据
-- (void)requestData
+- (void)fetchAssetCollections
+{
+    
+    PHFetchOptions *options = [PHFetchOptions new];
+    if (@available(iOS 9.0,*)) {
+        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    }
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:NO]];
+    
+    NSMutableArray<PHAssetCollection *> *tempAssetCollections = [NSMutableArray array];
+    
+    // 相机胶卷
+    PHFetchResult<PHAssetCollection *> *cameraResults = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
+    [cameraResults enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [tempAssetCollections addObject:obj];
+    }];
+    
+    // 最近添加
+    PHFetchResult<PHAssetCollection *> *recentlyAddeds = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumRecentlyAdded options:options];
+    [recentlyAddeds enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [tempAssetCollections addObject:obj];
+    }];
+    
+    // 屏幕快照
+    if (@available(iOS 9.0, *)) {
+        PHFetchResult<PHAssetCollection *> *screenshots = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumScreenshots options:options];
+        [screenshots enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tempAssetCollections addObject:obj];
+        }];
+    }
+    
+    // 我的相册
+    PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
+    [userLibrary enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [tempAssetCollections addObject:obj];
+    }];
+    
+    _assetCollections = [NSArray arrayWithArray:tempAssetCollections];
+    _selectedAssetCollection = _assetCollections.firstObject;
+    self.topBar.tipsLabel.text = _selectedAssetCollection.localizedTitle;
+    
+    [self fetchAssets];
+}
+
+/// 获取某个相册的照片
+- (void)fetchAssets
 {
     PHFetchOptions *options = [PHFetchOptions new];
     if (@available(iOS 9.0,*)) {
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    PHFetchResult *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
     
     NSMutableArray *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
     [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
