@@ -101,6 +101,13 @@ UICollectionViewDataSource
     countOverflow =  _selectedAssets.count >= 9;
     [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
     
+    // topbar 和 bottombar 联动
+    self.topBar.doneButton.enabled = _selectedAssets.count;
+    self.topBar.numberButton.hidden = !_selectedAssets.count;
+    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
+    
+    self.bottomBar.previewButton.enabled = _selectedAssets.count;
+    
 }
 
 - (void)cellTapMaskView:(UITapGestureRecognizer *)tap

@@ -70,9 +70,13 @@
     _button.selected = selected;
     
     if (selected) {
-        _button.backgroundColor = [UIColor redColor];
+        [_button setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateNormal];
+        _button.backgroundColor = [UIColor clearColor];
+        _button.layer.borderWidth = 0;
     } else {
+        [_button setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
         _button.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+        _button.layer.borderWidth = 1;
     }
     
 }

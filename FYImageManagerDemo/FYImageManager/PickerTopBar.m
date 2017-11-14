@@ -36,6 +36,7 @@
         numberButton.titleLabel.font = [UIFont systemFontOfSize:16];
         numberButton.layer.cornerRadius = 10;
         [numberButton setTitle:@"1" forState:UIControlStateNormal];
+        numberButton.hidden = YES;
         [self addSubview:numberButton];
         _numberButton = numberButton;
         
