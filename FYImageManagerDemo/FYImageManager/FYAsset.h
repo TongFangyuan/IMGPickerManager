@@ -16,5 +16,7 @@
 
 @property (nonatomic,strong) PHAsset *asset;
 @property (nonatomic,assign) BOOL select;
+/// 是否超出了最大选择数
+@property (nonatomic,assign) BOOL overflow;
 
 @end

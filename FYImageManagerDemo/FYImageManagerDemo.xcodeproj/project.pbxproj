@@ -16,6 +16,7 @@
 		24CC84ED1FBABC77009DE712 /* ic_photo_choosenor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CC84E91FBABC77009DE712 /* ic_photo_choosenor@3x.png */; };
 		24CC84EE1FBABC77009DE712 /* ic_photo_choosenor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CC84EA1FBABC77009DE712 /* ic_photo_choosenor@2x.png */; };
 		24CC84EF1FBABC77009DE712 /* ic_photo_choosesel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CC84EB1FBABC77009DE712 /* ic_photo_choosesel@2x.png */; };
+		24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84F11FBAC520009DE712 /* PickerBottomBar.m */; };
 		24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722C1FB6F228004267BC /* AppDelegate.m */; };
 		24E172301FB6F228004267BC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722F1FB6F228004267BC /* ViewController.m */; };
 		24E172331FB6F228004267BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24E172311FB6F228004267BC /* Main.storyboard */; };
@@ -58,6 +59,8 @@
 		24CC84E91FBABC77009DE712 /* ic_photo_choosenor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosenor@3x.png"; sourceTree = "<group>"; };
 		24CC84EA1FBABC77009DE712 /* ic_photo_choosenor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosenor@2x.png"; sourceTree = "<group>"; };
 		24CC84EB1FBABC77009DE712 /* ic_photo_choosesel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosesel@2x.png"; sourceTree = "<group>"; };
+		24CC84F01FBAC520009DE712 /* PickerBottomBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerBottomBar.h; sourceTree = "<group>"; };
+		24CC84F11FBAC520009DE712 /* PickerBottomBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerBottomBar.m; sourceTree = "<group>"; };
 		24E172281FB6F227004267BC /* FYImageManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYImageManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24E1722B1FB6F227004267BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		24E1722C1FB6F228004267BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				24CC84D31FB96729009DE712 /* FYThumbCell.m */,
 				24CC84D81FBA9146009DE712 /* PickerTopBar.h */,
 				24CC84D91FBA9146009DE712 /* PickerTopBar.m */,
+				24CC84F01FBAC520009DE712 /* PickerBottomBar.h */,
+				24CC84F11FBAC520009DE712 /* PickerBottomBar.m */,
 				24E172621FB6F812004267BC /* FYImageFlowLayout.h */,
 				24E172631FB6F812004267BC /* FYImageFlowLayout.m */,
 			);
@@ -332,6 +337,7 @@
 			files = (
 				24E172641FB6F812004267BC /* FYImageFlowLayout.m in Sources */,
 				24CC84D71FB97293009DE712 /* FYAsset.m in Sources */,
+				24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */,
 				24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,
 				24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */,

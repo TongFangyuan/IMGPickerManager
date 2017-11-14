@@ -14,6 +14,7 @@
 @property (nonatomic,strong) FYAsset *asset;
 @property (nonatomic,strong) UIImageView *thumbView;
 @property (nonatomic,strong) UIButton *button;
+@property (nonatomic,strong) UIImageView *maskView;
 
 - (void)setButtonSelected:(BOOL)selected;
 

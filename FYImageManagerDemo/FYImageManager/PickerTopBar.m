@@ -25,7 +25,7 @@
         [doneButton setTitleColor:[UIColor colorWithRed:0.19 green:0.57 blue:0.83 alpha:1.00] forState:UIControlStateNormal];
         [doneButton setTitleColor:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00] forState:UIControlStateDisabled];
         doneButton.enabled = NO;
-        doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         doneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [self addSubview:doneButton];
         _doneButton = doneButton;

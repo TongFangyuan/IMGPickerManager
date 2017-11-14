@@ -38,6 +38,13 @@
         
         [self.contentView addSubview:button];
         _button = button;
+        
+        UIImageView *maskView = [UIImageView new];
+        maskView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
+        maskView.frame = imageView.bounds;
+        maskView.userInteractionEnabled = YES;
+        [self.contentView insertSubview:maskView belowSubview:imageView];
+        _maskView = maskView;
     }
     return self;
 }
