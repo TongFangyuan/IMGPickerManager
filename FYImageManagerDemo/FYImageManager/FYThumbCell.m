@@ -41,7 +41,7 @@
     }
     return self;
 }
-
+ 
 - (void)setAsset:(FYAsset *)asset
 {
     _asset = asset;

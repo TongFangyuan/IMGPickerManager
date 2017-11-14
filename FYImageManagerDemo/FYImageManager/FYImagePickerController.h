@@ -10,4 +10,7 @@
 
 @interface FYImagePickerController : UIViewController
 
+/// 最多能选几张图片,默认9张
+@property (nonatomic,assign) NSInteger maxCount;
+
 @end
