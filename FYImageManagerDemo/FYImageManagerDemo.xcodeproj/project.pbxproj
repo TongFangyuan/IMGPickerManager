@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 241C51D11FBC19FD008B2CC0 /* FYAlbumsCell.m */; };
 		24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D31FB96729009DE712 /* FYThumbCell.m */; };
 		24CC84D71FB97293009DE712 /* FYAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D61FB97293009DE712 /* FYAsset.m */; };
 		24CC84DA1FBA9146009DE712 /* PickerTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D91FBA9146009DE712 /* PickerTopBar.m */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		241C51D01FBC19FD008B2CC0 /* FYAlbumsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYAlbumsCell.h; sourceTree = "<group>"; };
+		241C51D11FBC19FD008B2CC0 /* FYAlbumsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYAlbumsCell.m; sourceTree = "<group>"; };
 		24CC84D21FB96729009DE712 /* FYThumbCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYThumbCell.h; sourceTree = "<group>"; };
 		24CC84D31FB96729009DE712 /* FYThumbCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYThumbCell.m; sourceTree = "<group>"; };
 		24CC84D51FB97293009DE712 /* FYAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYAsset.h; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				24CC84D61FB97293009DE712 /* FYAsset.m */,
 				24CC84D21FB96729009DE712 /* FYThumbCell.h */,
 				24CC84D31FB96729009DE712 /* FYThumbCell.m */,
+				241C51D01FBC19FD008B2CC0 /* FYAlbumsCell.h */,
+				241C51D11FBC19FD008B2CC0 /* FYAlbumsCell.m */,
 				24CC84D81FBA9146009DE712 /* PickerTopBar.h */,
 				24CC84D91FBA9146009DE712 /* PickerTopBar.m */,
 				24CC84F01FBAC520009DE712 /* PickerBottomBar.h */,
@@ -339,6 +344,7 @@
 				24CC84D71FB97293009DE712 /* FYAsset.m in Sources */,
 				24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */,
 				24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */,
+				241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,
 				24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */,
 				24E1723B1FB6F228004267BC /* main.m in Sources */,
@@ -513,8 +519,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b170b6cd-7d3f-4b94-860c-47d029c243f1";
-				PROVISIONING_PROFILE_SPECIFIER = ppq_deve_wildcard_20170517;
+				PROVISIONING_PROFILE = "3132f5b0-bfd0-4318-9af0-38fdd9af1306";
+				PROVISIONING_PROFILE_SPECIFIER = ppq_deve_wildcard_20171115;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -524,13 +530,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 393LMJAQ8W;
 				INFOPLIST_FILE = FYImageManagerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongfy.FYImageManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "3132f5b0-bfd0-4318-9af0-38fdd9af1306";
+				PROVISIONING_PROFILE_SPECIFIER = ppq_deve_wildcard_20171115;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
