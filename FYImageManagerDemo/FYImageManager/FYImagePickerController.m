@@ -140,7 +140,7 @@ UITableViewDataSource
         
         self.contentView.userInteractionEnabled = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            self.maskView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
+            self.maskView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             self.contentView.userInteractionEnabled = YES;
