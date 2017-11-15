@@ -15,7 +15,7 @@
     if (self = [super init]) {
         UIButton *previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [previewButton setTitle:@"预览" forState:UIControlStateNormal];
-        [previewButton setTitleColor:[UIColor colorWithRed:0.19 green:0.57 blue:0.83 alpha:1.00] forState:UIControlStateNormal];
+        [previewButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
         [previewButton setTitleColor:[UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1.00] forState:UIControlStateDisabled];
         previewButton.enabled = NO;
         previewButton.titleLabel.font = [UIFont  systemFontOfSize:16];
