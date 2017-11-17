@@ -13,6 +13,7 @@
 #import "PickerTopBar.h"
 #import "PickerBottomBar.h"
 #import "FYAlbumsCell.h"
+#import "FYImagePrivewController.h"
 
 @interface FYImagePickerController ()
 <
@@ -192,6 +193,15 @@ UITableViewDataSource
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    FYImagePrivewController *previewController = [FYImagePrivewController new];
+    previewController.assets = _assets;
+    previewController.selectedAssets = _selectedAssets;
+    previewController.selectIndexPath = indexPath;
+    [self presentViewController:previewController animated:YES completion:nil];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _assetCollections.count;
@@ -336,6 +346,7 @@ UITableViewDataSource
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
     PHFetchResult *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
     
     NSMutableArray *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
