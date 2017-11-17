@@ -42,12 +42,11 @@
 {
     if (!_scrollView) {
         _scrollView = [UIScrollView new];
-        _scrollView.minimumZoomScale = 2.5;
-        _scrollView.maximumZoomScale = 3.0;
+        _scrollView.minimumZoomScale = 1;
+        _scrollView.maximumZoomScale = 2.5;
         _scrollView.delegate = self;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
-//        _scrollView.layer.masksToBounds = NO;
     }
     return _scrollView;
 }
@@ -57,7 +56,6 @@
     if (!_iconView) {
         _iconView  = [UIImageView new];
         _iconView.contentMode = UIViewContentModeScaleAspectFit;
-//        _iconView.layer.masksToBounds = NO;
     }
     return _iconView;
 }
@@ -75,9 +73,13 @@
     NSLog(@"%@",scrollView);
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    
+    CGFloat scrollViewWidth = self.scrollView.frame.size.width;
+    CGFloat scrollViewHeight = self.scrollView.frame.size.height;
+    CGFloat offsetX = (scrollViewWidth > self.scrollView.contentSize.width) ? ((scrollViewWidth - _scrollView.contentSize.width) * 0.5) : 0.0;
+    CGFloat offsetY = (scrollViewHeight > _scrollView.contentSize.height) ? ((scrollViewHeight - _scrollView.contentSize.height) * 0.5) : 0.0;
+    self.iconView.center = CGPointMake(_scrollView.contentSize.width * 0.5 + offsetX, _scrollView.contentSize.height * 0.5 + offsetY);
 }
 
 

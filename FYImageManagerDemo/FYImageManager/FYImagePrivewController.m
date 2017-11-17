@@ -175,20 +175,31 @@ UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
-    cell.scrollView.zoomScale = 1.0;
     FYAsset *asset = _assets[indexPath.item];
     [[PHCachingImageManager defaultManager] requestImageForAsset:asset.asset targetSize:self.flowLayout.itemSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         cell.iconView.image = result;
         CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
         CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-        cell.iconView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, imageHeight);
-        cell.scrollView.contentInset = UIEdgeInsetsMake(0, 0, imageY, 0);
+        cell.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
     }];
     
     self.operationView.selectedButton.tag = indexPath.item;
     [self.operationView.selectedButton removeTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([cell isKindOfClass:[FYPrivewCell class]]) {
+        [[(FYPrivewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[FYPrivewCell class]]) {
+        [[(FYPrivewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+    }
 }
 
 
@@ -203,6 +214,5 @@ UICollectionViewDataSource
         self.selectIndexPath = indexPath;
     }
 }
-
 
 @end
