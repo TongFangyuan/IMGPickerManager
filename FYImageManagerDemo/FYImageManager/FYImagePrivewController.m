@@ -115,6 +115,7 @@ UICollectionViewDataSource
         UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationVIewTap:)];
         [_operationView addGestureRecognizer:tap];
         [_operationView.closedButton addTarget:self action:@selector(closedButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _operationView;
 }
@@ -185,16 +186,7 @@ UICollectionViewDataSource
 {
     FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
     FYAssetModel *asset = _assets[indexPath.item];
-    [[PHCachingImageManager defaultManager] requestImageForAsset:asset.asset targetSize:self.flowLayout.itemSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        cell.iconView.image = result;
-        CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
-        CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-        cell.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-    }];
-    
-    self.operationView.selectedButton.tag = indexPath.item;
-    [self.operationView.selectedButton removeTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
+    cell.model = asset;
     return cell;
 }
 
@@ -218,7 +210,7 @@ UICollectionViewDataSource
         
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-        NSLog(@"%@",indexPath);
+//        NSLog(@"%@",indexPath);
         [self showCellAtIndexPath:indexPath];
         self.selectIndexPath = indexPath;
     }

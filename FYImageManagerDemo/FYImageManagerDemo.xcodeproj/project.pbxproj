@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 241C51D11FBC19FD008B2CC0 /* FYAlbumsCell.m */; };
 		241C51D51FBC4379008B2CC0 /* FYImagePrivewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241C51D41FBC4379008B2CC0 /* FYImagePrivewController.m */; };
+		245DAA711FBED207006D6133 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 245DAA701FBED207006D6133 /* UIImage+animatedGIF.m */; };
 		248C65A81FBD3D1400CFB7DE /* FYPrivewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 248C65A71FBD3D1400CFB7DE /* FYPrivewCell.m */; };
 		248C65AB1FBD795600CFB7DE /* ic_close_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 248C65A91FBD795500CFB7DE /* ic_close_white@3x.png */; };
 		248C65AC1FBD795600CFB7DE /* ic_close_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 248C65AA1FBD795600CFB7DE /* ic_close_white@2x.png */; };
@@ -59,6 +60,8 @@
 		241C51D11FBC19FD008B2CC0 /* FYAlbumsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYAlbumsCell.m; sourceTree = "<group>"; };
 		241C51D31FBC4379008B2CC0 /* FYImagePrivewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYImagePrivewController.h; sourceTree = "<group>"; };
 		241C51D41FBC4379008B2CC0 /* FYImagePrivewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImagePrivewController.m; sourceTree = "<group>"; };
+		245DAA6F1FBED207006D6133 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		245DAA701FBED207006D6133 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		248C65A61FBD3D1400CFB7DE /* FYPrivewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYPrivewCell.h; sourceTree = "<group>"; };
 		248C65A71FBD3D1400CFB7DE /* FYPrivewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYPrivewCell.m; sourceTree = "<group>"; };
 		248C65A91FBD795500CFB7DE /* ic_close_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_close_white@3x.png"; sourceTree = "<group>"; };
@@ -128,6 +131,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		245DAA6E1FBED1FF006D6133 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				245DAA6F1FBED207006D6133 /* UIImage+animatedGIF.h */,
+				245DAA701FBED207006D6133 /* UIImage+animatedGIF.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		24CC84DB1FBA94DF009DE712 /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +215,7 @@
 		24E1725E1FB6F257004267BC /* FYImageManager */ = {
 			isa = PBXGroup;
 			children = (
+				245DAA6E1FBED1FF006D6133 /* Category */,
 				24CC84DB1FBA94DF009DE712 /* ImageAssets */,
 				24E1725F1FB6F7D3004267BC /* FYImagePickerController.h */,
 				24E172601FB6F7D3004267BC /* FYImagePickerController.m */,
@@ -384,6 +397,7 @@
 				24CC84DA1FBA9146009DE712 /* PickerTopBar.m in Sources */,
 				241C51D51FBC4379008B2CC0 /* FYImagePrivewController.m in Sources */,
 				248C65AF1FBD79D300CFB7DE /* OperationView.m in Sources */,
+				245DAA711FBED207006D6133 /* UIImage+animatedGIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

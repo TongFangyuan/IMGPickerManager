@@ -27,6 +27,7 @@ UITableViewDataSource
     BOOL countOverflow;
     BOOL showTableView;
     NSIndexPath *selectedTableViewIndexPath;
+    PHCachingImageManager *cachingImageManager;
 }
 
 /// 图片选择视图
@@ -65,6 +66,7 @@ UITableViewDataSource
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
         _assetCollections = [NSArray array];
+        cachingImageManager = [PHCachingImageManager new];
     }
     return self;
 }
@@ -220,7 +222,7 @@ UITableViewDataSource
     
     // 设置封面图
     PHAsset *thumAsset = result.firstObject;
-    [[PHCachingImageManager defaultManager] requestImageForAsset:thumAsset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestImageForAsset:thumAsset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         cell.iconView.image = result;
     }];
     return cell;
@@ -347,16 +349,24 @@ UITableViewDataSource
     }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
-    PHFetchResult *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
+    PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
     
-    NSMutableArray *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
-    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSMutableArray<FYAssetModel *> *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
+    NSMutableArray<PHAsset *> *cacheAssets = [NSMutableArray arrayWithCapacity:result.count];
+    [result enumerateObjectsUsingBlock:^(PHAsset  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         FYAssetModel *asset = [FYAssetModel new];
         asset.asset = obj;
         [tempAssets addObject:asset];
+        [cacheAssets addObject:obj];
     }];
     _assets = [NSArray arrayWithArray:tempAssets];
+    
+    // 缓存图片
+    PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
+    [cachingImageManager startCachingImagesForAssets:cacheAssets targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
+    
     [self.collectionView reloadData];
+    
 }
 
 /// 初始化子视图

@@ -60,6 +60,7 @@
     // 图片
     _imageRequsetID = [[PHImageManager defaultManager] requestImageForAsset:phAsset targetSize:CGSizeMake(ScreenWidth/[UIScreen mainScreen].scale, ScreenHeight/[UIScreen mainScreen].scale) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         _thumbView.image = result;
+        NSLog(@"%@",info);
     }];
     
     // 选中状态

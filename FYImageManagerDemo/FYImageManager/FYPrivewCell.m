@@ -7,33 +7,56 @@
 //
 
 #import "FYPrivewCell.h"
+#import "UIImage+animatedGIF.h"
 
 @implementation FYPrivewCell
+
+
+- (void)setModel:(FYAssetModel *)model
+{
+    _model = model;
+    
+    PHAsset *asset = model.asset;
+    if (@available(iOS 11.0, *)) {
+        NSLog(@"%ld",(long)asset.playbackStyle);
+    }
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    /*
+     [[PHImageManager defaultManager] requestImageForAsset:model.asset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+     self.iconView.image = result;
+     CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
+     CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
+     self.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+     }];
+     */
+    
+    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset  options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        UIImage *result = [UIImage imageWithData:imageData];
+        CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
+        CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
+        self.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+        self.iconView.image = result;
+//        NSLog(@"%@",info[@"PHImageFileURLKey"]);
+        NSURL *imageFileURL = info[@"PHImageFileURLKey"];
+        if ([imageFileURL.absoluteString hasSuffix:@".GIF"] ) {
+            self.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+        } else {
+            self.iconView.image = result;
+        }
+    }];
+
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
         [self.contentView addSubview:self.scrollView];
         [self.scrollView addSubview:self.iconView];
-        
-        /*
-        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.scrollView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
-        NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.scrollView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
-        NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
-        NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.scrollView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-        self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
-        
-        NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.iconView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-        NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.iconView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-        self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:@[constraint5,constraint6]];
-         */
          
         self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.iconView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         
-
     }
     return self;
 }
