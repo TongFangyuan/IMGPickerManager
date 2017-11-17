@@ -32,6 +32,15 @@ UICollectionViewDataSource
     [self initSubviews];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.selectIndexPath) {
+        [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -50,7 +59,7 @@ UICollectionViewDataSource
 
 - (void)showCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYAsset *asset = self.assets[indexPath.item];
+    FYAssetModel *asset = self.assets[indexPath.item];
     
     // 底部按钮选中状态
     [self.operationView setButtonSelected:[self.selectedAssets containsObject:asset]];
@@ -68,7 +77,7 @@ UICollectionViewDataSource
 {
     
     // 添加还是移除
-    FYAsset *asset = self.assets[self.selectIndexPath.item];
+    FYAssetModel *asset = self.assets[self.selectIndexPath.item];
     if ([self.selectedAssets containsObject:asset]) {
         [self.selectedAssets removeObject:asset];
     } else {
@@ -175,7 +184,7 @@ UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
-    FYAsset *asset = _assets[indexPath.item];
+    FYAssetModel *asset = _assets[indexPath.item];
     [[PHCachingImageManager defaultManager] requestImageForAsset:asset.asset targetSize:self.flowLayout.itemSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         cell.iconView.image = result;
         CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;

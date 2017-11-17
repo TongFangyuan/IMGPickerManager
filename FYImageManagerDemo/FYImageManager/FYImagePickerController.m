@@ -41,9 +41,9 @@ UITableViewDataSource
 @property (nonatomic,strong) PickerBottomBar *bottomBar;
 
 /// FYAsset 资源数组
-@property (nonatomic,strong) NSArray<FYAsset *> *assets;
+@property (nonatomic,strong) NSArray<FYAssetModel *> *assets;
 /// 选中的 FYAsset
-@property (nonatomic,strong) NSMutableArray<FYAsset *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<FYAssetModel *> *selectedAssets;
 /// PHAssetCollection 资源数组
 @property (nonatomic,strong) NSArray<PHAssetCollection *> *assetCollections;
 /// 当前选中的 PHAssetCollection
@@ -88,7 +88,7 @@ UITableViewDataSource
 - (void)cellButtonClicked:(UIButton *)button
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.tag inSection:0];
-    FYAsset *asset = _assets[indexPath.item];
+    FYAssetModel *asset = _assets[indexPath.item];
     asset.select = !asset.select;
     
     FYThumbCell *cell = (FYThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
@@ -178,8 +178,8 @@ UITableViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
-    FYAsset *asset = [_assets objectAtIndex:indexPath.item];
-    cell.asset = asset;
+    FYAssetModel *asset = [_assets objectAtIndex:indexPath.item];
+    cell.model = asset;
     
     cell.button.tag = indexPath.row;
     [cell.button addTarget:self action:@selector(cellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -351,7 +351,7 @@ UITableViewDataSource
     
     NSMutableArray *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
     [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        FYAsset *asset = [FYAsset new];
+        FYAssetModel *asset = [FYAssetModel new];
         asset.asset = obj;
         [tempAssets addObject:asset];
     }];

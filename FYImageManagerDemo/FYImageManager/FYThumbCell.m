@@ -51,9 +51,9 @@
     return self;
 }
  
-- (void)setAsset:(FYAsset *)asset
+- (void)setModel:(FYAssetModel *)asset
 {
-    _asset = asset;
+    _model = asset;
     
     PHAsset *phAsset = asset.asset;
     

@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FYAsset.h"
+#import "FYAssetModel.h"
 
 @interface FYImagePrivewController : UIViewController
 
 @property (nonatomic,strong) UICollectionView *collectionView;
 /// FYAsset 资源数组
-@property (nonatomic,strong) NSArray<FYAsset *> *assets;
+@property (nonatomic,strong) NSArray<FYAssetModel *> *assets;
 /// 选中的 FYAsset
-@property (nonatomic,strong) NSMutableArray<FYAsset *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<FYAssetModel *> *selectedAssets;
 /// 当前选中的 indexPath
 @property (nonatomic,strong) NSIndexPath *selectIndexPath;
 
