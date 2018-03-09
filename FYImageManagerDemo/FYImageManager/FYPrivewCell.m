@@ -8,6 +8,7 @@
 
 #import "FYPrivewCell.h"
 #import "UIImage+animatedGIF.h"
+#import "PHImageManager+FetchImage.h"
 
 @implementation FYPrivewCell
 
@@ -15,34 +16,18 @@
 - (void)setModel:(FYAssetModel *)model
 {
     _model = model;
-    
-    PHAsset *asset = model.asset;
-    if (@available(iOS 11.0, *)) {
-        NSLog(@"%ld",(long)asset.playbackStyle);
-    }
-    
-    PHImageRequestOptions *options = [PHImageRequestOptions new];
-    /*
-     [[PHImageManager defaultManager] requestImageForAsset:model.asset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-     self.iconView.image = result;
-     CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
-     CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-     self.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-     }];
-     */
-    
-    [[PHImageManager defaultManager] requestImageDataForAsset:model.asset  options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+    __weak typeof(self) weakSelf = self;
+    [PHImageManager fetchImageForAsset:model.asset handler:^(NSData *imageData, NSDictionary *info) {
         UIImage *result = [UIImage imageWithData:imageData];
         CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
         CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-        self.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-        self.iconView.image = result;
-//        NSLog(@"%@",info[@"PHImageFileURLKey"]);
+        weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+        //        NSLog(@"%@",info[@"PHImageFileURLKey"]);
         NSURL *imageFileURL = info[@"PHImageFileURLKey"];
         if ([imageFileURL.absoluteString hasSuffix:@".GIF"] ) {
-            self.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+            weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
         } else {
-            self.iconView.image = result;
+            weakSelf.iconView.image = result;
         }
     }];
 
@@ -91,9 +76,9 @@
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale
 {
-    NSLog(@"%@",view);
-    NSLog(@"%f",scale);
-    NSLog(@"%@",scrollView);
+//    NSLog(@"%@",view);
+//    NSLog(@"%f",scale);
+//    NSLog(@"%@",scrollView);
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView

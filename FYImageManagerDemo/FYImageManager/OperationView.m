@@ -16,7 +16,7 @@
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closedButton setImage:[UIImage imageNamed:@"ic_close_white"] forState:UIControlStateNormal];
-        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
@@ -43,24 +43,27 @@
         UIButton *selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         selectedButton.layer.borderWidth = 1;
         selectedButton.layer.borderColor = [UIColor whiteColor].CGColor;
-        selectedButton.layer.cornerRadius = 13;
+        selectedButton.layer.cornerRadius = 15;
         [selectedButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
         [selectedButton setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
+//        [selectedButton setImage:[UIImage new] forState:UIControlStateNormal];
+//        [selectedButton setImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
         [self addSubview:selectedButton];
         _selectedButton = selectedButton;
         
         UIImageView *topMask = [UIImageView new];
-        topMask.image = [UIImage imageNamed:@"mask_gray"];
-//        topMask.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
+//        topMask.image = [UIImage imageNamed:@"mask_gray"];
+        topMask.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         [self insertSubview:topMask belowSubview:closedButton];
         _topMask = topMask;
         
         UIImageView *bottomMask = [UIImageView new];
-        bottomMask.image = [UIImage imageNamed:@"mask_gray"];
+//        bottomMask.image = [UIImage imageNamed:@"mask_gray"];
+        bottomMask.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         [self insertSubview:bottomMask belowSubview:closedButton];
         _bottomMask = bottomMask;
         
-        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:18];
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:5];
         NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:40];
         NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:40];
@@ -85,8 +88,8 @@
         // selectedButton
         NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-15];
         NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-15];
-        NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:26];
-        NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:26];
+        NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30];
+        NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:selectedButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30];
         selectedButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self addConstraints:@[constraint13,constraint14,constraint15,constraint16]];
 
@@ -98,7 +101,7 @@
         topMask.translatesAutoresizingMaskIntoConstraints = NO;
         [self addConstraints:@[constraint17,constraint18,constraint19,constraint20]];
         
-        // topmask
+        // bottom_mask
         NSLayoutConstraint *constraint21 = [NSLayoutConstraint constraintWithItem:bottomMask attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint22 = [NSLayoutConstraint constraintWithItem:bottomMask attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint23 = [NSLayoutConstraint constraintWithItem:bottomMask attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];

@@ -32,13 +32,12 @@ UICollectionViewDataSource
     [self initSubviews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     if (self.selectIndexPath) {
         [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     }
+    [self showCellAtIndexPath:self.selectIndexPath];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,7 +74,6 @@ UICollectionViewDataSource
 
 - (void)userClickedSelectedButton:(UIButton *)button
 {
-    
     // 添加还是移除
     FYAssetModel *asset = self.assets[self.selectIndexPath.item];
     if ([self.selectedAssets containsObject:asset]) {

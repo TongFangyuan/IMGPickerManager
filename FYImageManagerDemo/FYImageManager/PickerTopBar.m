@@ -16,7 +16,8 @@
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closedButton setImage:[UIImage imageNamed:@"ic_photo_close"] forState:UIControlStateNormal];
-        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//        closedButton.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
@@ -66,7 +67,7 @@
 
         /// 添加约束
         // closed button
-        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:15];
+        NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:40];
         NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:closedButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:40];
