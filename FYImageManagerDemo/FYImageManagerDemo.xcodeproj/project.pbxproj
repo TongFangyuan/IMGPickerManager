@@ -37,6 +37,7 @@
 		24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172601FB6F7D3004267BC /* FYImagePickerController.m */; };
 		24E172641FB6F812004267BC /* FYImageFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E172631FB6F812004267BC /* FYImageFlowLayout.m */; };
 		841DA71B2052370D003BF677 /* PHImageManager+FetchImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DA71A2052370D003BF677 /* PHImageManager+FetchImage.m */; };
+		84979E5F206A42A2002233A9 /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 84979E5E206A42A2002233A9 /* UIViewController+FYAlert.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,8 @@
 		24E172631FB6F812004267BC /* FYImageFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYImageFlowLayout.m; sourceTree = "<group>"; };
 		841DA7192052370D003BF677 /* PHImageManager+FetchImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHImageManager+FetchImage.h"; sourceTree = "<group>"; };
 		841DA71A2052370D003BF677 /* PHImageManager+FetchImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHImageManager+FetchImage.m"; sourceTree = "<group>"; };
+		84979E5D206A42A2002233A9 /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
+		84979E5E206A42A2002233A9 /* UIViewController+FYAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FYAlert.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 				245DAA701FBED207006D6133 /* UIImage+animatedGIF.m */,
 				841DA7192052370D003BF677 /* PHImageManager+FetchImage.h */,
 				841DA71A2052370D003BF677 /* PHImageManager+FetchImage.m */,
+				84979E5D206A42A2002233A9 /* UIViewController+FYAlert.h */,
+				84979E5E206A42A2002233A9 /* UIViewController+FYAlert.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				24E172291FB6F227004267BC /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		24E172291FB6F227004267BC /* Products */ = {
 			isa = PBXGroup;
@@ -308,6 +314,7 @@
 		24E172201FB6F227004267BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = FY;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = tongfy;
 				TargetAttributes = {
@@ -393,6 +400,7 @@
 				248C65A81FBD3D1400CFB7DE /* FYPrivewCell.m in Sources */,
 				24CC84D71FB97293009DE712 /* FYAssetModel.m in Sources */,
 				24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */,
+				84979E5F206A42A2002233A9 /* UIViewController+FYAlert.m in Sources */,
 				24E172611FB6F7D3004267BC /* FYImagePickerController.m in Sources */,
 				241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,

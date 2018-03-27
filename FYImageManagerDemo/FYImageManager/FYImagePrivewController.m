@@ -9,6 +9,7 @@
 #import "FYImagePrivewController.h"
 #import "FYPrivewCell.h"
 #import "OperationView.h"
+#import "UIViewController+FYAlert.h"
 
 @interface FYImagePrivewController ()
 <
@@ -19,21 +20,35 @@ UICollectionViewDataSource
     BOOL isCollectionViewTop;
 }
 
+@property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic,strong) OperationView *operationView;
+
+/// 选中的资源
+@property (nonatomic,strong) NSMutableArray<FYAssetModel *> *selectedAssets;
 
 @end
 
 @implementation FYImagePrivewController
 
+#pragma mark - public
+- (void)setupCompleteBlock:(void(^)(NSArray *selectedAssets))block {
+    self.complete = block;
+}
+
+#pragma mark - private
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initSubviews];
+    
+    /// 设置选中的资源
+    self.selectedAssets = [NSMutableArray arrayWithArray:self.originalSelectedAssets];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    // FIXME: 点击选中按钮图片会偏移bug
     if (self.selectIndexPath) {
         [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     }
@@ -44,8 +59,8 @@ UICollectionViewDataSource
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - private
-- (void)operationVIewTap:(UITapGestureRecognizer *)tap
+
+- (void)operationViewTap:(UITapGestureRecognizer *)tap
 {
     if (isCollectionViewTop) {
         [self.collectionView.superview sendSubviewToBack:self.collectionView];
@@ -74,12 +89,21 @@ UICollectionViewDataSource
 
 - (void)userClickedSelectedButton:(UIButton *)button
 {
-    // 添加还是移除
     FYAssetModel *asset = self.assets[self.selectIndexPath.item];
+    
+    if ( (self.selectedAssets.count>=self.maxCount) && ![self.selectedAssets containsObject:asset]) {
+        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)self.maxCount];
+        [self fy_showTitle:@"提示" message:msg];
+        return;
+    }
+    
+    // 添加还是移除
     if ([self.selectedAssets containsObject:asset]) {
         [self.selectedAssets removeObject:asset];
+        [asset setSelect:NO];
     } else {
         [self.selectedAssets addObject:asset];
+        [asset setSelect:YES];
     }
     
     [self showCellAtIndexPath:self.selectIndexPath];
@@ -87,7 +111,41 @@ UICollectionViewDataSource
 
 - (void)closedButtonAction:(UIButton *)button
 {
+    //// 设置选中状态
+    [self.assets enumerateObjectsUsingBlock:^(FYAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([self.selectedAssets containsObject:obj]) {
+            [obj setSelect:YES];
+        } else {
+            [obj setSelect:NO];
+        }
+    }];
+    
+    //// 数据回调
+    if (self.complete) {
+        self.complete(self.selectedAssets);
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// TODO:完成功能
+- (void)doneButtonAction:(UIButton *)button
+{
+//    //// 设置选中状态
+//    [self.assets enumerateObjectsUsingBlock:^(FYAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if ([self.selectedAssets containsObject:obj]) {
+//            [obj setSelect:YES];
+//        } else {
+//            [obj setSelect:NO];
+//        }
+//    }];
+//    
+//    //// 数据回调
+//    if (self.complete) {
+//        self.complete(self.selectedAssets);
+//    }
+//    
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - property
@@ -110,10 +168,11 @@ UICollectionViewDataSource
     if (!_operationView) {
         _operationView = [OperationView new];
         _operationView.backgroundColor = [UIColor clearColor];
-        UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationVIewTap:)];
+        UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationViewTap:)];
         [_operationView addGestureRecognizer:tap];
         [_operationView.closedButton addTarget:self action:@selector(closedButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_operationView.doneButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _operationView;
 }
@@ -208,7 +267,7 @@ UICollectionViewDataSource
         
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-//        NSLog(@"%@",indexPath);
+        //        NSLog(@"%@",indexPath);
         [self showCellAtIndexPath:indexPath];
         self.selectIndexPath = indexPath;
     }

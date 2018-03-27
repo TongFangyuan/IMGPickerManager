@@ -87,6 +87,7 @@ UITableViewDataSource
 
 #pragma mark - user action
 
+/// 点击选中按钮(圆圈)
 - (void)cellButtonClicked:(UIButton *)button
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.tag inSection:0];
@@ -99,16 +100,18 @@ UITableViewDataSource
     // 保存或移除对应的 asset
     asset.select ? [_selectedAssets addObject:asset] : [_selectedAssets removeObject:asset];
     
-    // 是否显示 cell 的 maskview
-    countOverflow =  _selectedAssets.count >= 9;
-    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+    [self reloadCollectionViewData];
     
-    // topbar 和 bottombar 联动
-    self.topBar.doneButton.enabled = _selectedAssets.count;
-    self.topBar.numberButton.hidden = !_selectedAssets.count;
-    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
-    
-    self.bottomBar.previewButton.enabled = _selectedAssets.count;
+//    // 是否显示 cell 的 maskview
+//    countOverflow =  _selectedAssets.count >= 9;
+//    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+//
+//    // topbar 和 bottombar 联动
+//    self.topBar.doneButton.enabled = _selectedAssets.count;
+//    self.topBar.numberButton.hidden = !_selectedAssets.count;
+//    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
+//
+//    self.bottomBar.previewButton.enabled = _selectedAssets.count;
     
 }
 
@@ -122,6 +125,7 @@ UITableViewDataSource
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// TODO: 图片选择完成,dismiss控制器,传出数据
 - (void)doneButtonAction:(UIButton *)button
 {
     
@@ -170,6 +174,48 @@ UITableViewDataSource
     }
 }
 
+// TODO: 用户预览功能
+- (void)previewButtonAction:(id)sender {
+    
+    FYImagePrivewController *previewController = [FYImagePrivewController new];
+    previewController.assets = _selectedAssets;
+    previewController.originalSelectedAssets = _selectedAssets;
+    previewController.maxCount = self.maxCount;
+    
+    __weak typeof(self) weakSelf = self;
+    [previewController setupCompleteBlock:^(NSArray *selectedAssets) {
+        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
+        [weakSelf reloadCollectionViewData];
+    }];
+    [self presentViewController:previewController animated:YES completion:nil];
+    
+}
+
+#pragma mark - 数据源刷新
+- (void)reloadCollectionViewData {
+    
+    //// 是否显示 cell 的 maskview
+    countOverflow =  _selectedAssets.count >= 9;
+    
+    //// topbar 选中图片数字和title颜色
+    self.topBar.doneButton.enabled = _selectedAssets.count;
+    self.topBar.numberButton.hidden = !_selectedAssets.count;
+    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
+    
+    //// bottomBar `预览` 按钮交互状态
+    self.bottomBar.previewButton.enabled = _selectedAssets.count;
+    
+    //// 刷新 collectionView
+    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+
+}
+
+// TODO: 刷新胶卷列表
+- (void)reloadTableViewData{
+    
+}
+
+
 #pragma mark - Delegate and DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -199,8 +245,15 @@ UITableViewDataSource
 {
     FYImagePrivewController *previewController = [FYImagePrivewController new];
     previewController.assets = _assets;
-    previewController.selectedAssets = _selectedAssets;
+    previewController.originalSelectedAssets = _selectedAssets;
     previewController.selectIndexPath = indexPath;
+    previewController.maxCount = self.maxCount;
+    
+    __weak typeof(self) weakSelf = self;
+    [previewController setupCompleteBlock:^(NSArray *selectedAssets) {
+        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
+        [weakSelf reloadCollectionViewData];
+    }];
     [self presentViewController:previewController animated:YES completion:nil];
 }
 
@@ -365,7 +418,7 @@ UITableViewDataSource
     PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
     [cachingImageManager startCachingImagesForAssets:cacheAssets targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
     
-    [self.collectionView reloadData];
+    [self reloadCollectionViewData];
     
 }
 
@@ -490,6 +543,7 @@ UITableViewDataSource
 {
     if (!_bottomBar) {
         _bottomBar = [PickerBottomBar new];
+        [_bottomBar.previewButton addTarget:self action:@selector(previewButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomBar;
 }
