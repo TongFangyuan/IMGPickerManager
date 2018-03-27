@@ -418,7 +418,7 @@ UITableViewDataSource
     PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
     [cachingImageManager startCachingImagesForAssets:cacheAssets targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
     
-    [self reloadCollectionViewData];
+    [self.collectionView reloadData];
     
 }
 

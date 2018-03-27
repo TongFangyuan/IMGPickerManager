@@ -14,6 +14,25 @@
 {
     if (self = [super initWithFrame:frame]) {
         
+        UIView *titleView = [UIView new];
+        [self addSubview:titleView];
+        _titleView = titleView;
+        
+        UILabel *titleLabel = [UILabel new];
+        titleLabel.font = [UIFont boldSystemFontOfSize:17.f];
+        titleLabel.text = @"相机胶卷";
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        [_titleView addSubview:titleLabel];
+        _titleLabel = titleLabel;
+        
+        UILabel *tipsLabel = [UILabel new];
+        tipsLabel.font = [UIFont boldSystemFontOfSize:10.f];
+        tipsLabel.text = @"轻触更改相册";
+        tipsLabel.textAlignment = NSTextAlignmentCenter;
+        [_titleView addSubview:tipsLabel];
+        _tipsLabel = tipsLabel;
+        
+        
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closedButton setImage:[UIImage imageNamed:@"ic_photo_close"] forState:UIControlStateNormal];
 //        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -40,24 +59,6 @@
         numberButton.hidden = YES;
         [self addSubview:numberButton];
         _numberButton = numberButton;
-        
-        UIView *titleView = [UIView new];
-        [self addSubview:titleView];
-        _titleView = titleView;
-        
-        UILabel *titleLabel = [UILabel new];
-        titleLabel.font = [UIFont boldSystemFontOfSize:17.f];
-        titleLabel.text = @"相机胶卷";
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_titleView addSubview:titleLabel];
-        _titleLabel = titleLabel;
-        
-        UILabel *tipsLabel = [UILabel new];
-        tipsLabel.font = [UIFont boldSystemFontOfSize:10.f];
-        tipsLabel.text = @"轻触更改相册";
-        tipsLabel.textAlignment = NSTextAlignmentCenter;
-        [_titleView addSubview:tipsLabel];
-        _tipsLabel = tipsLabel;
         
         
         UIImageView *line = [UIImageView new];
@@ -91,8 +92,8 @@
         [self addConstraints:@[constraint9,constraint10,constraint11,constraint12]];
         
         // title view
-        NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:closedButton attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
-        NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:numberButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+        NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:closedButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+        NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
         titleView.translatesAutoresizingMaskIntoConstraints = NO;
