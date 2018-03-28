@@ -6,8 +6,8 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYAssetModel.h"
+#import "IMGAsset.h"
 
-@implementation FYAssetModel
+@implementation IMGAsset
 
 @end

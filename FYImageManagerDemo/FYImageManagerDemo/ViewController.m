@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#import "FYImagePickerController.h"
+#import "IMGPickerTool.h"
+
 
 @interface ViewController ()
 
@@ -31,7 +32,15 @@
 
 - (IBAction)takePhotoAction:(id)sender {
     
-    [self presentViewController:[FYImagePickerController new] animated:YES completion:nil];
+    [IMGPickerTool start:^(NSArray *result, NSError *error) {
+        if (!error) {
+            NSLog(@"%@",result);
+        }else {
+            NSLog(@"%@",error.localizedDescription);
+        }
+    }];
+    
+//    [self presentViewController:[IMGPickerController new] animated:YES completion:nil];
 }
 
 @end

@@ -20,21 +20,30 @@ UICollectionViewDataSource
     BOOL isCollectionViewTop;
 }
 
+@property (nonatomic,assign) BOOL isNeedScroll;//defaulf is YES
 @property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic,strong) OperationView *operationView;
 
 /// 选中的资源
-@property (nonatomic,strong) NSMutableArray<FYAssetModel *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<IMGAsset *> *selectedAssets;
+
+@property (nonatomic,copy) IMGCompleteBlock completeBlock;
+@property (nonatomic,copy) PreviewCancelBlock cancelBlock;
 
 @end
 
 @implementation FYImagePrivewController
 
 #pragma mark - public
-- (void)setupCompleteBlock:(void(^)(NSArray *selectedAssets))block {
-    self.complete = block;
+- (void)setupCompleteBlock:(IMGCompleteBlock)block{
+    self.completeBlock = block;
 }
+
+- (void)setupCancelBlock:(PreviewCancelBlock)block{
+    self.cancelBlock = block;
+}
+
 
 #pragma mark - private
 - (void)viewDidLoad {
@@ -43,16 +52,18 @@ UICollectionViewDataSource
     [self initSubviews];
     
     /// 设置选中的资源
+    self.isNeedScroll = YES;
     self.selectedAssets = [NSMutableArray arrayWithArray:self.originalSelectedAssets];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    // FIXME: 点击选中按钮图片会偏移bug
-    if (self.selectIndexPath) {
+    
+    if (self.selectIndexPath && self.isNeedScroll) {
         [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+        [self showCellAtIndexPath:self.selectIndexPath];
     }
-    [self showCellAtIndexPath:self.selectIndexPath];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +84,7 @@ UICollectionViewDataSource
 
 - (void)showCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYAssetModel *asset = self.assets[indexPath.item];
+    IMGAsset *asset = self.assets[indexPath.item];
     
     // 底部按钮选中状态
     [self.operationView setButtonSelected:[self.selectedAssets containsObject:asset]];
@@ -89,10 +100,12 @@ UICollectionViewDataSource
 
 - (void)userClickedSelectedButton:(UIButton *)button
 {
-    FYAssetModel *asset = self.assets[self.selectIndexPath.item];
+    self.isNeedScroll = NO;
     
-    if ( (self.selectedAssets.count>=self.maxCount) && ![self.selectedAssets containsObject:asset]) {
-        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)self.maxCount];
+    IMGAsset *asset = self.assets[self.selectIndexPath.item];
+    
+    if ( (self.selectedAssets.count>=[IMGConfiguration sharedInstance].maxCount) && ![self.selectedAssets containsObject:asset]) {
+        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfiguration sharedInstance].maxCount];
         [self fy_showTitle:@"提示" message:msg];
         return;
     }
@@ -112,7 +125,7 @@ UICollectionViewDataSource
 - (void)closedButtonAction:(UIButton *)button
 {
     //// 设置选中状态
-    [self.assets enumerateObjectsUsingBlock:^(FYAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.assets enumerateObjectsUsingBlock:^(IMGAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([self.selectedAssets containsObject:obj]) {
             [obj setSelect:YES];
         } else {
@@ -121,8 +134,8 @@ UICollectionViewDataSource
     }];
     
     //// 数据回调
-    if (self.complete) {
-        self.complete(self.selectedAssets);
+    if (self.cancelBlock) {
+        self.cancelBlock(self.selectedAssets);
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -131,21 +144,7 @@ UICollectionViewDataSource
 // TODO:完成功能
 - (void)doneButtonAction:(UIButton *)button
 {
-//    //// 设置选中状态
-//    [self.assets enumerateObjectsUsingBlock:^(FYAssetModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if ([self.selectedAssets containsObject:obj]) {
-//            [obj setSelect:YES];
-//        } else {
-//            [obj setSelect:NO];
-//        }
-//    }];
-//    
-//    //// 数据回调
-//    if (self.complete) {
-//        self.complete(self.selectedAssets);
-//    }
-//    
-//    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 #pragma mark - property
@@ -242,7 +241,7 @@ UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
-    FYAssetModel *asset = _assets[indexPath.item];
+    IMGAsset *asset = _assets[indexPath.item];
     cell.model = asset;
     return cell;
 }

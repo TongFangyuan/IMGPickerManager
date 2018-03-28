@@ -13,7 +13,7 @@
 @implementation FYPrivewCell
 
 
-- (void)setModel:(FYAssetModel *)model
+- (void)setModel:(IMGAsset *)model
 {
     _model = model;
     __weak typeof(self) weakSelf = self;

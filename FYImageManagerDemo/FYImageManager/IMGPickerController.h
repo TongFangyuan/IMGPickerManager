@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IMGBlockDefine.h"
 
-@interface FYImagePickerController : UIViewController
+@interface IMGPickerController : UIViewController
 
-/// 最多能选几张图片,默认9张
-@property (nonatomic,assign) NSInteger maxCount;
+- (void)setupCompleteBlock:(IMGCompleteBlock)block;
 
 @end

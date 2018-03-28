@@ -51,7 +51,7 @@
     return self;
 }
  
-- (void)setModel:(FYAssetModel *)asset
+- (void)setModel:(IMGAsset *)asset
 {
     _model = asset;
     

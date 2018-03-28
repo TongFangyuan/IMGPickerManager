@@ -92,13 +92,12 @@
         [self addConstraints:@[constraint9,constraint10,constraint11,constraint12]];
         
         // title view
-        NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:closedButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
-        NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+        NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:15.0];
+        NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-15.0];
         NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
         NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:titleView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
         titleView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addConstraints:@[constraint13,constraint14,constraint15,constraint16]];
-        
         
         // titleLabel
         NSLayoutConstraint *constraint17 = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleView attribute:NSLayoutAttributeTop multiplier:1.0 constant:10.f];

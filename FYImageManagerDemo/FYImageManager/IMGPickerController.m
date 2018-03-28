@@ -6,8 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
+#import "IMGConfiguration.h"
 
-#import "FYImagePickerController.h"
+#import "IMGPickerController.h"
 #import "FYThumbCell.h"
 #import "FYImageFlowLayout.h"
 #import "PickerTopBar.h"
@@ -15,7 +16,8 @@
 #import "FYAlbumsCell.h"
 #import "FYImagePrivewController.h"
 
-@interface FYImagePickerController ()
+
+@interface IMGPickerController ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
@@ -42,9 +44,9 @@ UITableViewDataSource
 @property (nonatomic,strong) PickerBottomBar *bottomBar;
 
 /// FYAsset 资源数组
-@property (nonatomic,strong) NSArray<FYAssetModel *> *assets;
+@property (nonatomic,strong) NSArray<IMGAsset *> *assets;
 /// 选中的 FYAsset
-@property (nonatomic,strong) NSMutableArray<FYAssetModel *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<IMGAsset *> *selectedAssets;
 /// PHAssetCollection 资源数组
 @property (nonatomic,strong) NSArray<PHAssetCollection *> *assetCollections;
 /// 当前选中的 PHAssetCollection
@@ -53,16 +55,25 @@ UITableViewDataSource
 /// 动态约束
 @property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
 
+@property (nonatomic,copy) IMGCompleteBlock completeBlock;
+
 @end
 
-@implementation FYImagePickerController
+@implementation IMGPickerController
+
+#pragma mark - public
+- (void)setupCompleteBlock:(IMGCompleteBlock)block{
+    self.completeBlock = block;
+}
+
+
+#pragma mark - private
 
 - (instancetype)init
 {
     if (self = [super init]) {
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.modalPresentationStyle = UIModalPresentationOverFullScreen;
-        _maxCount = 9;
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
         _assetCollections = [NSArray array];
@@ -74,7 +85,7 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     [self setNeedsStatusBarAppearanceUpdate];
    
     [self initSubviews];
@@ -91,7 +102,7 @@ UITableViewDataSource
 - (void)cellButtonClicked:(UIButton *)button
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.tag inSection:0];
-    FYAssetModel *asset = _assets[indexPath.item];
+    IMGAsset *asset = _assets[indexPath.item];
     asset.select = !asset.select;
     
     FYThumbCell *cell = (FYThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
@@ -117,7 +128,8 @@ UITableViewDataSource
 
 - (void)cellTapMaskView:(UITapGestureRecognizer *)tap
 {
-    NSLog(@"最多只能选择%ld张照片",(long)_maxCount);
+    
+    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfiguration sharedInstance].maxCount);
 }
 
 - (void)closedButtonAction:(UIButton *)button
@@ -180,11 +192,12 @@ UITableViewDataSource
     FYImagePrivewController *previewController = [FYImagePrivewController new];
     previewController.assets = _selectedAssets;
     previewController.originalSelectedAssets = _selectedAssets;
-    previewController.maxCount = self.maxCount;
+    
+    [previewController setupCompleteBlock:self.completeBlock];
     
     __weak typeof(self) weakSelf = self;
-    [previewController setupCompleteBlock:^(NSArray *selectedAssets) {
-        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
+    [previewController setupCancelBlock:^(NSArray<IMGAsset *> *asstes) {
+        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
     [self presentViewController:previewController animated:YES completion:nil];
@@ -226,7 +239,7 @@ UITableViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
-    FYAssetModel *asset = [_assets objectAtIndex:indexPath.item];
+    IMGAsset *asset = [_assets objectAtIndex:indexPath.item];
     cell.model = asset;
     
     cell.button.tag = indexPath.row;
@@ -247,11 +260,11 @@ UITableViewDataSource
     previewController.assets = _assets;
     previewController.originalSelectedAssets = _selectedAssets;
     previewController.selectIndexPath = indexPath;
-    previewController.maxCount = self.maxCount;
-    
+    [previewController setupCompleteBlock:self.completeBlock];
+
     __weak typeof(self) weakSelf = self;
-    [previewController setupCompleteBlock:^(NSArray *selectedAssets) {
-        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
+    [previewController setupCancelBlock:^(NSArray<IMGAsset *> *asstes) {
+        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
     [self presentViewController:previewController animated:YES completion:nil];
@@ -404,10 +417,10 @@ UITableViewDataSource
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
     PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
     
-    NSMutableArray<FYAssetModel *> *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
+    NSMutableArray<IMGAsset *> *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
     NSMutableArray<PHAsset *> *cacheAssets = [NSMutableArray arrayWithCapacity:result.count];
     [result enumerateObjectsUsingBlock:^(PHAsset  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        FYAssetModel *asset = [FYAssetModel new];
+        IMGAsset *asset = [IMGAsset new];
         asset.asset = obj;
         [tempAssets addObject:asset];
         [cacheAssets addObject:obj];

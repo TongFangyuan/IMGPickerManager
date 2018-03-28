@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
 
-@interface FYAssetModel : NSObject
+@interface IMGAsset : NSObject
 
 @property (nonatomic,strong) PHAsset *asset;
 @property (nonatomic,assign) BOOL select;

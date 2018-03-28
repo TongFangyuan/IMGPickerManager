@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FYAssetModel.h"
+#import "IMGAsset.h"
 
 @interface FYThumbCell : UICollectionViewCell
 
-@property (nonatomic,strong) FYAssetModel *model;
+@property (nonatomic,strong) IMGAsset *model;
 @property (nonatomic,strong) UIImageView *thumbView;
 @property (nonatomic,strong) UIButton *button;
 @property (nonatomic,strong) UIImageView *maskView;
