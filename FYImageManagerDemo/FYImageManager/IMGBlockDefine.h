@@ -11,4 +11,6 @@
 
 typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
 
+#define IOS9 NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_9_0
+
 #endif /* IMGBlockDefine_h */

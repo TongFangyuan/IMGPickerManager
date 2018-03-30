@@ -23,7 +23,7 @@
  *
  *  @param title   标题
  *  @param message 提示信息
- *  @param handler 确认按钮回调
+ *  @param confirmHandler 确认按钮回调
  */
 - (void)fy_showTitle:(NSString *)title message:(NSString *)message confirmHandler:(void(^)(void))confirmHandler;
 /**

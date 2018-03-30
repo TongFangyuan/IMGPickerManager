@@ -361,7 +361,7 @@ UITableViewDataSource
 {
     
     PHFetchOptions *options = [PHFetchOptions new];
-    if (@available(iOS 9.0,*)) {
+    if (IOS9) {
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:NO]];
@@ -381,7 +381,7 @@ UITableViewDataSource
     }];
     
     // 屏幕快照
-    if (@available(iOS 9.0, *)) {
+    if (IOS9) {
         PHFetchResult<PHAssetCollection *> *screenshots = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumScreenshots options:options];
         [screenshots enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [tempAssetCollections addObject:obj];
@@ -410,7 +410,7 @@ UITableViewDataSource
 - (void)fetchAssets
 {
     PHFetchOptions *options = [PHFetchOptions new];
-    if (@available(iOS 9.0,*)) {
+    if (IOS9) {
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];

@@ -40,6 +40,7 @@
 		842D6978206B92DB004923B5 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D6974206B92DB004923B5 /* UIImage+animatedGIF.m */; };
 		842D6979206B92DB004923B5 /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D6976206B92DB004923B5 /* UIViewController+FYAlert.m */; };
 		842D697C206B9505004923B5 /* IMGConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D697B206B9505004923B5 /* IMGConfiguration.m */; };
+		DA907564206E8D9C00AC9ED8 /* IMGMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907563206E8D9C00AC9ED8 /* IMGMediator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,8 @@
 		842D697B206B9505004923B5 /* IMGConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGConfiguration.m; sourceTree = "<group>"; };
 		842D697D206B98FB004923B5 /* IMGBlockDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGBlockDefine.h; sourceTree = "<group>"; };
 		842D697E206B9A67004923B5 /* IMGPickerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPickerManager.h; sourceTree = "<group>"; };
+		DA907562206E8D9C00AC9ED8 /* IMGMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGMediator.h; sourceTree = "<group>"; };
+		DA907563206E8D9C00AC9ED8 /* IMGMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGMediator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +233,7 @@
 				24CC84F11FBAC520009DE712 /* PickerBottomBar.m */,
 				24E172621FB6F812004267BC /* FYImageFlowLayout.h */,
 				24E172631FB6F812004267BC /* FYImageFlowLayout.m */,
+				DA907561206E8D9C00AC9ED8 /* Mediator */,
 				842D6970206B92DB004923B5 /* UIKit */,
 				842D6951206B9267004923B5 /* Resources */,
 			);
@@ -264,6 +268,15 @@
 				842D6976206B92DB004923B5 /* UIViewController+FYAlert.m */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		DA907561206E8D9C00AC9ED8 /* Mediator */ = {
+			isa = PBXGroup;
+			children = (
+				DA907562206E8D9C00AC9ED8 /* IMGMediator.h */,
+				DA907563206E8D9C00AC9ED8 /* IMGMediator.m */,
+			);
+			path = Mediator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +431,7 @@
 				842D6977206B92DB004923B5 /* PHImageManager+FetchImage.m in Sources */,
 				24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */,
 				24E172611FB6F7D3004267BC /* IMGPickerController.m in Sources */,
+				DA907564206E8D9C00AC9ED8 /* IMGMediator.m in Sources */,
 				842D6979206B92DB004923B5 /* UIViewController+FYAlert.m in Sources */,
 				241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,

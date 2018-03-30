@@ -11,10 +11,6 @@
 @implementation PHImageManager (FetchImage)
 
 + (void)fetchImageForAsset:(PHAsset *)asset handler:(void(^)(NSData *imageData,NSDictionary *info))handler{
-
-    if (@available(iOS 11.0, *)) {
-        NSLog(@"%ld",(long)asset.playbackStyle);
-    }
     
     PHImageRequestOptions *options = [PHImageRequestOptions new];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
