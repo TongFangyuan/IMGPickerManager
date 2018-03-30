@@ -26,24 +26,13 @@ UICollectionViewDataSource
 @property (nonatomic,strong) OperationView *operationView;
 
 /// 选中的资源
-@property (nonatomic,strong) NSMutableArray<IMGAsset *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<PHAsset *> *selectedAssets;
 
-@property (nonatomic,copy) IMGCompleteBlock completeBlock;
-@property (nonatomic,copy) PreviewCancelBlock cancelBlock;
+
 
 @end
 
 @implementation FYImagePrivewController
-
-#pragma mark - public
-- (void)setupCompleteBlock:(IMGCompleteBlock)block{
-    self.completeBlock = block;
-}
-
-- (void)setupCancelBlock:(PreviewCancelBlock)block{
-    self.cancelBlock = block;
-}
-
 
 #pragma mark - private
 - (void)viewDidLoad {
@@ -84,7 +73,7 @@ UICollectionViewDataSource
 
 - (void)showCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    IMGAsset *asset = self.assets[indexPath.item];
+    PHAsset *asset = self.assets[indexPath.item];
     
     // 底部按钮选中状态
     [self.operationView setButtonSelected:[self.selectedAssets containsObject:asset]];
@@ -102,7 +91,7 @@ UICollectionViewDataSource
 {
     self.isNeedScroll = NO;
     
-    IMGAsset *asset = self.assets[self.selectIndexPath.item];
+    PHAsset *asset = self.assets[self.selectIndexPath.item];
     
     if ( (self.selectedAssets.count>=[IMGConfiguration sharedInstance].maxCount) && ![self.selectedAssets containsObject:asset]) {
         NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfiguration sharedInstance].maxCount];
@@ -125,7 +114,7 @@ UICollectionViewDataSource
 - (void)closedButtonAction:(UIButton *)button
 {
     //// 设置选中状态
-    [self.assets enumerateObjectsUsingBlock:^(IMGAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([self.selectedAssets containsObject:obj]) {
             [obj setSelect:YES];
         } else {
@@ -241,7 +230,7 @@ UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
-    IMGAsset *asset = _assets[indexPath.item];
+    PHAsset *asset = _assets[indexPath.item];
     cell.model = asset;
     return cell;
 }

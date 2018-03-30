@@ -13,11 +13,11 @@
 @implementation FYPrivewCell
 
 
-- (void)setModel:(IMGAsset *)model
+- (void)setModel:(PHAsset *)model
 {
     _model = model;
     __weak typeof(self) weakSelf = self;
-    [PHImageManager fetchImageForAsset:model.asset handler:^(NSData *imageData, NSDictionary *info) {
+    [PHImageManager fetchImageForAsset:model handler:^(NSData *imageData, NSDictionary *info) {
         UIImage *result = [UIImage imageWithData:imageData];
         CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
         CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;

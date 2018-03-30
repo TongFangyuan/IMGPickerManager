@@ -9,8 +9,10 @@
 #ifndef IMGBlockDefine_h
 #define IMGBlockDefine_h
 
-typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
 
 #define IOS9 NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_9_0
+
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #endif /* IMGBlockDefine_h */

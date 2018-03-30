@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IMGAsset.h"
+#import "PHAsset+IMGProperty.h"
 
 @interface FYPrivewCell : UICollectionViewCell
 <
 UIScrollViewDelegate
 >
 
-@property (nonatomic,strong) IMGAsset *model;
+@property (nonatomic,strong) PHAsset *model;
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIImageView *iconView;
 

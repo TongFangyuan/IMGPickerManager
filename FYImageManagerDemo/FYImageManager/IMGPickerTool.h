@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "IMGPickerManager.h"
 
+typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
+
 @interface IMGPickerTool : NSObject
 
 + (void)start:(IMGCompleteBlock)completeBlock;

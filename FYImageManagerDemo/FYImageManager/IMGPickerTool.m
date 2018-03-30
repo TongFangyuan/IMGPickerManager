@@ -14,7 +14,7 @@
 + (void)start:(IMGCompleteBlock)completeBlock {
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;
     IMGPickerController *picker=[[IMGPickerController alloc] init];
-    [picker setupCompleteBlock:completeBlock];
+    [picker setCompleteBlock:completeBlock];
     [rootCtr presentViewController:picker animated:YES completion:nil];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "FYThumbCell.h"
+#import "IMGBlockDefine.h"
 
 @interface FYThumbCell()
 
@@ -51,14 +52,12 @@
     return self;
 }
  
-- (void)setModel:(IMGAsset *)asset
+- (void)setModel:(PHAsset *)asset
 {
     _model = asset;
     
-    PHAsset *phAsset = asset.asset;
-    
     // 图片
-    _imageRequsetID = [[PHImageManager defaultManager] requestImageForAsset:phAsset targetSize:CGSizeMake(ScreenWidth/[UIScreen mainScreen].scale, ScreenHeight/[UIScreen mainScreen].scale) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    _imageRequsetID = [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(ScreenWidth/[UIScreen mainScreen].scale, ScreenHeight/[UIScreen mainScreen].scale) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         _thumbView.image = result;
         NSLog(@"%@",info);
     }];

@@ -7,6 +7,7 @@
 //
 
 #import "IMGConfiguration.h"
+#import "IMGDataTool.h"
 
 #import "IMGPickerController.h"
 #import "FYThumbCell.h"
@@ -14,9 +15,9 @@
 #import "PickerTopBar.h"
 #import "PickerBottomBar.h"
 #import "FYAlbumsCell.h"
+
+
 #import "FYImagePrivewController.h"
-
-
 @interface IMGPickerController ()
 <
 UICollectionViewDelegate,
@@ -44,9 +45,9 @@ UITableViewDataSource
 @property (nonatomic,strong) PickerBottomBar *bottomBar;
 
 /// FYAsset 资源数组
-@property (nonatomic,strong) NSArray<IMGAsset *> *assets;
+@property (nonatomic,strong) NSArray<PHAsset *> *assets;
 /// 选中的 FYAsset
-@property (nonatomic,strong) NSMutableArray<IMGAsset *> *selectedAssets;
+@property (nonatomic,strong) NSMutableArray<PHAsset *> *selectedAssets;
 /// PHAssetCollection 资源数组
 @property (nonatomic,strong) NSArray<PHAssetCollection *> *assetCollections;
 /// 当前选中的 PHAssetCollection
@@ -55,17 +56,10 @@ UITableViewDataSource
 /// 动态约束
 @property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
 
-@property (nonatomic,copy) IMGCompleteBlock completeBlock;
 
 @end
 
 @implementation IMGPickerController
-
-#pragma mark - public
-- (void)setupCompleteBlock:(IMGCompleteBlock)block{
-    self.completeBlock = block;
-}
-
 
 #pragma mark - private
 
@@ -102,7 +96,7 @@ UITableViewDataSource
 - (void)cellButtonClicked:(UIButton *)button
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.tag inSection:0];
-    IMGAsset *asset = _assets[indexPath.item];
+    PHAsset *asset = _assets[indexPath.item];
     asset.select = !asset.select;
     
     FYThumbCell *cell = (FYThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
@@ -193,10 +187,10 @@ UITableViewDataSource
     previewController.assets = _selectedAssets;
     previewController.originalSelectedAssets = _selectedAssets;
     
-    [previewController setupCompleteBlock:self.completeBlock];
+    [previewController setCompleteBlock:self.completeBlock];
     
     __weak typeof(self) weakSelf = self;
-    [previewController setupCancelBlock:^(NSArray<IMGAsset *> *asstes) {
+    [previewController setCancelBlock:^(NSArray<PHAsset *> *asstes) {
         weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
@@ -239,7 +233,7 @@ UITableViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FYThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
-    IMGAsset *asset = [_assets objectAtIndex:indexPath.item];
+    PHAsset *asset = [_assets objectAtIndex:indexPath.item];
     cell.model = asset;
     
     cell.button.tag = indexPath.row;
@@ -260,10 +254,10 @@ UITableViewDataSource
     previewController.assets = _assets;
     previewController.originalSelectedAssets = _selectedAssets;
     previewController.selectIndexPath = indexPath;
-    [previewController setupCompleteBlock:self.completeBlock];
+    [previewController setCompleteBlock:self.completeBlock];
 
     __weak typeof(self) weakSelf = self;
-    [previewController setupCancelBlock:^(NSArray<IMGAsset *> *asstes) {
+    [previewController setCancelBlock:^(NSArray<PHAsset *> *asstes) {
         weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
@@ -360,41 +354,7 @@ UITableViewDataSource
 - (void)fetchAssetCollections
 {
     
-    PHFetchOptions *options = [PHFetchOptions new];
-    if (IOS9) {
-        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-    }
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:NO]];
-    
-    NSMutableArray<PHAssetCollection *> *tempAssetCollections = [NSMutableArray array];
-    
-    // 相机胶卷
-    PHFetchResult<PHAssetCollection *> *cameraResults = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
-    [cameraResults enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [tempAssetCollections addObject:obj];
-    }];
-    
-    // 最近添加
-    PHFetchResult<PHAssetCollection *> *recentlyAddeds = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumRecentlyAdded options:options];
-    [recentlyAddeds enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [tempAssetCollections addObject:obj];
-    }];
-    
-    // 屏幕快照
-    if (IOS9) {
-        PHFetchResult<PHAssetCollection *> *screenshots = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumScreenshots options:options];
-        [screenshots enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tempAssetCollections addObject:obj];
-        }];
-    }
-    
-    // 我的相册
-    PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
-    [userLibrary enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [tempAssetCollections addObject:obj];
-    }];
-    
-    _assetCollections = [NSArray arrayWithArray:tempAssetCollections];
+    _assetCollections = [IMGDataTool fetchAssetCollections];
     _selectedAssetCollection = _assetCollections.firstObject;
     selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.topBar.tipsLabel.text = _selectedAssetCollection.localizedTitle;
@@ -409,27 +369,13 @@ UITableViewDataSource
 /// 获取某个相册的照片
 - (void)fetchAssets
 {
-    PHFetchOptions *options = [PHFetchOptions new];
-    if (IOS9) {
-        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-    }
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
-    PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsInAssetCollection:_selectedAssetCollection options:options];
+    NSArray *results = [IMGDataTool fetchAssetsWithAssetCollection:self.selectedAssetCollection];
     
-    NSMutableArray<IMGAsset *> *tempAssets = [NSMutableArray arrayWithCapacity:result.count];
-    NSMutableArray<PHAsset *> *cacheAssets = [NSMutableArray arrayWithCapacity:result.count];
-    [result enumerateObjectsUsingBlock:^(PHAsset  * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        IMGAsset *asset = [IMGAsset new];
-        asset.asset = obj;
-        [tempAssets addObject:asset];
-        [cacheAssets addObject:obj];
-    }];
-    _assets = [NSArray arrayWithArray:tempAssets];
-    
+    self.assets = [NSArray arrayWithArray:results];
+
     // 缓存图片
     PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
-    [cachingImageManager startCachingImagesForAssets:cacheAssets targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
+    [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
     
     [self.collectionView reloadData];
     
@@ -492,7 +438,8 @@ UITableViewDataSource
 
 }
 
-//MARK:  property
+//MARK:
+//MARK:  setter and getter
 - (UIView *)contentView
 {
     if (!_contentView) {

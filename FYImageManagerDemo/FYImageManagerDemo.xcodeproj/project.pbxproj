@@ -12,7 +12,6 @@
 		248C65A81FBD3D1400CFB7DE /* FYPrivewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 248C65A71FBD3D1400CFB7DE /* FYPrivewCell.m */; };
 		248C65AF1FBD79D300CFB7DE /* OperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248C65AE1FBD79D300CFB7DE /* OperationView.m */; };
 		24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D31FB96729009DE712 /* FYThumbCell.m */; };
-		24CC84D71FB97293009DE712 /* IMGAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D61FB97293009DE712 /* IMGAsset.m */; };
 		24CC84DA1FBA9146009DE712 /* PickerTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84D91FBA9146009DE712 /* PickerTopBar.m */; };
 		24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CC84F11FBAC520009DE712 /* PickerBottomBar.m */; };
 		24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E1722C1FB6F228004267BC /* AppDelegate.m */; };
@@ -36,11 +35,13 @@
 		842D6963206B9267004923B5 /* ic_photo_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842D6959206B9267004923B5 /* ic_photo_close@3x.png */; };
 		842D6964206B9267004923B5 /* mask_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842D695A206B9267004923B5 /* mask_gray@2x.png */; };
 		842D6965206B9267004923B5 /* mask_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 842D695B206B9267004923B5 /* mask_gray@3x.png */; };
-		842D6977206B92DB004923B5 /* PHImageManager+FetchImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D6972206B92DB004923B5 /* PHImageManager+FetchImage.m */; };
-		842D6978206B92DB004923B5 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D6974206B92DB004923B5 /* UIImage+animatedGIF.m */; };
-		842D6979206B92DB004923B5 /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D6976206B92DB004923B5 /* UIViewController+FYAlert.m */; };
 		842D697C206B9505004923B5 /* IMGConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D697B206B9505004923B5 /* IMGConfiguration.m */; };
 		DA907564206E8D9C00AC9ED8 /* IMGMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907563206E8D9C00AC9ED8 /* IMGMediator.m */; };
+		DA90756C206E8F4500AC9ED8 /* PHImageManager+FetchImage.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907567206E8F4500AC9ED8 /* PHImageManager+FetchImage.m */; };
+		DA90756D206E8F4500AC9ED8 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907569206E8F4500AC9ED8 /* UIImage+animatedGIF.m */; };
+		DA90756E206E8F4500AC9ED8 /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = DA90756B206E8F4500AC9ED8 /* UIViewController+FYAlert.m */; };
+		DA907571206E8F8E00AC9ED8 /* PHAsset+IMGProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907570206E8F8E00AC9ED8 /* PHAsset+IMGProperty.m */; };
+		DA907574206E9ADF00AC9ED8 /* IMGDataTool.m in Sources */ = {isa = PBXBuildFile; fileRef = DA907573206E9ADF00AC9ED8 /* IMGDataTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +72,6 @@
 		248C65AE1FBD79D300CFB7DE /* OperationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OperationView.m; sourceTree = "<group>"; };
 		24CC84D21FB96729009DE712 /* FYThumbCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FYThumbCell.h; sourceTree = "<group>"; };
 		24CC84D31FB96729009DE712 /* FYThumbCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FYThumbCell.m; sourceTree = "<group>"; };
-		24CC84D51FB97293009DE712 /* IMGAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGAsset.h; sourceTree = "<group>"; };
-		24CC84D61FB97293009DE712 /* IMGAsset.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGAsset.m; sourceTree = "<group>"; };
 		24CC84D81FBA9146009DE712 /* PickerTopBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerTopBar.h; sourceTree = "<group>"; };
 		24CC84D91FBA9146009DE712 /* PickerTopBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerTopBar.m; sourceTree = "<group>"; };
 		24CC84F01FBAC520009DE712 /* PickerBottomBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerBottomBar.h; sourceTree = "<group>"; };
@@ -109,18 +108,22 @@
 		842D6959206B9267004923B5 /* ic_photo_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@3x.png"; sourceTree = "<group>"; };
 		842D695A206B9267004923B5 /* mask_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask_gray@2x.png"; sourceTree = "<group>"; };
 		842D695B206B9267004923B5 /* mask_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mask_gray@3x.png"; sourceTree = "<group>"; };
-		842D6971206B92DB004923B5 /* PHImageManager+FetchImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHImageManager+FetchImage.h"; sourceTree = "<group>"; };
-		842D6972206B92DB004923B5 /* PHImageManager+FetchImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHImageManager+FetchImage.m"; sourceTree = "<group>"; };
-		842D6973206B92DB004923B5 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
-		842D6974206B92DB004923B5 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
-		842D6975206B92DB004923B5 /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
-		842D6976206B92DB004923B5 /* UIViewController+FYAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FYAlert.m"; sourceTree = "<group>"; };
 		842D697A206B9505004923B5 /* IMGConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGConfiguration.h; sourceTree = "<group>"; };
 		842D697B206B9505004923B5 /* IMGConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGConfiguration.m; sourceTree = "<group>"; };
 		842D697D206B98FB004923B5 /* IMGBlockDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGBlockDefine.h; sourceTree = "<group>"; };
 		842D697E206B9A67004923B5 /* IMGPickerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPickerManager.h; sourceTree = "<group>"; };
 		DA907562206E8D9C00AC9ED8 /* IMGMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGMediator.h; sourceTree = "<group>"; };
 		DA907563206E8D9C00AC9ED8 /* IMGMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGMediator.m; sourceTree = "<group>"; };
+		DA907566206E8F4500AC9ED8 /* PHImageManager+FetchImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHImageManager+FetchImage.h"; sourceTree = "<group>"; };
+		DA907567206E8F4500AC9ED8 /* PHImageManager+FetchImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHImageManager+FetchImage.m"; sourceTree = "<group>"; };
+		DA907568206E8F4500AC9ED8 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		DA907569206E8F4500AC9ED8 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		DA90756A206E8F4500AC9ED8 /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
+		DA90756B206E8F4500AC9ED8 /* UIViewController+FYAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FYAlert.m"; sourceTree = "<group>"; };
+		DA90756F206E8F8E00AC9ED8 /* PHAsset+IMGProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+IMGProperty.h"; sourceTree = "<group>"; };
+		DA907570206E8F8E00AC9ED8 /* PHAsset+IMGProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+IMGProperty.m"; sourceTree = "<group>"; };
+		DA907572206E9ADF00AC9ED8 /* IMGDataTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGDataTool.h; sourceTree = "<group>"; };
+		DA907573206E9ADF00AC9ED8 /* IMGDataTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDataTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,14 +214,14 @@
 				842D697D206B98FB004923B5 /* IMGBlockDefine.h */,
 				842D694E206B8DFC004923B5 /* IMGPickerTool.h */,
 				842D694F206B8DFC004923B5 /* IMGPickerTool.m */,
+				DA907572206E9ADF00AC9ED8 /* IMGDataTool.h */,
+				DA907573206E9ADF00AC9ED8 /* IMGDataTool.m */,
 				842D697A206B9505004923B5 /* IMGConfiguration.h */,
 				842D697B206B9505004923B5 /* IMGConfiguration.m */,
 				24E1725F1FB6F7D3004267BC /* IMGPickerController.h */,
 				24E172601FB6F7D3004267BC /* IMGPickerController.m */,
 				241C51D31FBC4379008B2CC0 /* FYImagePrivewController.h */,
 				241C51D41FBC4379008B2CC0 /* FYImagePrivewController.m */,
-				24CC84D51FB97293009DE712 /* IMGAsset.h */,
-				24CC84D61FB97293009DE712 /* IMGAsset.m */,
 				24CC84D21FB96729009DE712 /* FYThumbCell.h */,
 				24CC84D31FB96729009DE712 /* FYThumbCell.m */,
 				241C51D01FBC19FD008B2CC0 /* FYAlbumsCell.h */,
@@ -234,7 +237,7 @@
 				24E172621FB6F812004267BC /* FYImageFlowLayout.h */,
 				24E172631FB6F812004267BC /* FYImageFlowLayout.m */,
 				DA907561206E8D9C00AC9ED8 /* Mediator */,
-				842D6970206B92DB004923B5 /* UIKit */,
+				DA907565206E8F4500AC9ED8 /* Category */,
 				842D6951206B9267004923B5 /* Resources */,
 			);
 			path = FYImageManager;
@@ -257,19 +260,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		842D6970206B92DB004923B5 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				842D6971206B92DB004923B5 /* PHImageManager+FetchImage.h */,
-				842D6972206B92DB004923B5 /* PHImageManager+FetchImage.m */,
-				842D6973206B92DB004923B5 /* UIImage+animatedGIF.h */,
-				842D6974206B92DB004923B5 /* UIImage+animatedGIF.m */,
-				842D6975206B92DB004923B5 /* UIViewController+FYAlert.h */,
-				842D6976206B92DB004923B5 /* UIViewController+FYAlert.m */,
-			);
-			path = UIKit;
-			sourceTree = "<group>";
-		};
 		DA907561206E8D9C00AC9ED8 /* Mediator */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +267,21 @@
 				DA907563206E8D9C00AC9ED8 /* IMGMediator.m */,
 			);
 			path = Mediator;
+			sourceTree = "<group>";
+		};
+		DA907565206E8F4500AC9ED8 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				DA907566206E8F4500AC9ED8 /* PHImageManager+FetchImage.h */,
+				DA907567206E8F4500AC9ED8 /* PHImageManager+FetchImage.m */,
+				DA907568206E8F4500AC9ED8 /* UIImage+animatedGIF.h */,
+				DA907569206E8F4500AC9ED8 /* UIImage+animatedGIF.m */,
+				DA90756A206E8F4500AC9ED8 /* UIViewController+FYAlert.h */,
+				DA90756B206E8F4500AC9ED8 /* UIViewController+FYAlert.m */,
+				DA90756F206E8F8E00AC9ED8 /* PHAsset+IMGProperty.h */,
+				DA907570206E8F8E00AC9ED8 /* PHAsset+IMGProperty.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -423,23 +428,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA90756C206E8F4500AC9ED8 /* PHImageManager+FetchImage.m in Sources */,
 				24E172641FB6F812004267BC /* FYImageFlowLayout.m in Sources */,
 				248C65A81FBD3D1400CFB7DE /* FYPrivewCell.m in Sources */,
 				842D697C206B9505004923B5 /* IMGConfiguration.m in Sources */,
+				DA90756E206E8F4500AC9ED8 /* UIViewController+FYAlert.m in Sources */,
+				DA907574206E9ADF00AC9ED8 /* IMGDataTool.m in Sources */,
 				842D6950206B8DFC004923B5 /* IMGPickerTool.m in Sources */,
-				24CC84D71FB97293009DE712 /* IMGAsset.m in Sources */,
-				842D6977206B92DB004923B5 /* PHImageManager+FetchImage.m in Sources */,
 				24CC84F21FBAC520009DE712 /* PickerBottomBar.m in Sources */,
 				24E172611FB6F7D3004267BC /* IMGPickerController.m in Sources */,
 				DA907564206E8D9C00AC9ED8 /* IMGMediator.m in Sources */,
-				842D6979206B92DB004923B5 /* UIViewController+FYAlert.m in Sources */,
 				241C51D21FBC19FD008B2CC0 /* FYAlbumsCell.m in Sources */,
 				24E172301FB6F228004267BC /* ViewController.m in Sources */,
+				DA90756D206E8F4500AC9ED8 /* UIImage+animatedGIF.m in Sources */,
 				24CC84D41FB96729009DE712 /* FYThumbCell.m in Sources */,
 				24E1723B1FB6F228004267BC /* main.m in Sources */,
 				24E1722D1FB6F228004267BC /* AppDelegate.m in Sources */,
 				24CC84DA1FBA9146009DE712 /* PickerTopBar.m in Sources */,
-				842D6978206B92DB004923B5 /* UIImage+animatedGIF.m in Sources */,
+				DA907571206E8F8E00AC9ED8 /* PHAsset+IMGProperty.m in Sources */,
 				241C51D51FBC4379008B2CC0 /* FYImagePrivewController.m in Sources */,
 				248C65AF1FBD79D300CFB7DE /* OperationView.m in Sources */,
 			);
