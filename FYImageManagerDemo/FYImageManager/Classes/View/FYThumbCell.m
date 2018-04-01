@@ -7,7 +7,7 @@
 //
 
 #import "FYThumbCell.h"
-#import "IMGBlockDefine.h"
+#import "IMGPickerConstant.h"
 
 static CGFloat kButtonWidth = 22;
 

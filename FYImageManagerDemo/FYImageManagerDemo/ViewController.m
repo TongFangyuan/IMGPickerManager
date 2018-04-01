@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "IMGPickerManager.h"
+#import "IMGPicker.h"
 
 
 @interface ViewController ()

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IMGBlockDefine.h"
+#import "IMGPickerConstant.h"
 
 /// 定义block
 typedef void(^IMGPickerCompleteBlock)(NSArray *result,NSError *error);

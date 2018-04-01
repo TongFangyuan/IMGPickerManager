@@ -1,15 +1,15 @@
 //
-//  IMGPickerManager.h
+//  IMGPicker.h
 //  FYImageManagerDemo
 //
-//  Created by admin on 2018/3/28.
+//  Created by 童方园 on 2018/4/1.
 //  Copyright © 2018年 tongfy. All rights reserved.
 //
 
-#ifndef IMGPickerManager_h
-#define IMGPickerManager_h
+#ifndef IMGPicker_h
+#define IMGPicker_h
 
 #import "IMGPickerTool.h"
 #import "IMGConfiguration.h"
 
-#endif /* IMGPickerManager_h */
+#endif /* IMGPicker_h */

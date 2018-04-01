@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IMGPickerManager.h"
+#import "IMGPicker.h"
 
 typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
 
