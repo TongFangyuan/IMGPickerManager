@@ -16,13 +16,13 @@
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closedButton setImage:[UIImage imageNamed:@"ic_close_white"] forState:UIControlStateNormal];
-//        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [doneButton setTitle:@"完成" forState:UIControlStateNormal];
         [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [doneButton setTitleColor:[UIColor clearColor] forState:UIControlStateDisabled];
         doneButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         doneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [self addSubview:doneButton];
@@ -41,24 +41,20 @@
         _numberButton = numberButton;
         
         UIButton *selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        selectedButton.layer.borderWidth = 1;
+        selectedButton.layer.borderWidth = 2;
         selectedButton.layer.borderColor = [UIColor whiteColor].CGColor;
         selectedButton.layer.cornerRadius = 15;
         [selectedButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
         [selectedButton setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
-//        [selectedButton setImage:[UIImage new] forState:UIControlStateNormal];
-//        [selectedButton setImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
         [self addSubview:selectedButton];
         _selectedButton = selectedButton;
         
         UIImageView *topMask = [UIImageView new];
-//        topMask.image = [UIImage imageNamed:@"mask_gray"];
         topMask.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         [self insertSubview:topMask belowSubview:closedButton];
         _topMask = topMask;
         
         UIImageView *bottomMask = [UIImageView new];
-//        bottomMask.image = [UIImage imageNamed:@"mask_gray"];
         bottomMask.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         [self insertSubview:bottomMask belowSubview:closedButton];
         _bottomMask = bottomMask;
@@ -108,6 +104,15 @@
         NSLayoutConstraint *constraint24 = [NSLayoutConstraint constraintWithItem:bottomMask attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:56];
         bottomMask.translatesAutoresizingMaskIntoConstraints = NO;
         [self addConstraints:@[constraint21,constraint22,constraint23,constraint24]];
+        
+        
+        UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMaskView:)];
+        topMask.userInteractionEnabled = YES;
+        [topMask addGestureRecognizer:tapGesture1];
+        
+        UITapGestureRecognizer *tapGesture2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMaskView:)];
+        bottomMask.userInteractionEnabled = YES;
+        [bottomMask addGestureRecognizer:tapGesture2];
 
     }
     return self;
@@ -118,13 +123,13 @@
     _selectedButton.selected = selected;
     
     if (selected) {
-        _selectedButton.backgroundColor = [UIColor clearColor];
-        _selectedButton.layer.borderWidth = 0;
+        _selectedButton.backgroundColor = [UIColor whiteColor];
     } else {
         _selectedButton.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-        _selectedButton.layer.borderWidth = 1;
     }
     
 }
+
+- (void)tapMaskView:(UITapGestureRecognizer *)tap{}
 
 @end

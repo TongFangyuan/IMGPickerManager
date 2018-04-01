@@ -12,10 +12,13 @@
 @implementation IMGPickerTool
 
 + (void)start:(IMGCompleteBlock)completeBlock {
+    
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;
     IMGPickerController *picker=[[IMGPickerController alloc] init];
     [picker setCompleteBlock:completeBlock];
-    [rootCtr presentViewController:picker animated:YES completion:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:picker];
+    [navController setNavigationBarHidden:YES animated:NO];
+    [rootCtr presentViewController:navController animated:YES completion:nil];
 }
 
 @end

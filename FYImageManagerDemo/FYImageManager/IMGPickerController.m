@@ -61,7 +61,7 @@ UITableViewDataSource
 
 @implementation IMGPickerController
 
-#pragma mark - private
+#pragma mark - LifeCycle
 
 - (instancetype)init
 {
@@ -79,18 +79,73 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.view.backgroundColor = [UIColor grayColor];
     [self setNeedsStatusBarAppearanceUpdate];
    
     [self initSubviews];
     [self fetchAssetCollections];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+/// 初始化子视图
+- (void)initSubviews
+{
+    [self.view addSubview:self.contentView];
+    [self.contentView addSubview:self.maskView];
+    [self.contentView addSubview:self.topBar];
+    [self.contentView addSubview:self.collectionView];
+    [self.contentView addSubview:self.bottomBar];
+    [self.contentView addSubview:self.tableView];
+    
+    /// 约束
+    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:20.f];
+    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.f];
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
+    
+    NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint7 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:55.f];
+    self.topBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:@[constraint5,constraint6,constraint7,constraint8]];
+    
+    NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.f];
+    NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:47.f];
+    self.bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:@[constraint13,constraint14,constraint15,constraint16]];
+    
+    NSLayoutConstraint *constraint9 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint10 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint11 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint12 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomBar attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:@[constraint9,constraint10,constraint11,constraint12]];
+    
+    // maskview
+    NSLayoutConstraint *constraint17 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint18 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint19 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint20 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.f];
+    self.maskView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:@[constraint17,constraint18,constraint19,constraint20]];
+    
+    // tableview
+    NSLayoutConstraint *constraint21 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint22 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint23 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
+    _dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:@[constraint21,constraint22,constraint23,_dynamicConstraint]];
+    
 }
 
-#pragma mark - user action
+#pragma mark - Event response
 
 /// 点击选中按钮(圆圈)
 - (void)cellButtonClicked:(UIButton *)button
@@ -107,17 +162,6 @@ UITableViewDataSource
     
     [self reloadCollectionViewData];
     
-//    // 是否显示 cell 的 maskview
-//    countOverflow =  _selectedAssets.count >= 9;
-//    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-//
-//    // topbar 和 bottombar 联动
-//    self.topBar.doneButton.enabled = _selectedAssets.count;
-//    self.topBar.numberButton.hidden = !_selectedAssets.count;
-//    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
-//
-//    self.bottomBar.previewButton.enabled = _selectedAssets.count;
-    
 }
 
 - (void)cellTapMaskView:(UITapGestureRecognizer *)tap
@@ -128,13 +172,20 @@ UITableViewDataSource
 
 - (void)closedButtonAction:(UIButton *)button
 {
+    if (self.completeBlock) {
+        NSError *error = [NSError errorWithDomain:@"user cancel" code:404 userInfo:@{NSLocalizedDescriptionKey:@"用户取消"}];
+        self.completeBlock(nil, error);
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // TODO: 图片选择完成,dismiss控制器,传出数据
 - (void)doneButtonAction:(UIButton *)button
 {
-    
+    if (self.completeBlock) {
+        self.completeBlock(self.selectedAssets, nil);
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)titleViewAction:(UITapGestureRecognizer *)tap
@@ -180,7 +231,6 @@ UITableViewDataSource
     }
 }
 
-// TODO: 用户预览功能
 - (void)previewButtonAction:(id)sender {
     
     FYImagePrivewController *previewController = [FYImagePrivewController new];
@@ -194,7 +244,8 @@ UITableViewDataSource
         weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
-    [self presentViewController:previewController animated:YES completion:nil];
+    
+    [self.navigationController pushViewController:previewController animated:YES];
     
 }
 
@@ -222,6 +273,11 @@ UITableViewDataSource
     
 }
 
+#pragma mark - Notification
+- (void)applicationDidBecomeActive:(NSNotification *)noti {
+    [self fetchAssetCollections];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Delegate and DataSource
 
@@ -261,7 +317,7 @@ UITableViewDataSource
         weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
         [weakSelf reloadCollectionViewData];
     }];
-    [self presentViewController:previewController animated:YES completion:nil];
+    [self.navigationController pushViewController:previewController animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -381,65 +437,7 @@ UITableViewDataSource
     
 }
 
-/// 初始化子视图
-- (void)initSubviews
-{
-    [self.view addSubview:self.contentView];
-    [self.contentView addSubview:self.maskView];
-    [self.contentView addSubview:self.topBar];
-    [self.contentView addSubview:self.collectionView];
-    [self.contentView addSubview:self.bottomBar];
-    [self.contentView addSubview:self.tableView];
-    
-    /// 约束
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:20.f];
-    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.f];
-    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
-
-    NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint7 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:55.f];
-    self.topBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint5,constraint6,constraint7,constraint8]];
-    
-    NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.f];
-    NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:47.f];
-    self.bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint13,constraint14,constraint15,constraint16]];
-    
-    NSLayoutConstraint *constraint9 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint10 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint11 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint12 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomBar attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint9,constraint10,constraint11,constraint12]];
-    
-    // maskview
-    NSLayoutConstraint *constraint17 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint18 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint19 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint20 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.f];
-    self.maskView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint17,constraint18,constraint19,constraint20]];
-    
-    // tableview
-    NSLayoutConstraint *constraint21 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint22 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint23 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    _dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint21,constraint22,constraint23,_dynamicConstraint]];
-
-}
-
-//MARK:
-//MARK:  setter and getter
+//MARK: -  setter and getter
 - (UIView *)contentView
 {
     if (!_contentView) {

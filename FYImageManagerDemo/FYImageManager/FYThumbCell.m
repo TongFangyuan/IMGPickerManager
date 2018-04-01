@@ -9,6 +9,8 @@
 #import "FYThumbCell.h"
 #import "IMGBlockDefine.h"
 
+static CGFloat kButtonWidth = 22;
+
 @interface FYThumbCell()
 
 @property (nonatomic,assign) PHImageRequestID imageRequsetID;
@@ -34,9 +36,8 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 1;
         button.layer.borderColor = [UIColor whiteColor].CGColor;
-        button.frame = CGRectMake(frame.size.width-22-2, 2, 22, 22);
-        button.layer.cornerRadius = 11;
-        [button setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+        button.frame = CGRectMake(frame.size.width-kButtonWidth-2, 2, kButtonWidth, kButtonWidth);
+        button.layer.cornerRadius = kButtonWidth*0.5;
         [button setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
 
         [self.contentView addSubview:button];
@@ -72,8 +73,8 @@
     _button.selected = selected;
     
     if (selected) {
-        _button.backgroundColor = [UIColor clearColor];
-        _button.layer.borderWidth = 0;
+        _button.backgroundColor = [UIColor whiteColor];
+        _button.layer.borderWidth = 1;
     } else {
         _button.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
         _button.layer.borderWidth = 1;

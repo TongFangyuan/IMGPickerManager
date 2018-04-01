@@ -34,7 +34,8 @@ UICollectionViewDataSource
 
 @implementation FYImagePrivewController
 
-#pragma mark - private
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,6 +44,9 @@ UICollectionViewDataSource
     /// 设置选中的资源
     self.isNeedScroll = YES;
     self.selectedAssets = [NSMutableArray arrayWithArray:self.originalSelectedAssets];
+    
+    [self.operationView.doneButton setEnabled:self.selectedAssets.count];
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -50,15 +54,37 @@ UICollectionViewDataSource
     
     if (self.selectIndexPath && self.isNeedScroll) {
         [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-        [self showCellAtIndexPath:self.selectIndexPath];
     }
+    [self showCellAtIndexPath:self.selectIndexPath];
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)initSubviews
+{
+    [self.view addSubview:self.operationView];
+    [self.operationView addSubview:self.collectionView];
+    
+    NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
+    NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.];
+    NSLayoutConstraint *constraint7 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+    self.operationView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:@[constraint5,constraint6,constraint7,constraint8]];
+    
+    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-5.f];
+    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeRight multiplier:1.0 constant:5.];
+    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.operationView addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
+    [self.collectionView.superview sendSubviewToBack:self.collectionView];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+//MARK: -  Event Respones
 
 - (void)operationViewTap:(UITapGestureRecognizer *)tap
 {
@@ -77,6 +103,7 @@ UICollectionViewDataSource
     
     // 底部按钮选中状态
     [self.operationView setButtonSelected:[self.selectedAssets containsObject:asset]];
+    [self.operationView.doneButton setEnabled:self.selectedAssets.count];
     
     // 顶部是否展示选中数量按钮
     if (self.selectedAssets.count) {
@@ -127,77 +154,17 @@ UICollectionViewDataSource
         self.cancelBlock(self.selectedAssets);
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 // TODO:完成功能
 - (void)doneButtonAction:(UIButton *)button
 {
-
-}
-
-#pragma mark - property
-
-- (UICollectionView *)collectionView
-{
-    if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        _collectionView.showsHorizontalScrollIndicator = NO;
-        _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:[FYPrivewCell class] forCellWithReuseIdentifier:@"FYPrivewCell"];
+    if (self.completeBlock) {
+        self.completeBlock(self.selectedAssets, nil);
     }
-    return _collectionView;
-}
-
-- (OperationView *)operationView
-{
-    if (!_operationView) {
-        _operationView = [OperationView new];
-        _operationView.backgroundColor = [UIColor clearColor];
-        UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationViewTap:)];
-        [_operationView addGestureRecognizer:tap];
-        [_operationView.closedButton addTarget:self action:@selector(closedButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
-        [_operationView.doneButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _operationView;
-}
-
-- (UICollectionViewFlowLayout *)flowLayout
-{
-    if (!_flowLayout) {
-        _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.itemSize = [UIScreen mainScreen].bounds.size;
-        _flowLayout.minimumInteritemSpacing = 0;
-        _flowLayout.minimumLineSpacing = 10;
-        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
-        _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    }
-    return _flowLayout;
-}
-
-
-- (void)initSubviews
-{
-    [self.view addSubview:self.operationView];
-    [self.operationView addSubview:self.collectionView];
     
-    NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.];
-    NSLayoutConstraint *constraint7 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
-    NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:self.operationView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-    self.operationView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:@[constraint5,constraint6,constraint7,constraint8]];
-    
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-5.f];
-    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeRight multiplier:1.0 constant:5.];
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.operationView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.operationView addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
-    [self.collectionView.superview sendSubviewToBack:self.collectionView];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -259,6 +226,48 @@ UICollectionViewDataSource
         [self showCellAtIndexPath:indexPath];
         self.selectIndexPath = indexPath;
     }
+}
+
+#pragma mark - Setter Getter
+
+- (UICollectionView *)collectionView
+{
+    if (!_collectionView) {
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.pagingEnabled = YES;
+        [_collectionView registerClass:[FYPrivewCell class] forCellWithReuseIdentifier:@"FYPrivewCell"];
+    }
+    return _collectionView;
+}
+
+- (OperationView *)operationView
+{
+    if (!_operationView) {
+        _operationView = [OperationView new];
+        _operationView.backgroundColor = [UIColor clearColor];
+        UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationViewTap:)];
+        [_operationView addGestureRecognizer:tap];
+        [_operationView.closedButton addTarget:self action:@selector(closedButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_operationView.selectedButton addTarget:self action:@selector(userClickedSelectedButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_operationView.doneButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _operationView;
+}
+
+- (UICollectionViewFlowLayout *)flowLayout
+{
+    if (!_flowLayout) {
+        _flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        _flowLayout.itemSize = [UIScreen mainScreen].bounds.size;
+        _flowLayout.minimumInteritemSpacing = 0;
+        _flowLayout.minimumLineSpacing = 10;
+        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
+        _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    }
+    return _flowLayout;
 }
 
 @end
