@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
+@class PHAsset;
+typedef void(^IMGCompleteBlock)(NSArray<PHAsset *> *results,NSError *error);
 
 @interface IMGPickerManager : NSObject
 
-+ (void)start:(IMGCompleteBlock)completeBlock;
++ (void)startChoose:(IMGCompleteBlock)completeBlock;
 
 @end

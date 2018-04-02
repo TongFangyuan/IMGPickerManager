@@ -11,7 +11,7 @@
 
 @implementation IMGPickerManager
 
-+ (void)start:(IMGCompleteBlock)completeBlock {
++ (void)startChoose:(IMGCompleteBlock)completeBlock {
     
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;
     IMGPickerController *picker=[[IMGPickerController alloc] init];

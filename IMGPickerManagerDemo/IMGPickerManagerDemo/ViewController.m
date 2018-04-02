@@ -28,11 +28,11 @@
 
 - (IBAction)chooseAction:(id)sender {
     
-    [IMGPickerManager start:^(NSArray *result, NSError *error) {
+    [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
         if (!error) {
-            NSLog(@"%@",result);
+            NSLog(@"user chosse %@",results);
         }else {
-            NSLog(@"%@",error.localizedDescription);
+            NSLog(@"chosse error: %@",error.localizedDescription);
         }
     }];
 }
