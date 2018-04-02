@@ -2,8 +2,8 @@
 //  IMGDataTool.h
 //  FYImageManagerDemo
 //
-//  Created by 童方园 on 2018/3/31.
-//  Copyright © 2018年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2018/3/31.
+//  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,8 +11,10 @@
 
 @interface IMGPhotoManager : NSObject
 
-+ (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections;
++ (instancetype)shareManager;
 
-+ (NSMutableArray<PHAsset *> *)fetchAssetsWithAssetCollection:(PHAssetCollection *)collection;
+- (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections;
+
+- (NSMutableArray<PHAsset *> *)fetchAssetsWithAssetCollection:(PHAssetCollection *)collection;
 
 @end

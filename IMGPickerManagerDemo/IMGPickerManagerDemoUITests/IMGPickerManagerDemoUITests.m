@@ -2,7 +2,7 @@
 //  IMGPickerManagerDemoUITests.m
 //  IMGPickerManagerDemoUITests
 //
-//  Created by admin on 2018/4/2.
+//  Created by tongfangyuan on 2018/4/2.
 //  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 

@@ -2,8 +2,8 @@
 //  PHAsset+IMGProperty.m
 //  FYImageManagerDemo
 //
-//  Created by 童方园 on 2018/3/30.
-//  Copyright © 2018年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2018/3/30.
+//  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
 #import "PHAsset+IMGProperty.h"

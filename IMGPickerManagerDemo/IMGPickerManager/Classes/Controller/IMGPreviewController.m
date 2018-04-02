@@ -2,8 +2,8 @@
 //  FYImagePrivewController.m
 //  FYImageManagerDemo
 //
-//  Created by tongfy on 2017/11/15.
-//  Copyright © 2017年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2017/11/15.
+//  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
 #import "IMGPreviewController.h"
@@ -120,8 +120,8 @@ UICollectionViewDataSource
     
     PHAsset *asset = self.assets[self.selectIndexPath.item];
     
-    if ( (self.selectedAssets.count>=[IMGConfigManager sharedInstance].maxCount) && ![self.selectedAssets containsObject:asset]) {
-        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfigManager sharedInstance].maxCount];
+    if ( (self.selectedAssets.count>=[IMGConfigManager shareManager].maxCount) && ![self.selectedAssets containsObject:asset]) {
+        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfigManager shareManager].maxCount];
         [self fy_showTitle:@"提示" message:msg];
         return;
     }

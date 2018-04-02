@@ -2,8 +2,8 @@
 //  PickerTopBar.m
 //  FYImageManagerDemo
 //
-//  Created by tongfy on 2017/11/14.
-//  Copyright © 2017年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2017/11/14.
+//  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
 #import "IMGPickerTopBar.h"

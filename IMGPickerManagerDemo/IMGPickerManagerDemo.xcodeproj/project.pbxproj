@@ -37,6 +37,8 @@
 		8424FA5E2071D01E007E5B36 /* ic_photo_choosesel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA482071D01E007E5B36 /* ic_photo_choosesel@3x.png */; };
 		8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */; };
 		8424FA602071D01E007E5B36 /* ic_photo_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */; };
+		8424FA6320720363007E5B36 /* take_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6120720363007E5B36 /* take_photo@3x.png */; };
+		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +115,8 @@
 		8424FA482071D01E007E5B36 /* ic_photo_choosesel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosesel@3x.png"; sourceTree = "<group>"; };
 		8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@2x.png"; sourceTree = "<group>"; };
 		8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@3x.png"; sourceTree = "<group>"; };
+		8424FA6120720363007E5B36 /* take_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@3x.png"; sourceTree = "<group>"; };
+		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +284,8 @@
 		8424FA442071D01E007E5B36 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8424FA6220720363007E5B36 /* take_photo@2x.png */,
+				8424FA6120720363007E5B36 /* take_photo@3x.png */,
 				8424FA452071D01E007E5B36 /* ic_close_white@2x.png */,
 				8424FA462071D01E007E5B36 /* ic_close_white@3x.png */,
 				8424FA472071D01E007E5B36 /* ic_photo_choosesel@2x.png */,
@@ -397,8 +403,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8424FA5C2071D01E007E5B36 /* ic_close_white@3x.png in Resources */,
+				8424FA6320720363007E5B36 /* take_photo@3x.png in Resources */,
 				8424F9F72071CF61007E5B36 /* LaunchScreen.storyboard in Resources */,
 				8424F9F42071CF61007E5B36 /* Assets.xcassets in Resources */,
+				8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */,
 				8424F9F22071CF61007E5B36 /* Main.storyboard in Resources */,
 				8424FA602071D01E007E5B36 /* ic_photo_close@3x.png in Resources */,
 				8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */,

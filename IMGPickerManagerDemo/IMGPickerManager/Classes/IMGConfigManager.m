@@ -2,23 +2,23 @@
 //  IMGConfiguration.m
 //  FYImageManagerDemo
 //
-//  Created by admin on 2018/3/28.
-//  Copyright © 2018年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2018/3/28.
+//  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
 #import "IMGConfigManager.h"
 
-static IMGConfigManager *_sharedInstance = nil;
+static IMGConfigManager *_shareManager = nil;
 
 @implementation IMGConfigManager
 
-+ (IMGConfigManager *) sharedInstance {
++ (IMGConfigManager *) shareManager {
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[[self class] alloc] init];
+        _shareManager = [[[self class] alloc] init];
     });
-    return _sharedInstance;
+    return _shareManager;
 }
 
 - (instancetype)init{

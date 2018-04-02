@@ -2,7 +2,7 @@
 //  UIViewController+FYAlert.m
 //  FYCategoryExample
 //
-//  Created by 童方园 on 16/4/22.
+//  Created by tongfangyuan on 16/4/22.
 //  Copyright © 2016年 IOS. All rights reserved.
 //
 

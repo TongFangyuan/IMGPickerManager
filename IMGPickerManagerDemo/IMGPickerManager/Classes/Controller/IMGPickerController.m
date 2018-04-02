@@ -2,8 +2,8 @@
 //  FYImagePickerController.m
 //  FYImageManagerDemo
 //
-//  Created by tongfy on 2017/11/11.
-//  Copyright © 2017年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2017/11/11.
+//  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
 #import "IMGConfigManager.h"
@@ -66,7 +66,7 @@ UITableViewDataSource
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.modalPresentationStyle = UIModalPresentationOverFullScreen;
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
@@ -79,7 +79,7 @@ UITableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self setNeedsStatusBarAppearanceUpdate];
    
     [self initSubviews];
@@ -145,6 +145,12 @@ UITableViewDataSource
     
 }
 
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
+}
+
 #pragma mark - Event response
 
 /// 点击选中按钮(圆圈)
@@ -167,7 +173,7 @@ UITableViewDataSource
 - (void)cellTapMaskView:(UITapGestureRecognizer *)tap
 {
     
-    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfigManager sharedInstance].maxCount);
+    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfigManager shareManager].maxCount);
 }
 
 - (void)closedButtonAction:(UIButton *)button
@@ -248,7 +254,35 @@ UITableViewDataSource
     
 }
 
-#pragma mark - 数据源刷新
+/// 获取相册数据
+- (void)fetchAssetCollections
+{
+    _assetCollections = [[IMGPhotoManager shareManager] fetchAssetCollections];
+    _selectedAssetCollection = _assetCollections.firstObject;
+    selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
+    
+    [self fetchAssets];
+}
+
+/// 获取某个相册的照片
+- (void)fetchAssets
+{
+    NSArray *results = [[IMGPhotoManager shareManager] fetchAssetsWithAssetCollection:self.selectedAssetCollection];
+    
+    self.assets = [NSArray arrayWithArray:results];
+    
+    // 缓存图片
+    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    requestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+    requestOptions.synchronous = YES;
+    [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
+    
+    [self.collectionView reloadData];
+    
+}
+
 - (void)reloadCollectionViewData {
     
     //// 是否显示 cell 的 maskview
@@ -267,18 +301,13 @@ UITableViewDataSource
 
 }
 
-// TODO: 刷新胶卷列表
-- (void)reloadTableViewData{
-    
-}
-
 #pragma mark - Notification
 - (void)applicationDidBecomeActive:(NSNotification *)noti {
     [self fetchAssetCollections];
     [self.tableView reloadData];
 }
 
-#pragma mark - Delegate and DataSource
+#pragma mark - UICollectionViewDelegate UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -295,8 +324,8 @@ UITableViewDataSource
     [cell.button addTarget:self action:@selector(cellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     BOOL show = countOverflow&&!asset.select;
-    show ? [cell.maskView.superview bringSubviewToFront:cell.maskView] : [cell.maskView.superview sendSubviewToBack:cell.maskView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
+    show ? [cell.maskView.superview bringSubviewToFront:cell.maskView] : [cell.maskView.superview sendSubviewToBack:cell.maskView];
     show ? [cell.maskView addGestureRecognizer:tap] : nil;
     cell.maskView.userInteractionEnabled = show;
     
@@ -318,6 +347,8 @@ UITableViewDataSource
     }];
     [self.navigationController pushViewController:previewController animated:YES];
 }
+
+#pragma mark - UITableViewDelegate UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -356,7 +387,7 @@ UITableViewDataSource
     self.topBar.numberButton.hidden = !_selectedAssets.count;
     [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
     self.bottomBar.previewButton.enabled = _selectedAssets.count;
-    
+
     PHAssetCollection *collection = _assetCollections[indexPath.row];
     _selectedAssetCollection = collection;
     
@@ -371,6 +402,7 @@ UITableViewDataSource
     // 收起弹窗
     [self titleViewAction:nil];
     
+    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -396,45 +428,6 @@ UITableViewDataSource
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     return nil;
-}
-
-#pragma mark - Private
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleDefault;
-}
-
-/// 获取相册数据
-- (void)fetchAssetCollections
-{
-    _assetCollections = [IMGPhotoManager fetchAssetCollections];
-    _selectedAssetCollection = _assetCollections.firstObject;
-    selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
-    
-    [self fetchAssets];
-}
-
-/// 获取某个相册的照片
-- (void)fetchAssets
-{
-    NSArray *results = [IMGPhotoManager fetchAssetsWithAssetCollection:self.selectedAssetCollection];
-    
-    self.assets = [NSArray arrayWithArray:results];
-
-    // 缓存图片
-    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
-    requestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
-    requestOptions.synchronous = YES;
-    [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
-    
-    //
-    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
-    
-    [self.collectionView reloadData];
-    
 }
 
 //MARK: -  setter and getter

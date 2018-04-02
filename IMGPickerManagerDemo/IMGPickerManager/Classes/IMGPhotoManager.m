@@ -2,16 +2,31 @@
 //  IMGDataTool.m
 //  FYImageManagerDemo
 //
-//  Created by 童方园 on 2018/3/31.
-//  Copyright © 2018年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2018/3/31.
+//  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
 #import "IMGPhotoManager.h"
 #import "IMGPickerConstant.h"
 
+static IMGPhotoManager *_shareManager = nil;
+
+@interface IMGPhotoManager()
+
+@end
+
 @implementation IMGPhotoManager
 
-+ (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections {
++ (instancetype)shareManager{
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _shareManager = [[[self class] alloc] init];
+    });
+    return _shareManager;
+}
+
+- (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections {
     
     PHFetchOptions *options = [PHFetchOptions new];
     if (IOS9) {
@@ -51,7 +66,7 @@
 }
 
 
-+ (NSMutableArray<PHAsset *> *)fetchAssetsWithAssetCollection:(PHAssetCollection *)assetCollection {
+- (NSMutableArray<PHAsset *> *)fetchAssetsWithAssetCollection:(PHAssetCollection *)assetCollection {
     PHFetchOptions *options = [PHFetchOptions new];
     if (IOS9) {
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
@@ -65,4 +80,5 @@
     }];
     return resultAssets;
 }
+
 @end

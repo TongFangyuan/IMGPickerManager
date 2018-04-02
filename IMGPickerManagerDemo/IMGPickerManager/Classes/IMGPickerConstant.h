@@ -2,8 +2,8 @@
 //  IMGPickerConstant.h
 //  FYImageManagerDemo
 //
-//  Created by 童方园 on 2018/4/1.
-//  Copyright © 2018年 tongfy. All rights reserved.
+//  Created by tongfangyuan on 2018/4/1.
+//  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
 #ifndef IMGPickerConstant_h
