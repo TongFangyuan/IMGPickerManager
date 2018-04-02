@@ -6,6 +6,13 @@
 
 一个集成简单、无依赖、高效、轻量级、持续更新的第三方图片选择框架
 
+效果图
+------
+![image](https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.png)
+![image](https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_02.png)
+![image](https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_03.png)
+![image](https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_04.png)
+![image](https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_05.png)
 
 特性
 -----
