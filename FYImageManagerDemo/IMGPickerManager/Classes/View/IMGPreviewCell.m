@@ -6,11 +6,11 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYPrivewCell.h"
+#import "IMGPreviewCell.h"
 #import "UIImage+animatedGIF.h"
 #import "PHImageManager+FetchImage.h"
 
-@implementation FYPrivewCell
+@implementation IMGPreviewCell
 
 
 - (void)setModel:(PHAsset *)model

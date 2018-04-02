@@ -6,18 +6,18 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYThumbCell.h"
+#import "IMGPickerThumbCell.h"
 #import "IMGPickerConstant.h"
 
 static CGFloat kButtonWidth = 22;
 
-@interface FYThumbCell()
+@interface IMGPickerThumbCell()
 
 @property (nonatomic,assign) PHImageRequestID imageRequsetID;
 
 @end
 
-@implementation FYThumbCell
+@implementation IMGPickerThumbCell
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

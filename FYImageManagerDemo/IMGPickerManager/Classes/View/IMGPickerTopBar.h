@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PickerTopBar : UIView
+@interface IMGPickerTopBar : UIView
 
 /// 关闭按钮
 @property (nonatomic,strong) UIButton *closedButton;

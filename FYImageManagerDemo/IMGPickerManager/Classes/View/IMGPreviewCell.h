@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PHAsset+IMGProperty.h"
 
-@interface FYPrivewCell : UICollectionViewCell
+@interface IMGPreviewCell : UICollectionViewCell
 <
 UIScrollViewDelegate
 >

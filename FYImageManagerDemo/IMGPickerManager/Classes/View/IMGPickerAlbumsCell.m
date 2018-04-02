@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "IMGAlbumsCell.h"
+#import "IMGPickerAlbumsCell.h"
 
-@implementation IMGAlbumsCell
+@implementation IMGPickerAlbumsCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "OperationView.h"
+#import "IMGPreviewOperationView.h"
 
-@implementation OperationView
+@implementation IMGPreviewOperationView
 
 - (instancetype)init
 {

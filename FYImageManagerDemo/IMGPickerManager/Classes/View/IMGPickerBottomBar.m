@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "PickerBottomBar.h"
+#import "IMGPickerBottomBar.h"
 
-@implementation PickerBottomBar
+@implementation IMGPickerBottomBar
 
 - (instancetype)init
 {

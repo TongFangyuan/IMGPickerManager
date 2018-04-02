@@ -6,12 +6,12 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "IMGPrivewController.h"
-#import "FYPrivewCell.h"
-#import "OperationView.h"
+#import "IMGPreviewController.h"
+#import "IMGPreviewCell.h"
+#import "IMGPreviewOperationView.h"
 #import "UIViewController+FYAlert.h"
 
-@interface IMGPrivewController ()
+@interface IMGPreviewController ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource
@@ -23,7 +23,7 @@ UICollectionViewDataSource
 @property (nonatomic,assign) BOOL isNeedScroll;//defaulf is YES
 @property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
-@property (nonatomic,strong) OperationView *operationView;
+@property (nonatomic,strong) IMGPreviewOperationView *operationView;
 
 /// 选中的资源
 @property (nonatomic,strong) NSMutableArray<PHAsset *> *selectedAssets;
@@ -32,7 +32,7 @@ UICollectionViewDataSource
 
 @end
 
-@implementation IMGPrivewController
+@implementation IMGPreviewController
 
 #pragma mark - LifeCycle
 
@@ -196,7 +196,7 @@ UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYPrivewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
+    IMGPreviewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
     PHAsset *asset = _assets[indexPath.item];
     cell.model = asset;
     return cell;
@@ -204,14 +204,14 @@ UICollectionViewDataSource
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([cell isKindOfClass:[FYPrivewCell class]]) {
-        [[(FYPrivewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+    if ([cell isKindOfClass:[IMGPreviewCell class]]) {
+        [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
     }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([cell isKindOfClass:[FYPrivewCell class]]) {
-        [[(FYPrivewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+    if ([cell isKindOfClass:[IMGPreviewCell class]]) {
+        [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
     }
 }
 
@@ -238,15 +238,15 @@ UICollectionViewDataSource
         _collectionView.dataSource = self;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:[FYPrivewCell class] forCellWithReuseIdentifier:@"FYPrivewCell"];
+        [_collectionView registerClass:[IMGPreviewCell class] forCellWithReuseIdentifier:@"FYPrivewCell"];
     }
     return _collectionView;
 }
 
-- (OperationView *)operationView
+- (IMGPreviewOperationView *)operationView
 {
     if (!_operationView) {
-        _operationView = [OperationView new];
+        _operationView = [IMGPreviewOperationView new];
         _operationView.backgroundColor = [UIColor clearColor];
         UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(operationViewTap:)];
         [_operationView addGestureRecognizer:tap];

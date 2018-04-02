@@ -10,14 +10,14 @@
 #import "IMGDataManager.h"
 
 #import "IMGPickerController.h"
-#import "FYThumbCell.h"
-#import "IMGFlowLayout.h"
-#import "PickerTopBar.h"
-#import "PickerBottomBar.h"
-#import "IMGAlbumsCell.h"
+#import "IMGPickerThumbCell.h"
+#import "IMGPickerFlowLayout.h"
+#import "IMGPickerTopBar.h"
+#import "IMGPickerBottomBar.h"
+#import "IMGPickerAlbumsCell.h"
 
 
-#import "IMGPrivewController.h"
+#import "IMGPreviewController.h"
 @interface IMGPickerController ()
 <
 UICollectionViewDelegate,
@@ -41,8 +41,8 @@ UITableViewDataSource
 @property (nonatomic,strong) UIView *maskView;
 
 @property (nonatomic,strong) UIView *contentView;
-@property (nonatomic,strong) PickerTopBar *topBar;
-@property (nonatomic,strong) PickerBottomBar *bottomBar;
+@property (nonatomic,strong) IMGPickerTopBar *topBar;
+@property (nonatomic,strong) IMGPickerBottomBar *bottomBar;
 
 /// FYAsset 资源数组
 @property (nonatomic,strong) NSArray<PHAsset *> *assets;
@@ -154,7 +154,7 @@ UITableViewDataSource
     PHAsset *asset = _assets[indexPath.item];
     asset.select = !asset.select;
     
-    FYThumbCell *cell = (FYThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+    IMGPickerThumbCell *cell = (IMGPickerThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
     [cell setButtonSelected:asset.select];
 
     // 保存或移除对应的 asset
@@ -233,7 +233,7 @@ UITableViewDataSource
 
 - (void)previewButtonAction:(id)sender {
     
-    IMGPrivewController *previewController = [IMGPrivewController new];
+    IMGPreviewController *previewController = [IMGPreviewController new];
     previewController.assets = _selectedAssets;
     previewController.originalSelectedAssets = _selectedAssets;
     
@@ -288,7 +288,7 @@ UITableViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
+    IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
     PHAsset *asset = [_assets objectAtIndex:indexPath.item];
     cell.model = asset;
     
@@ -306,7 +306,7 @@ UITableViewDataSource
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    IMGPrivewController *previewController = [IMGPrivewController new];
+    IMGPreviewController *previewController = [IMGPreviewController new];
     previewController.assets = _assets;
     previewController.originalSelectedAssets = _selectedAssets;
     previewController.selectIndexPath = indexPath;
@@ -327,7 +327,7 @@ UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IMGAlbumsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYAlbumsCell"];
+    IMGPickerAlbumsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYAlbumsCell"];
     PHAssetCollection *collection = _assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==_selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -452,11 +452,11 @@ UITableViewDataSource
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[IMGFlowLayout new]];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[IMGPickerFlowLayout new]];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        [_collectionView registerClass:[FYThumbCell class] forCellWithReuseIdentifier:@"FYThumbCell"];
+        [_collectionView registerClass:[IMGPickerThumbCell class] forCellWithReuseIdentifier:@"FYThumbCell"];
     }
     return _collectionView;
 }
@@ -468,7 +468,7 @@ UITableViewDataSource
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor whiteColor];
-        [_tableView registerClass:[IMGAlbumsCell class] forCellReuseIdentifier:@"FYAlbumsCell"];
+        [_tableView registerClass:[IMGPickerAlbumsCell class] forCellReuseIdentifier:@"FYAlbumsCell"];
         _tableView.separatorColor = [UIColor clearColor];
     }
     return _tableView;
@@ -482,10 +482,10 @@ UITableViewDataSource
     }
     return _maskView;
 }
-- (PickerTopBar *)topBar
+- (IMGPickerTopBar *)topBar
 {
     if (!_topBar) {
-        _topBar = [PickerTopBar new];
+        _topBar = [IMGPickerTopBar new];
         [_topBar.closedButton addTarget:self action:@selector(closedButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_topBar.doneButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_topBar.numberButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -497,10 +497,10 @@ UITableViewDataSource
     return _topBar;
 }
 
-- (PickerBottomBar *)bottomBar
+- (IMGPickerBottomBar *)bottomBar
 {
     if (!_bottomBar) {
-        _bottomBar = [PickerBottomBar new];
+        _bottomBar = [IMGPickerBottomBar new];
         [_bottomBar.previewButton addTarget:self action:@selector(previewButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomBar;

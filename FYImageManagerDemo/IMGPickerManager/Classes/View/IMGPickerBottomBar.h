@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PickerBottomBar : UIView
+@interface IMGPickerBottomBar : UIView
 
 @property (nonatomic,strong) UIButton *previewButton;
 @property (nonatomic,strong) UIImageView *line;

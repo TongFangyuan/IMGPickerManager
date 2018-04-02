@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PHAsset+IMGProperty.h"
 
-@interface FYThumbCell : UICollectionViewCell
+@interface IMGPickerThumbCell : UICollectionViewCell
 
 @property (nonatomic,strong) PHAsset *model;
 @property (nonatomic,strong) UIImageView *thumbView;

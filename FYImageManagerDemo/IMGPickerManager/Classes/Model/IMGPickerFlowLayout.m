@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "IMGFlowLayout.h"
+#import "IMGPickerFlowLayout.h"
 
-@implementation IMGFlowLayout
+@implementation IMGPickerFlowLayout
 
 - (instancetype)init
 {

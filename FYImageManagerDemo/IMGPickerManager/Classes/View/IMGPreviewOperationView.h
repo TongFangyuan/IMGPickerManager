@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OperationView : UIView
+@interface IMGPreviewOperationView : UIView
 
 @property (nonatomic,strong) UIButton *closedButton;
 @property (nonatomic,strong) UIButton *doneButton;

@@ -15,7 +15,7 @@ typedef void(^IMGPrivewCompleteBlock)(NSArray *result,NSError *error);
 typedef void(^IMGPrivewCancelBlock)(NSArray *result);
 
 
-@interface IMGPrivewController : UIViewController
+@interface IMGPreviewController : UIViewController
 
 /// 所有资源数组
 @property (nonatomic,strong) NSArray<PHAsset *> *assets;

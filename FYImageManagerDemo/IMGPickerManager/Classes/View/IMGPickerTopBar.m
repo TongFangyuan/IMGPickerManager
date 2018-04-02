@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "PickerTopBar.h"
+#import "IMGPickerTopBar.h"
 
-@implementation PickerTopBar
+@implementation IMGPickerTopBar
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
