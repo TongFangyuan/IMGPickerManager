@@ -424,7 +424,10 @@ UITableViewDataSource
     self.assets = [NSArray arrayWithArray:results];
 
     // 缓存图片
-    PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
+    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    requestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+    requestOptions.synchronous = YES;
     [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
     
     //
