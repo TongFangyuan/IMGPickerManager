@@ -13,8 +13,6 @@ static CGFloat kButtonWidth = 22;
 
 @interface IMGPickerThumbCell()
 
-@property (nonatomic,assign) PHImageRequestID imageRequsetID;
-
 @end
 
 @implementation IMGPickerThumbCell
@@ -52,21 +50,6 @@ static CGFloat kButtonWidth = 22;
     }
     return self;
 }
- 
-- (void)setModel:(PHAsset *)asset
-{
-    _model = asset;
-    
-    // 图片
-    _imageRequsetID = [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(ScreenWidth/[UIScreen mainScreen].scale, ScreenHeight/[UIScreen mainScreen].scale) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        _thumbView.image = result;
-//        NSLog(@"%@",info);
-    }];
-    
-    // 选中状态
-    [self setButtonSelected:asset.select];
-    
-}
 
 - (void)setButtonSelected:(BOOL)selected
 {
@@ -78,17 +61,6 @@ static CGFloat kButtonWidth = 22;
     } else {
         _button.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
         _button.layer.borderWidth = 1;
-    }
-    
-}
-
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    
-    // 取消下载图片
-    if (_imageRequsetID) {
-        [[PHImageManager defaultManager] cancelImageRequest:_imageRequsetID];
     }
     
 }

@@ -62,7 +62,6 @@ static IMGPhotoManager *_shareManager = nil;
         [tempAssetCollections addObject:obj];
     }];
     
-    NSLog(@"获取到相册数组：%@",tempAssetCollections);
     return tempAssetCollections;
 }
 
@@ -80,6 +79,35 @@ static IMGPhotoManager *_shareManager = nil;
         [resultAssets addObject:obj];
     }];
     return resultAssets;
+}
+
+
+- (void)getImageForAsset:(PHAsset *)asset targetSize:(CGSize)targetSize resultBlock:(void(^)(UIImage *image))block
+{
+    
+    PHCachingImageManager *cacheManager = (PHCachingImageManager *)[PHCachingImageManager defaultManager];
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.synchronous = YES;
+    [cacheManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        if (block) {
+            block(result);
+        }
+    }];
+    
+}
+
+
+- (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie
+{
+    
+    PHCachingImageManager *cacheManager = (PHCachingImageManager *)[PHCachingImageManager defaultManager];
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.synchronous = YES;
+    [cacheManager startCachingImagesForAssets:assets targetSize:targetSzie contentMode:PHImageContentModeAspectFill options:options];
 }
 
 @end

@@ -6,18 +6,20 @@
 //  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
+#import "IMGPickerController.h"
+
 #import "IMGConfigManager.h"
 #import "IMGPhotoManager.h"
-
-#import "IMGPickerController.h"
 #import "IMGPickerAlbumsCell.h"
 #import "IMGPickerThumbCell.h"
 #import "IMGPickerFlowLayout.h"
 #import "IMGPickerTopBar.h"
 #import "IMGPickerBottomBar.h"
-
-
 #import "IMGPreviewController.h"
+#import "PHAsset+IMGProperty.h"
+
+static CGFloat kAlbumsCellHeight = 70;
+
 @interface IMGPickerController ()
 <
 UICollectionViewDelegate,
@@ -56,6 +58,7 @@ UITableViewDataSource
 /// 动态约束
 @property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
 
+@property (nonatomic,assign) CGSize imageSize;
 
 @end
 
@@ -66,7 +69,6 @@ UITableViewDataSource
 - (instancetype)init
 {
     if (self = [super init]) {
-//        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.modalPresentationStyle = UIModalPresentationOverFullScreen;
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
@@ -179,7 +181,7 @@ UITableViewDataSource
 - (void)closedButtonAction:(UIButton *)button
 {
     if (self.completeBlock) {
-        NSError *error = [NSError errorWithDomain:@"user cancel" code:404 userInfo:@{NSLocalizedDescriptionKey:@"用户取消"}];
+        NSError *error = [NSError errorWithDomain:@"user cancel" code:100 userInfo:@{NSLocalizedDescriptionKey:@"用户取消"}];
         self.completeBlock(nil, error);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -269,16 +271,9 @@ UITableViewDataSource
 - (void)fetchAssets
 {
     NSArray *results = [[IMGPhotoManager shareManager] fetchAssetsWithAssetCollection:self.selectedAssetCollection];
+    [[IMGPhotoManager shareManager] cacheImageForAsset:results targetSize:self.imageSize];
     
     self.assets = [NSArray arrayWithArray:results];
-    
-    // 缓存图片
-    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
-    requestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
-    requestOptions.synchronous = YES;
-    [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
-    
     [self.collectionView reloadData];
     
 }
@@ -317,18 +312,30 @@ UITableViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
     PHAsset *asset = [_assets objectAtIndex:indexPath.item];
-    cell.model = asset;
+    
+    IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
+//    cell.model = asset;
+    [cell setButtonSelected:asset.select];
+    
+    __weak typeof(cell) weakCell = cell;
+    [[IMGPhotoManager shareManager] getImageForAsset:asset targetSize:self.imageSize resultBlock:^(UIImage *image) {
+        weakCell.thumbView.image = image;
+    }];
     
     cell.button.tag = indexPath.row;
     [cell.button addTarget:self action:@selector(cellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     BOOL show = countOverflow&&!asset.select;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
-    show ? [cell.maskView.superview bringSubviewToFront:cell.maskView] : [cell.maskView.superview sendSubviewToBack:cell.maskView];
-    show ? [cell.maskView addGestureRecognizer:tap] : nil;
-    cell.maskView.userInteractionEnabled = show;
+    if (show) {
+        [cell.maskView.superview bringSubviewToFront:cell.maskView];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
+        [cell.maskView addGestureRecognizer:tap];
+        [cell.maskView setUserInteractionEnabled:YES];
+    } else {
+        [cell.maskView.superview sendSubviewToBack:cell.maskView];
+        [cell.maskView setUserInteractionEnabled:NO];
+    }
     
     return cell;
 }
@@ -368,9 +375,9 @@ UITableViewDataSource
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)result.count];
     
     // 设置封面图
-    PHAsset *thumAsset = result.firstObject;
-    [cachingImageManager requestImageForAsset:thumAsset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        cell.iconView.image = result;
+    __weak typeof(cell) weakCell = cell;
+    [[IMGPhotoManager shareManager] getImageForAsset:result.firstObject targetSize:self.imageSize resultBlock:^(UIImage *image) {
+        weakCell.iconView.image = image;
     }];
     return cell;
 }
@@ -408,7 +415,7 @@ UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return kAlbumsCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -498,6 +505,10 @@ UITableViewDataSource
         [_bottomBar.previewButton addTarget:self action:@selector(previewButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomBar;
+}
+
+- (CGSize)imageSize{
+    return CGSizeMake(kAlbumsCellHeight*[UIScreen mainScreen].scale, kAlbumsCellHeight*[UIScreen mainScreen].scale);
 }
 
 @end
