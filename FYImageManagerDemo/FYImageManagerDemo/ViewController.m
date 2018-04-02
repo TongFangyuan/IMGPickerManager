@@ -32,7 +32,7 @@
 
 - (IBAction)takePhotoAction:(id)sender {
     
-    [IMGPickerTool start:^(NSArray *result, NSError *error) {
+    [IMGPickerManager start:^(NSArray *result, NSError *error) {
         if (!error) {
             NSLog(@"%@",result);
         }else {

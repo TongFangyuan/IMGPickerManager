@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYAlbumsCell.h"
+#import "IMGAlbumsCell.h"
 
-@implementation FYAlbumsCell
+@implementation IMGAlbumsCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -9,7 +9,7 @@
 #ifndef IMGPicker_h
 #define IMGPicker_h
 
-#import "IMGPickerTool.h"
-#import "IMGConfiguration.h"
+#import "IMGPickerManager.h"
+#import "IMGConfigManager.h"
 
 #endif /* IMGPicker_h */

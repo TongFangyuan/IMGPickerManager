@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYImageFlowLayout.h"
+#import "IMGFlowLayout.h"
 
-@implementation FYImageFlowLayout
+@implementation IMGFlowLayout
 
 - (instancetype)init
 {

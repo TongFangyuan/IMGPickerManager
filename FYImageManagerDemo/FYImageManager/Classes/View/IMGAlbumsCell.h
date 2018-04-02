@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FYAlbumsCell : UITableViewCell
+@interface IMGAlbumsCell : UITableViewCell
 
 @property (nonatomic,strong) UIImageView *iconView;
 @property (nonatomic,strong) UILabel *titleLabel;

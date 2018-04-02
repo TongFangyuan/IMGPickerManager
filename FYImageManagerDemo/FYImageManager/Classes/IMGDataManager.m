@@ -6,10 +6,10 @@
 //  Copyright © 2018年 tongfy. All rights reserved.
 //
 
-#import "IMGDataTool.h"
+#import "IMGDataManager.h"
 #import "IMGPickerConstant.h"
 
-@implementation IMGDataTool
+@implementation IMGDataManager
 
 + (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections {
     

@@ -6,10 +6,10 @@
 //  Copyright © 2018年 tongfy. All rights reserved.
 //
 
-#import "IMGPickerTool.h"
+#import "IMGPickerManager.h"
 #import "IMGPickerController.h"
 
-@implementation IMGPickerTool
+@implementation IMGPickerManager
 
 + (void)start:(IMGCompleteBlock)completeBlock {
     

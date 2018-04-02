@@ -6,13 +6,13 @@
 //  Copyright © 2018年 tongfy. All rights reserved.
 //
 
-#import "IMGConfiguration.h"
+#import "IMGConfigManager.h"
 
-static IMGConfiguration *_sharedInstance = nil;
+static IMGConfigManager *_sharedInstance = nil;
 
-@implementation IMGConfiguration
+@implementation IMGConfigManager
 
-+ (IMGConfiguration *) sharedInstance {
++ (IMGConfigManager *) sharedInstance {
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

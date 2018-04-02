@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "IMGPickerConstant.h"
-#import "IMGConfiguration.h"
+#import "IMGConfigManager.h"
 #import <Photos/Photos.h>
 
 typedef void(^IMGPrivewCompleteBlock)(NSArray *result,NSError *error);
 typedef void(^IMGPrivewCancelBlock)(NSArray *result);
 
 
-@interface FYImagePrivewController : UIViewController
+@interface IMGPrivewController : UIViewController
 
 /// 所有资源数组
 @property (nonatomic,strong) NSArray<PHAsset *> *assets;

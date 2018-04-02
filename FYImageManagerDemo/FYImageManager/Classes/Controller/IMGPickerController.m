@@ -6,18 +6,18 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "IMGConfiguration.h"
-#import "IMGDataTool.h"
+#import "IMGConfigManager.h"
+#import "IMGDataManager.h"
 
 #import "IMGPickerController.h"
 #import "FYThumbCell.h"
-#import "FYImageFlowLayout.h"
+#import "IMGFlowLayout.h"
 #import "PickerTopBar.h"
 #import "PickerBottomBar.h"
-#import "FYAlbumsCell.h"
+#import "IMGAlbumsCell.h"
 
 
-#import "FYImagePrivewController.h"
+#import "IMGPrivewController.h"
 @interface IMGPickerController ()
 <
 UICollectionViewDelegate,
@@ -167,7 +167,7 @@ UITableViewDataSource
 - (void)cellTapMaskView:(UITapGestureRecognizer *)tap
 {
     
-    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfiguration sharedInstance].maxCount);
+    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfigManager sharedInstance].maxCount);
 }
 
 - (void)closedButtonAction:(UIButton *)button
@@ -233,7 +233,7 @@ UITableViewDataSource
 
 - (void)previewButtonAction:(id)sender {
     
-    FYImagePrivewController *previewController = [FYImagePrivewController new];
+    IMGPrivewController *previewController = [IMGPrivewController new];
     previewController.assets = _selectedAssets;
     previewController.originalSelectedAssets = _selectedAssets;
     
@@ -306,7 +306,7 @@ UITableViewDataSource
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYImagePrivewController *previewController = [FYImagePrivewController new];
+    IMGPrivewController *previewController = [IMGPrivewController new];
     previewController.assets = _assets;
     previewController.originalSelectedAssets = _selectedAssets;
     previewController.selectIndexPath = indexPath;
@@ -327,7 +327,7 @@ UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FYAlbumsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYAlbumsCell"];
+    IMGAlbumsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYAlbumsCell"];
     PHAssetCollection *collection = _assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==_selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -410,7 +410,7 @@ UITableViewDataSource
 - (void)fetchAssetCollections
 {
     
-    _assetCollections = [IMGDataTool fetchAssetCollections];
+    _assetCollections = [IMGDataManager fetchAssetCollections];
     _selectedAssetCollection = _assetCollections.firstObject;
     selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.topBar.tipsLabel.text = _selectedAssetCollection.localizedTitle;
@@ -425,7 +425,7 @@ UITableViewDataSource
 /// 获取某个相册的照片
 - (void)fetchAssets
 {
-    NSArray *results = [IMGDataTool fetchAssetsWithAssetCollection:self.selectedAssetCollection];
+    NSArray *results = [IMGDataManager fetchAssetsWithAssetCollection:self.selectedAssetCollection];
     
     self.assets = [NSArray arrayWithArray:results];
 
@@ -452,7 +452,7 @@ UITableViewDataSource
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[FYImageFlowLayout new]];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[IMGFlowLayout new]];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -468,7 +468,7 @@ UITableViewDataSource
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor whiteColor];
-        [_tableView registerClass:[FYAlbumsCell class] forCellReuseIdentifier:@"FYAlbumsCell"];
+        [_tableView registerClass:[IMGAlbumsCell class] forCellReuseIdentifier:@"FYAlbumsCell"];
         _tableView.separatorColor = [UIColor clearColor];
     }
     return _tableView;

@@ -6,12 +6,12 @@
 //  Copyright © 2017年 tongfy. All rights reserved.
 //
 
-#import "FYImagePrivewController.h"
+#import "IMGPrivewController.h"
 #import "FYPrivewCell.h"
 #import "OperationView.h"
 #import "UIViewController+FYAlert.h"
 
-@interface FYImagePrivewController ()
+@interface IMGPrivewController ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource
@@ -32,7 +32,7 @@ UICollectionViewDataSource
 
 @end
 
-@implementation FYImagePrivewController
+@implementation IMGPrivewController
 
 #pragma mark - LifeCycle
 
@@ -120,8 +120,8 @@ UICollectionViewDataSource
     
     PHAsset *asset = self.assets[self.selectIndexPath.item];
     
-    if ( (self.selectedAssets.count>=[IMGConfiguration sharedInstance].maxCount) && ![self.selectedAssets containsObject:asset]) {
-        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfiguration sharedInstance].maxCount];
+    if ( (self.selectedAssets.count>=[IMGConfigManager sharedInstance].maxCount) && ![self.selectedAssets containsObject:asset]) {
+        NSString *msg= [NSString stringWithFormat:@"最多只能选择%ld张",(long)[IMGConfigManager sharedInstance].maxCount];
         [self fy_showTitle:@"提示" message:msg];
         return;
     }

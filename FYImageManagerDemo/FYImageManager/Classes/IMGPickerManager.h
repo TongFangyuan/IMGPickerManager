@@ -11,7 +11,7 @@
 
 typedef void(^IMGCompleteBlock)(NSArray *result,NSError *error);
 
-@interface IMGPickerTool : NSObject
+@interface IMGPickerManager : NSObject
 
 + (void)start:(IMGCompleteBlock)completeBlock;
 

@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMGConfiguration : NSObject
+@interface IMGConfigManager : NSObject
 
 /// 最多能选几张图片,默认9张
 @property (nonatomic,assign) NSInteger maxCount;
 
-+ (IMGConfiguration *)sharedInstance;
++ (IMGConfigManager *)sharedInstance;
 
 @end
