@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class PHAsset;
+
 typedef void(^IMGCompleteBlock)(NSArray<PHAsset *> *results,NSError *error);
 
 @interface IMGPickerManager : NSObject

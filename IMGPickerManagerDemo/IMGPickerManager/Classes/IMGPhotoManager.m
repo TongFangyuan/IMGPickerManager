@@ -62,6 +62,7 @@ static IMGPhotoManager *_shareManager = nil;
         [tempAssetCollections addObject:obj];
     }];
     
+    NSLog(@"获取到相册数组：%@",tempAssetCollections);
     return tempAssetCollections;
 }
 

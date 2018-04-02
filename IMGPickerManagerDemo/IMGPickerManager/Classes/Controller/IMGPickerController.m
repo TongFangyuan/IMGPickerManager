@@ -303,6 +303,7 @@ UITableViewDataSource
 
 #pragma mark - Notification
 - (void)applicationDidBecomeActive:(NSNotification *)noti {
+    
     [self fetchAssetCollections];
     [self.tableView reloadData];
 }

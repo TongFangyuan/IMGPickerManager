@@ -4,9 +4,8 @@
 ![liscense](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 ![Language](https://img.shields.io/badge/Language-%20Objective%20C%20-blue.svg)
 
-一个集成简单、无依赖、高效、轻量级、持续更新的图片选择第三方框架
+一个集成简单、无依赖、高效、轻量级、持续更新的第三方图片选择框架
 
-----------------------------------------
 
 特性
 -----
@@ -17,20 +16,19 @@
 
 ### 更多特性
 
-有更多需求的朋友欢迎 [新建 Issues](https://github.com/TongFangyuan/IMGPickerManager/issues/new)，目前更多特性本人也在积极开发中...
+有更多需求或发现bug的朋友欢迎新建 [Issues](https://github.com/TongFangyuan/IMGPickerManager/issues/new)，目前更多特性本人也在积极开发中...
 
 
 环境要求
 ----
 
 - iOS 8.0 及以上
-- xcode 8.0 及以上
+- Xcode 8.0 及以上
 
 如何使用
 ----
 
-```
-
+```objective-c
 #import "IMGPickerManagerHeader.h"
 ...
 [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
@@ -40,7 +38,6 @@
         NSLog(@"chosse error: %@",error.localizedDescription);
     }
 }];
-
 ```
 
 安装
