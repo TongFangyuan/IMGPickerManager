@@ -22,7 +22,7 @@
 		8424FA4F2071D01E007E5B36 /* IMGPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA292071D01D007E5B36 /* IMGPickerController.m */; };
 		8424FA502071D01E007E5B36 /* IMGPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA2B2071D01D007E5B36 /* IMGPreviewController.m */; };
 		8424FA512071D01E007E5B36 /* IMGConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA2D2071D01D007E5B36 /* IMGConfigManager.m */; };
-		8424FA522071D01E007E5B36 /* IMGDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA2F2071D01D007E5B36 /* IMGDataManager.m */; };
+		8424FA522071D01E007E5B36 /* IMGPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA2F2071D01D007E5B36 /* IMGPhotoManager.m */; };
 		8424FA532071D01E007E5B36 /* IMGPickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA322071D01D007E5B36 /* IMGPickerManager.m */; };
 		8424FA542071D01E007E5B36 /* IMGPickerFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA352071D01D007E5B36 /* IMGPickerFlowLayout.m */; };
 		8424FA552071D01E007E5B36 /* IMGPickerAlbumsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA382071D01D007E5B36 /* IMGPickerAlbumsCell.m */; };
@@ -87,8 +87,8 @@
 		8424FA2B2071D01D007E5B36 /* IMGPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPreviewController.m; sourceTree = "<group>"; };
 		8424FA2C2071D01D007E5B36 /* IMGConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGConfigManager.h; sourceTree = "<group>"; };
 		8424FA2D2071D01D007E5B36 /* IMGConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGConfigManager.m; sourceTree = "<group>"; };
-		8424FA2E2071D01D007E5B36 /* IMGDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGDataManager.h; sourceTree = "<group>"; };
-		8424FA2F2071D01D007E5B36 /* IMGDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDataManager.m; sourceTree = "<group>"; };
+		8424FA2E2071D01D007E5B36 /* IMGPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPhotoManager.h; sourceTree = "<group>"; };
+		8424FA2F2071D01D007E5B36 /* IMGPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPhotoManager.m; sourceTree = "<group>"; };
 		8424FA302071D01D007E5B36 /* IMGPickerConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerConstant.h; sourceTree = "<group>"; };
 		8424FA312071D01D007E5B36 /* IMGPickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerManager.h; sourceTree = "<group>"; };
 		8424FA322071D01D007E5B36 /* IMGPickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPickerManager.m; sourceTree = "<group>"; };
@@ -224,14 +224,14 @@
 		8424FA262071D01D007E5B36 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8424FA272071D01D007E5B36 /* Controller */,
-				8424FA2C2071D01D007E5B36 /* IMGConfigManager.h */,
-				8424FA2D2071D01D007E5B36 /* IMGConfigManager.m */,
-				8424FA2E2071D01D007E5B36 /* IMGDataManager.h */,
-				8424FA2F2071D01D007E5B36 /* IMGDataManager.m */,
 				8424FA302071D01D007E5B36 /* IMGPickerConstant.h */,
 				8424FA312071D01D007E5B36 /* IMGPickerManager.h */,
 				8424FA322071D01D007E5B36 /* IMGPickerManager.m */,
+				8424FA2E2071D01D007E5B36 /* IMGPhotoManager.h */,
+				8424FA2F2071D01D007E5B36 /* IMGPhotoManager.m */,
+				8424FA2C2071D01D007E5B36 /* IMGConfigManager.h */,
+				8424FA2D2071D01D007E5B36 /* IMGConfigManager.m */,
+				8424FA272071D01D007E5B36 /* Controller */,
 				8424FA332071D01D007E5B36 /* Model */,
 				8424FA362071D01D007E5B36 /* View */,
 			);
@@ -432,7 +432,7 @@
 				8424FA4C2071D01E007E5B36 /* PHImageManager+FetchImage.m in Sources */,
 				8424FA4D2071D01E007E5B36 /* UIImage+animatedGIF.m in Sources */,
 				8424FA502071D01E007E5B36 /* IMGPreviewController.m in Sources */,
-				8424FA522071D01E007E5B36 /* IMGDataManager.m in Sources */,
+				8424FA522071D01E007E5B36 /* IMGPhotoManager.m in Sources */,
 				8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */,
 				8424FA4E2071D01E007E5B36 /* UIViewController+FYAlert.m in Sources */,
 				8424FA542071D01E007E5B36 /* IMGPickerFlowLayout.m in Sources */,

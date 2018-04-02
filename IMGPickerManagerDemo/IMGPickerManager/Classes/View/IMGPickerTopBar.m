@@ -35,8 +35,6 @@
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closedButton setImage:[UIImage imageNamed:@"ic_photo_close"] forState:UIControlStateNormal];
-//        closedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//        closedButton.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
@@ -102,8 +100,10 @@
         // titleLabel
         NSLayoutConstraint *constraint17 = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleView attribute:NSLayoutAttributeTop multiplier:1.0 constant:10.f];
         NSLayoutConstraint *constraint18 = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:titleView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+        NSLayoutConstraint *newConstraint1 = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:titleView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:15.0];
+        NSLayoutConstraint *newConstraint2 = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:titleView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-15.0];
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [titleView addConstraints:@[constraint17,constraint18]];
+        [titleView addConstraints:@[constraint17,constraint18,newConstraint1,newConstraint2]];
 
         // tipsLabel
         NSLayoutConstraint *constraint19 = [NSLayoutConstraint constraintWithItem:tipsLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:2.f];

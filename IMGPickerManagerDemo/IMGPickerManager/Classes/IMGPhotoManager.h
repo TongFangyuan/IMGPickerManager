@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
 
-@interface IMGDataManager : NSObject
+@interface IMGPhotoManager : NSObject
 
 + (NSMutableArray<PHAssetCollection *> *)fetchAssetCollections;
 

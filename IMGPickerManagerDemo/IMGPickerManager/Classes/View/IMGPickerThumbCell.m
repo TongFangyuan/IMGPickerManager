@@ -60,7 +60,7 @@ static CGFloat kButtonWidth = 22;
     // 图片
     _imageRequsetID = [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(ScreenWidth/[UIScreen mainScreen].scale, ScreenHeight/[UIScreen mainScreen].scale) contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         _thumbView.image = result;
-        NSLog(@"%@",info);
+//        NSLog(@"%@",info);
     }];
     
     // 选中状态

@@ -7,14 +7,14 @@
 //
 
 #import "IMGConfigManager.h"
-#import "IMGDataManager.h"
+#import "IMGPhotoManager.h"
 
 #import "IMGPickerController.h"
+#import "IMGPickerAlbumsCell.h"
 #import "IMGPickerThumbCell.h"
 #import "IMGPickerFlowLayout.h"
 #import "IMGPickerTopBar.h"
 #import "IMGPickerBottomBar.h"
-#import "IMGPickerAlbumsCell.h"
 
 
 #import "IMGPreviewController.h"
@@ -71,7 +71,7 @@ UITableViewDataSource
         _selectedAssets = [NSMutableArray array];
         _assets = [NSArray array];
         _assetCollections = [NSArray array];
-        cachingImageManager = [PHCachingImageManager new];
+        cachingImageManager = [[PHCachingImageManager alloc] init];
     }
     return self;
 }
@@ -179,7 +179,6 @@ UITableViewDataSource
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// TODO: 图片选择完成,dismiss控制器,传出数据
 - (void)doneButtonAction:(UIButton *)button
 {
     if (self.completeBlock) {
@@ -338,7 +337,7 @@ UITableViewDataSource
     
     // 设置封面图
     PHAsset *thumAsset = result.firstObject;
-    [[PHImageManager defaultManager] requestImageForAsset:thumAsset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    [cachingImageManager requestImageForAsset:thumAsset targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         cell.iconView.image = result;
     }];
     return cell;
@@ -409,15 +408,10 @@ UITableViewDataSource
 /// 获取相册数据
 - (void)fetchAssetCollections
 {
-    
-    _assetCollections = [IMGDataManager fetchAssetCollections];
+    _assetCollections = [IMGPhotoManager fetchAssetCollections];
     _selectedAssetCollection = _assetCollections.firstObject;
     selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    self.topBar.tipsLabel.text = _selectedAssetCollection.localizedTitle;
-    
-    [_assetCollections enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLog(@"%@",obj);
-    }];
+    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
     
     [self fetchAssets];
 }
@@ -425,13 +419,16 @@ UITableViewDataSource
 /// 获取某个相册的照片
 - (void)fetchAssets
 {
-    NSArray *results = [IMGDataManager fetchAssetsWithAssetCollection:self.selectedAssetCollection];
+    NSArray *results = [IMGPhotoManager fetchAssetsWithAssetCollection:self.selectedAssetCollection];
     
     self.assets = [NSArray arrayWithArray:results];
 
     // 缓存图片
     PHImageRequestOptions *requestOptions = [PHImageRequestOptions new];
     [cachingImageManager startCachingImagesForAssets:results targetSize:[UIScreen mainScreen].bounds.size contentMode:PHImageContentModeAspectFill options:requestOptions];
+    
+    //
+    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
     
     [self.collectionView reloadData];
     
