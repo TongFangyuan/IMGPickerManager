@@ -25,7 +25,8 @@ static CGFloat kAlbumsCellHeight = 70;
 UICollectionViewDelegate,
 UICollectionViewDataSource,
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+UIViewControllerPreviewingDelegate
 >
 {
     /// 是否达到最大选择数量,控制 cell 是否展示 maskView;
@@ -332,10 +333,17 @@ UITableViewDataSource
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
         [cell.maskView addGestureRecognizer:tap];
         [cell.maskView setUserInteractionEnabled:YES];
+        
     } else {
         [cell.maskView.superview sendSubviewToBack:cell.maskView];
         [cell.maskView setUserInteractionEnabled:NO];
+        
+        //// 3Dtouch
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            [self registerForPreviewingWithDelegate:self sourceView:cell];
+        }
     }
+    
     
     return cell;
 }
@@ -379,6 +387,7 @@ UITableViewDataSource
     [[IMGPhotoManager shareManager] getImageForAsset:result.firstObject targetSize:self.imageSize resultBlock:^(UIImage *image) {
         weakCell.iconView.image = image;
     }];
+    
     return cell;
 }
 
@@ -436,6 +445,26 @@ UITableViewDataSource
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     return nil;
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location{
+    UICollectionViewCell *cell = (UICollectionViewCell* )[previewingContext sourceView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+    
+    IMGPreviewController *previewController = [IMGPreviewController new];
+    previewController.assets = _assets;
+    previewController.originalSelectedAssets = _selectedAssets;
+    previewController.selectIndexPath = indexPath;
+    previewController.preferredContentSize = CGSizeMake(0.0f,500.0f);
+    
+    previewingContext.sourceRect = cell.bounds;
+    
+    return previewController;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit{
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
 
 //MARK: -  setter and getter
