@@ -49,14 +49,13 @@ UICollectionViewDataSource
     
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     
     if (self.selectIndexPath && self.isNeedScroll) {
-        [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+        [self.collectionView setContentOffset:CGPointMake((self.flowLayout.minimumLineSpacing+self.flowLayout.itemSize.width)*self.selectIndexPath.item, 0) animated:NO];
     }
     [self showCellAtIndexPath:self.selectIndexPath];
-    
 }
 
 - (void)initSubviews
