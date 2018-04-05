@@ -316,7 +316,6 @@ UIViewControllerPreviewingDelegate
     PHAsset *asset = [_assets objectAtIndex:indexPath.item];
     
     IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
-//    cell.model = asset;
     [cell setButtonSelected:asset.select];
     
     __weak typeof(cell) weakCell = cell;
@@ -333,6 +332,7 @@ UIViewControllerPreviewingDelegate
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
         [cell.maskView addGestureRecognizer:tap];
         [cell.maskView setUserInteractionEnabled:YES];
+        
         
     } else {
         [cell.maskView.superview sendSubviewToBack:cell.maskView];
