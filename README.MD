@@ -8,11 +8,8 @@
 
 效果图
 ------
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.png" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_02.png" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_03.png" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_04.png" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_05.png" width="235" height="417"/>
+<!-- <img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.jpeg" width="235" height="417"/> -->
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.jpeg"/>
 
 特性
 -----
