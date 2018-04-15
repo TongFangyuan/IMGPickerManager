@@ -10,11 +10,15 @@
 #import "IMGPreviewCell.h"
 #import "IMGPreviewOperationView.h"
 #import "UIViewController+FYAlert.h"
+#import "IMGPlayerManager.h"
+#import "IMGPhotoManager.h"
 
 @interface IMGPreviewController ()
 <
 UICollectionViewDelegate,
-UICollectionViewDataSource
+UICollectionViewDataSource,
+IMGPreviewCellDelegate,
+IMGPlayerDelegate
 >
 {
     BOOL isCollectionViewTop;
@@ -24,6 +28,8 @@ UICollectionViewDataSource
 @property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic,strong) IMGPreviewOperationView *operationView;
+@property (nonatomic,strong) IMGPreviewCell *playCell;
+@property (nonatomic,strong) IMGPreviewCell *playLiveCell;
 
 /// 选中的资源
 @property (nonatomic,strong) NSMutableArray<PHAsset *> *selectedAssets;
@@ -31,6 +37,7 @@ UICollectionViewDataSource
 
 
 @end
+
 
 @implementation IMGPreviewController
 
@@ -77,9 +84,12 @@ UICollectionViewDataSource
     self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.operationView addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
     [self.collectionView.superview sendSubviewToBack:self.collectionView];
+    
 }
 
 - (void)dealloc {
+    [[IMGPlayerManager shareManager] stop];
+    [[IMGPlayerManager shareManager] stopPlayLivePhoto];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -110,6 +120,17 @@ UICollectionViewDataSource
         [self.operationView.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)self.selectedAssets.count] forState:UIControlStateNormal];
     } else {
         self.operationView.numberButton.hidden = YES;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    IMGPreviewCell *cell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && cell.iconView) {
+        [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:cell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:cell.iconView];
+                weakSelf.playLiveCell = cell;
+            });
+        }];
     }
 }
 
@@ -156,7 +177,6 @@ UICollectionViewDataSource
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-// TODO:完成功能
 - (void)doneButtonAction:(UIButton *)button
 {
     if (self.completeBlock) {
@@ -186,6 +206,34 @@ UICollectionViewDataSource
     return UIInterfaceOrientationPortrait;
 }
 
+#pragma mark - IMGPreviewCellDelegate
+- (void)previewCellDidClickPlayButton:(IMGPreviewCell *)cell {
+    PHAsset *asset = cell.model;
+    
+    self.playCell = cell;
+    
+    __weak typeof(cell) weakCell = cell;
+    [IMGPhotoManager requestPlayerItemForVideo:asset handler:^(AVPlayerItem *playerItem) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [IMGPlayerManager shareManager].delegate = self;
+            [[IMGPlayerManager shareManager] playWithItem:playerItem contentView:weakCell.iconView];
+            [weakCell setPlayButtonHidden:YES];
+        });
+    }];
+    
+}
+
+#pragma mark - IMGPlayerDelegate
+- (void)playerDidPlayToEndTime:(IMGPlayerManager *)player {
+    [self.playCell setPlayButtonHidden:NO];
+    self.playCell = nil;
+}
+
+- (void)playerDidPlayWithError:(NSError *)error {
+    [self.playCell setPlayButtonHidden:NO];
+    self.playCell = nil;
+}
+
 #pragma mark - UICollectionViewDelegate UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -198,6 +246,7 @@ UICollectionViewDataSource
     IMGPreviewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYPrivewCell" forIndexPath:indexPath];
     PHAsset *asset = _assets[indexPath.item];
     cell.model = asset;
+    cell.delegate = self;
     return cell;
 }
 
@@ -221,7 +270,18 @@ UICollectionViewDataSource
         
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-        //        NSLog(@"%@",indexPath);
+        
+        if (self.selectIndexPath==indexPath) {
+            return;
+        }
+        
+        ///
+        [self.playCell setPlayButtonHidden:NO];
+        self.playCell = nil;
+        
+        [[IMGPlayerManager shareManager] stop];
+        
+        //  NSLog(@"%@",indexPath);
         [self showCellAtIndexPath:indexPath];
         self.selectIndexPath = indexPath;
     }

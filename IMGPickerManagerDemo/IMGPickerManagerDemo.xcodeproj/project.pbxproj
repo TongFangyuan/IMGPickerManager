@@ -16,7 +16,6 @@
 		8424FA042071CF61007E5B36 /* IMGPickerManagerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA032071CF61007E5B36 /* IMGPickerManagerDemoTests.m */; };
 		8424FA0F2071CF61007E5B36 /* IMGPickerManagerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA0E2071CF61007E5B36 /* IMGPickerManagerDemoUITests.m */; };
 		8424FA4B2071D01E007E5B36 /* PHAsset+IMGProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA1F2071D01D007E5B36 /* PHAsset+IMGProperty.m */; };
-		8424FA4C2071D01E007E5B36 /* PHImageManager+FetchImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA212071D01D007E5B36 /* PHImageManager+FetchImage.m */; };
 		8424FA4D2071D01E007E5B36 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA232071D01D007E5B36 /* UIImage+animatedGIF.m */; };
 		8424FA4E2071D01E007E5B36 /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA252071D01D007E5B36 /* UIViewController+FYAlert.m */; };
 		8424FA4F2071D01E007E5B36 /* IMGPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424FA292071D01D007E5B36 /* IMGPickerController.m */; };
@@ -39,6 +38,11 @@
 		8424FA602071D01E007E5B36 /* ic_photo_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */; };
 		8424FA6320720363007E5B36 /* take_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6120720363007E5B36 /* take_photo@3x.png */; };
 		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
+		DA159D97208338640080C50A /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D95208338640080C50A /* play@2x.png */; };
+		DA159D98208338640080C50A /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D96208338640080C50A /* play@3x.png */; };
+		DA159D9B20833C850080C50A /* IMGPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA159D9A20833C850080C50A /* IMGPlayerManager.m */; };
+		DA3D68F22082612100972B85 /* PHAssetCollection+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3D68F12082612100972B85 /* PHAssetCollection+Category.m */; };
+		DA852D442080F9D200BFEFD3 /* IMGCameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA852D432080F9D200BFEFD3 /* IMGCameraCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +81,6 @@
 		8424FA102071CF61007E5B36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8424FA1E2071D01D007E5B36 /* PHAsset+IMGProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+IMGProperty.h"; sourceTree = "<group>"; };
 		8424FA1F2071D01D007E5B36 /* PHAsset+IMGProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+IMGProperty.m"; sourceTree = "<group>"; };
-		8424FA202071D01D007E5B36 /* PHImageManager+FetchImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHImageManager+FetchImage.h"; sourceTree = "<group>"; };
-		8424FA212071D01D007E5B36 /* PHImageManager+FetchImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHImageManager+FetchImage.m"; sourceTree = "<group>"; };
 		8424FA222071D01D007E5B36 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		8424FA232071D01D007E5B36 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		8424FA242071D01D007E5B36 /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 		8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@3x.png"; sourceTree = "<group>"; };
 		8424FA6120720363007E5B36 /* take_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@3x.png"; sourceTree = "<group>"; };
 		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
+		DA159D95208338640080C50A /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		DA159D96208338640080C50A /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
+		DA159D9920833C850080C50A /* IMGPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPlayerManager.h; sourceTree = "<group>"; };
+		DA159D9A20833C850080C50A /* IMGPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPlayerManager.m; sourceTree = "<group>"; };
+		DA3D68F02082612100972B85 /* PHAssetCollection+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAssetCollection+Category.h"; sourceTree = "<group>"; };
+		DA3D68F12082612100972B85 /* PHAssetCollection+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAssetCollection+Category.m"; sourceTree = "<group>"; };
+		DA852D422080F9D200BFEFD3 /* IMGCameraCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGCameraCell.h; sourceTree = "<group>"; };
+		DA852D432080F9D200BFEFD3 /* IMGCameraCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGCameraCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,10 +223,10 @@
 		8424FA1D2071D01D007E5B36 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				DA3D68F02082612100972B85 /* PHAssetCollection+Category.h */,
+				DA3D68F12082612100972B85 /* PHAssetCollection+Category.m */,
 				8424FA1E2071D01D007E5B36 /* PHAsset+IMGProperty.h */,
 				8424FA1F2071D01D007E5B36 /* PHAsset+IMGProperty.m */,
-				8424FA202071D01D007E5B36 /* PHImageManager+FetchImage.h */,
-				8424FA212071D01D007E5B36 /* PHImageManager+FetchImage.m */,
 				8424FA222071D01D007E5B36 /* UIImage+animatedGIF.h */,
 				8424FA232071D01D007E5B36 /* UIImage+animatedGIF.m */,
 				8424FA242071D01D007E5B36 /* UIViewController+FYAlert.h */,
@@ -235,6 +245,8 @@
 				8424FA2F2071D01D007E5B36 /* IMGPhotoManager.m */,
 				8424FA2C2071D01D007E5B36 /* IMGConfigManager.h */,
 				8424FA2D2071D01D007E5B36 /* IMGConfigManager.m */,
+				DA159D9920833C850080C50A /* IMGPlayerManager.h */,
+				DA159D9A20833C850080C50A /* IMGPlayerManager.m */,
 				8424FA272071D01D007E5B36 /* Controller */,
 				8424FA332071D01D007E5B36 /* Model */,
 				8424FA362071D01D007E5B36 /* View */,
@@ -267,6 +279,8 @@
 			children = (
 				8424FA372071D01D007E5B36 /* IMGPickerAlbumsCell.h */,
 				8424FA382071D01D007E5B36 /* IMGPickerAlbumsCell.m */,
+				DA852D422080F9D200BFEFD3 /* IMGCameraCell.h */,
+				DA852D432080F9D200BFEFD3 /* IMGCameraCell.m */,
 				8424FA392071D01D007E5B36 /* IMGPickerBottomBar.h */,
 				8424FA3A2071D01D007E5B36 /* IMGPickerBottomBar.m */,
 				8424FA3B2071D01D007E5B36 /* IMGPickerThumbCell.h */,
@@ -284,6 +298,8 @@
 		8424FA442071D01E007E5B36 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DA159D95208338640080C50A /* play@2x.png */,
+				DA159D96208338640080C50A /* play@3x.png */,
 				8424FA6220720363007E5B36 /* take_photo@2x.png */,
 				8424FA6120720363007E5B36 /* take_photo@3x.png */,
 				8424FA452071D01E007E5B36 /* ic_close_white@2x.png */,
@@ -404,11 +420,13 @@
 			files = (
 				8424FA5C2071D01E007E5B36 /* ic_close_white@3x.png in Resources */,
 				8424FA6320720363007E5B36 /* take_photo@3x.png in Resources */,
+				DA159D97208338640080C50A /* play@2x.png in Resources */,
 				8424F9F72071CF61007E5B36 /* LaunchScreen.storyboard in Resources */,
 				8424F9F42071CF61007E5B36 /* Assets.xcassets in Resources */,
 				8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */,
 				8424F9F22071CF61007E5B36 /* Main.storyboard in Resources */,
 				8424FA602071D01E007E5B36 /* ic_photo_close@3x.png in Resources */,
+				DA159D98208338640080C50A /* play@3x.png in Resources */,
 				8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */,
 				8424FA5E2071D01E007E5B36 /* ic_photo_choosesel@3x.png in Resources */,
 				8424FA5B2071D01E007E5B36 /* ic_close_white@2x.png in Resources */,
@@ -437,13 +455,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8424FA4C2071D01E007E5B36 /* PHImageManager+FetchImage.m in Sources */,
 				8424FA4D2071D01E007E5B36 /* UIImage+animatedGIF.m in Sources */,
 				8424FA502071D01E007E5B36 /* IMGPreviewController.m in Sources */,
 				8424FA522071D01E007E5B36 /* IMGPhotoManager.m in Sources */,
+				DA852D442080F9D200BFEFD3 /* IMGCameraCell.m in Sources */,
+				DA3D68F22082612100972B85 /* PHAssetCollection+Category.m in Sources */,
 				8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */,
 				8424FA4E2071D01E007E5B36 /* UIViewController+FYAlert.m in Sources */,
 				8424FA542071D01E007E5B36 /* IMGPickerFlowLayout.m in Sources */,
+				DA159D9B20833C850080C50A /* IMGPlayerManager.m in Sources */,
 				8424FA582071D01E007E5B36 /* IMGPickerTopBar.m in Sources */,
 				8424FA592071D01E007E5B36 /* IMGPreviewCell.m in Sources */,
 				8424FA512071D01E007E5B36 /* IMGConfigManager.m in Sources */,

@@ -7,12 +7,30 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+typedef NS_ENUM(NSInteger, IMGAssetMediaType) {
+    IMGAssetMediaTypeUnknown = 0,
+    IMGAssetMediaTypeImage   = 1,
+    IMGAssetMediaTypeVideo   = 2,
+    IMGAssetMediaTypeAudio   = 3,
+};
 
 @interface IMGConfigManager : NSObject
 
-/// 最多能选几张图片,默认9张
-@property (nonatomic,assign) NSInteger maxCount;
-
 + (IMGConfigManager *)shareManager;
 
+/// 最多能选几张图片,默认9张
+@property (nonatomic,assign) NSInteger maxCount;
+/// IMGAssetMediaTypeImage default
+@property (nonatomic,assign) IMGAssetMediaType mediaType;
+/// 
+@property(nonatomic,assign) BOOL allowsEditing;
+
+//TODO: 属性
+//1.相机拍完照之后是否可编辑
+//2.颜色主题
+//...
+
 @end
+

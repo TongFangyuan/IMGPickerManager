@@ -8,7 +8,7 @@
 
 #import "IMGPreviewCell.h"
 #import "UIImage+animatedGIF.h"
-#import "PHImageManager+FetchImage.h"
+#import "IMGPhotoManager.h"
 
 @implementation IMGPreviewCell
 
@@ -17,30 +17,55 @@
 {
     _model = model;
     __weak typeof(self) weakSelf = self;
-    [PHImageManager fetchImageForAsset:model handler:^(NSData *imageData, NSDictionary *info) {
+    [IMGPhotoManager requestImageDataForAsset:model handler:^(NSData *imageData, IMGImageType imageType) {
         UIImage *result = [UIImage imageWithData:imageData];
         CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
         CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
         weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-        //        NSLog(@"%@",info[@"PHImageFileURLKey"]);
-        NSURL *imageFileURL = info[@"PHImageFileURLKey"];
-        if ([imageFileURL.absoluteString hasSuffix:@".GIF"] ) {
+        if (imageType==IMGImageTypeGif) {
             weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
         } else {
             weakSelf.iconView.image = result;
         }
     }];
+    
+    
+    if (model.mediaType == PHAssetMediaTypeVideo) {
+        self.playButton.hidden = NO;
+    } else {
+        self.playButton.hidden = YES;
+    }
 
+    
 }
+
+- (void)setPlayButtonHidden:(BOOL)hidden {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.model.mediaType == PHAssetMediaTypeVideo) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.playButton.hidden = hidden;
+            });
+        } else {
+            self.playButton.hidden = YES;
+        }
+    });
+    
+}
+
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
         [self.contentView addSubview:self.scrollView];
         [self.scrollView addSubview:self.iconView];
-         
+        [self.contentView addSubview:self.playButton];
+        
         self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.iconView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        self.playButton.frame = CGRectMake(0, 0, 80, 80);
+        self.playButton.center = self.contentView.center;
         
     }
     return self;
@@ -68,6 +93,14 @@
     return _iconView;
 }
 
+- (UIButton *)playButton{
+    if (!_playButton) {
+        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [_playButton addTarget:self action:@selector(playButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _playButton;
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
@@ -76,9 +109,9 @@
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale
 {
-//    NSLog(@"%@",view);
-//    NSLog(@"%f",scale);
-//    NSLog(@"%@",scrollView);
+    //    NSLog(@"%@",view);
+    //    NSLog(@"%f",scale);
+    //    NSLog(@"%@",scrollView);
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
@@ -96,4 +129,14 @@
     [super prepareForReuse];
     self.scrollView.zoomScale = 1;
 }
+
+
+- (void)playButtonCliked:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(previewCellDidClickPlayButton:)]) {
+        [self.delegate previewCellDidClickPlayButton:self];
+    }
+}
+
+
 @end

@@ -7,13 +7,13 @@
 //
 
 #import "IMGConfigManager.h"
+#import <objc/runtime.h>
 
 static IMGConfigManager *_shareManager = nil;
 
 @implementation IMGConfigManager
 
 + (IMGConfigManager *) shareManager {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _shareManager = [[[self class] alloc] init];
@@ -24,9 +24,12 @@ static IMGConfigManager *_shareManager = nil;
 - (instancetype)init{
     self = [super init];
     if (self) {
-        _maxCount = 9;
+        self.maxCount = 9;
+        self.mediaType = IMGAssetMediaTypeImage;
+        self.allowsEditing = NO;
     }
     return self;
 }
 
 @end
+

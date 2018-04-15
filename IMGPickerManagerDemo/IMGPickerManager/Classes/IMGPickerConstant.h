@@ -11,6 +11,7 @@
 
 
 #define IOS9 NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_9_0
+#define IOS9_1 NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_9_1
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height

@@ -9,13 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "PHAsset+IMGProperty.h"
 
+@class IMGPreviewCell;
+
+@protocol IMGPreviewCellDelegate <NSObject>
+
+- (void)previewCellDidClickPlayButton:(IMGPreviewCell *)cell;
+
+@end
 @interface IMGPreviewCell : UICollectionViewCell
 <
 UIScrollViewDelegate
 >
 
+@property (nonatomic,weak) id<IMGPreviewCellDelegate> delegate;
 @property (nonatomic,strong) PHAsset *model;
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIImageView *iconView;
+@property (nonatomic,strong) UIButton *playButton;
+
+- (void)setPlayButtonHidden:(BOOL)hidden;
 
 @end

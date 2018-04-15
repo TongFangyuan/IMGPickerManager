@@ -11,6 +11,7 @@
 #import "IMGConfigManager.h"
 #import "IMGPhotoManager.h"
 #import "IMGPickerAlbumsCell.h"
+#import "IMGCameraCell.h"
 #import "IMGPickerThumbCell.h"
 #import "IMGPickerFlowLayout.h"
 #import "IMGPickerTopBar.h"
@@ -26,7 +27,10 @@ UICollectionViewDelegate,
 UICollectionViewDataSource,
 UITableViewDelegate,
 UITableViewDataSource,
-UIViewControllerPreviewingDelegate
+UIViewControllerPreviewingDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,
+IMGPickerThumbCellDelegate
 >
 {
     /// 是否达到最大选择数量,控制 cell 是否展示 maskView;
@@ -46,6 +50,7 @@ UIViewControllerPreviewingDelegate
 @property (nonatomic,strong) UIView *contentView;
 @property (nonatomic,strong) IMGPickerTopBar *topBar;
 @property (nonatomic,strong) IMGPickerBottomBar *bottomBar;
+@property (nonatomic,strong) UIImagePickerController *imagePicker;
 
 /// FYAsset 资源数组
 @property (nonatomic,strong) NSArray<PHAsset *> *assets;
@@ -63,6 +68,9 @@ UIViewControllerPreviewingDelegate
 
 @end
 
+static NSString *kThubmbCellIdentifier = @"FYThumbCell";
+static NSString *kCameraCellIdentifier = @"IMGCameraCell";
+
 @implementation IMGPickerController
 
 #pragma mark - LifeCycle
@@ -71,9 +79,9 @@ UIViewControllerPreviewingDelegate
 {
     if (self = [super init]) {
         self.modalPresentationStyle = UIModalPresentationOverFullScreen;
-        _selectedAssets = [NSMutableArray array];
-        _assets = [NSArray array];
-        _assetCollections = [NSArray array];
+        self.selectedAssets = [NSMutableArray array];
+        self.assets = [NSArray array];
+        self.assetCollections = [NSArray array];
         cachingImageManager = [[PHCachingImageManager alloc] init];
     }
     return self;
@@ -142,9 +150,9 @@ UIViewControllerPreviewingDelegate
     NSLayoutConstraint *constraint21 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
     NSLayoutConstraint *constraint22 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
     NSLayoutConstraint *constraint23 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    _dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
+    self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint21,constraint22,constraint23,_dynamicConstraint]];
+    [self.contentView addConstraints:@[constraint21,constraint22,constraint23,self.dynamicConstraint]];
     
 }
 
@@ -155,29 +163,6 @@ UIViewControllerPreviewingDelegate
 }
 
 #pragma mark - Event response
-
-/// 点击选中按钮(圆圈)
-- (void)cellButtonClicked:(UIButton *)button
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.tag inSection:0];
-    PHAsset *asset = _assets[indexPath.item];
-    asset.select = !asset.select;
-    
-    IMGPickerThumbCell *cell = (IMGPickerThumbCell *)[_collectionView cellForItemAtIndexPath:indexPath];
-    [cell setButtonSelected:asset.select];
-
-    // 保存或移除对应的 asset
-    asset.select ? [_selectedAssets addObject:asset] : [_selectedAssets removeObject:asset];
-    
-    [self reloadCollectionViewData];
-    
-}
-
-- (void)cellTapMaskView:(UITapGestureRecognizer *)tap
-{
-    
-    NSLog(@"最多只能选择%ld张照片",(long)[IMGConfigManager shareManager].maxCount);
-}
 
 - (void)closedButtonAction:(UIButton *)button
 {
@@ -203,9 +188,9 @@ UIViewControllerPreviewingDelegate
     if (show) {
         self.topBar.line.hidden = YES;
         
-        [self.contentView removeConstraint:_dynamicConstraint];
-        _dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-120.f];
-        [self.contentView addConstraint:_dynamicConstraint];
+        [self.contentView removeConstraint:self.dynamicConstraint];
+        self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-120.f];
+        [self.contentView addConstraint:self.dynamicConstraint];
        
         [self.maskView.superview bringSubviewToFront:self.maskView];
         [self.tableView.superview bringSubviewToFront:self.tableView];
@@ -222,9 +207,9 @@ UIViewControllerPreviewingDelegate
     } else {
         
 
-        [self.contentView removeConstraint:_dynamicConstraint];
-        _dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-        [self.contentView addConstraint:_dynamicConstraint];
+        [self.contentView removeConstraint:self.dynamicConstraint];
+        self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+        [self.contentView addConstraint:self.dynamicConstraint];
         
         self.contentView.userInteractionEnabled = NO;
         [UIView animateWithDuration:0.3 animations:^{
@@ -242,8 +227,8 @@ UIViewControllerPreviewingDelegate
 - (void)previewButtonAction:(id)sender {
     
     IMGPreviewController *previewController = [IMGPreviewController new];
-    previewController.assets = _selectedAssets;
-    previewController.originalSelectedAssets = _selectedAssets;
+    previewController.assets = self.selectedAssets;
+    previewController.originalSelectedAssets = self.selectedAssets;
     
     [previewController setCompleteBlock:self.completeBlock];
     
@@ -260,19 +245,19 @@ UIViewControllerPreviewingDelegate
 /// 获取相册数据
 - (void)fetchAssetCollections
 {
-    _assetCollections = [[IMGPhotoManager shareManager] fetchAssetCollections];
-    _selectedAssetCollection = _assetCollections.firstObject;
+    self.assetCollections = [IMGPhotoManager fetchAssetCollectionsForMediaType:[IMGConfigManager shareManager].mediaType];
+    self.selectedAssetCollection = self.assetCollections.firstObject;
     selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
+    self.topBar.titleLabel.text = self.selectedAssetCollection.localizedTitle;
     
     [self fetchAssets];
 }
 
-/// 获取某个相册的照片
+/// 获取某个相册中的所有照片
 - (void)fetchAssets
 {
-    NSArray *results = [[IMGPhotoManager shareManager] fetchAssetsWithAssetCollection:self.selectedAssetCollection];
-    [[IMGPhotoManager shareManager] cacheImageForAsset:results targetSize:self.imageSize];
+    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].mediaType inAssetColelction:self.selectedAssetCollection];
+    [IMGPhotoManager cacheImageForAsset:results targetSize:self.imageSize];
     
     self.assets = [NSArray arrayWithArray:results];
     [self.collectionView reloadData];
@@ -282,15 +267,15 @@ UIViewControllerPreviewingDelegate
 - (void)reloadCollectionViewData {
     
     //// 是否显示 cell 的 maskview
-    countOverflow =  _selectedAssets.count >= 9;
+    countOverflow =  self.selectedAssets.count >= 9;
     
     //// topbar 选中图片数字和title颜色
-    self.topBar.doneButton.enabled = _selectedAssets.count;
-    self.topBar.numberButton.hidden = !_selectedAssets.count;
-    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
+    self.topBar.doneButton.enabled = self.selectedAssets.count;
+    self.topBar.numberButton.hidden = !self.selectedAssets.count;
+    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)self.selectedAssets.count] forState:UIControlStateNormal];
     
     //// bottomBar `预览` 按钮交互状态
-    self.bottomBar.previewButton.enabled = _selectedAssets.count;
+    self.bottomBar.previewButton.enabled = self.selectedAssets.count;
     
     //// 刷新 collectionView
     [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
@@ -308,52 +293,60 @@ UIViewControllerPreviewingDelegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _assets.count;
+    return self.assets.count+1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    PHAsset *asset = [_assets objectAtIndex:indexPath.item];
     
-    IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
-    [cell setButtonSelected:asset.select];
-    
-    __weak typeof(cell) weakCell = cell;
-    [[IMGPhotoManager shareManager] getImageForAsset:asset targetSize:self.imageSize resultBlock:^(UIImage *image) {
-        weakCell.thumbView.image = image;
-    }];
-    
-    cell.button.tag = indexPath.row;
-    [cell.button addTarget:self action:@selector(cellButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    BOOL show = countOverflow&&!asset.select;
-    if (show) {
-        [cell.maskView.superview bringSubviewToFront:cell.maskView];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapMaskView:)];
-        [cell.maskView addGestureRecognizer:tap];
-        [cell.maskView setUserInteractionEnabled:YES];
-        
-        
-    } else {
-        [cell.maskView.superview sendSubviewToBack:cell.maskView];
-        [cell.maskView setUserInteractionEnabled:NO];
-        
-        //// 3Dtouch
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            [self registerForPreviewingWithDelegate:self sourceView:cell];
-        }
+    ///////////// IMGCameraCell
+    if (indexPath.row==0) {
+        IMGCameraCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCameraCellIdentifier forIndexPath:indexPath];
+        return cell;
     }
     
+    /////////////// IMGPickerThumbCell
+    PHAsset *asset = self.assets[indexPath.item-1];
+    
+    IMGPickerThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FYThumbCell" forIndexPath:indexPath];
+    cell.asset = asset;
+    cell.delegate = self;
+    
+    BOOL show = countOverflow&&!asset.select;
+    [cell updateMaskViewStatus:show];
+    
+    // 3Dtouch
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:cell];
+    }
     
     return cell;
+    
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    //////////////// show UIImagePickerController
+    if (indexPath.row==0) {
+        
+        if (!self.imagePicker) {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.allowsEditing = [IMGConfigManager shareManager].allowsEditing;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [imagePicker setDelegate:self];
+            self.imagePicker = imagePicker;
+        }
+        [self presentViewController:self.imagePicker animated:YES completion:nil];
+        return;
+    }
+    
+    //////////////// show IMGPreviewController
     IMGPreviewController *previewController = [IMGPreviewController new];
-    previewController.assets = _assets;
-    previewController.originalSelectedAssets = _selectedAssets;
-    previewController.selectIndexPath = indexPath;
+    previewController.assets = self.assets;
+    previewController.originalSelectedAssets = self.selectedAssets;
+    previewController.selectIndexPath = [NSIndexPath indexPathForRow:(indexPath.row-1) inSection:indexPath.section];
     [previewController setCompleteBlock:self.completeBlock];
 
     __weak typeof(self) weakSelf = self;
@@ -368,23 +361,21 @@ UIViewControllerPreviewingDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _assetCollections.count;
+    return self.assetCollections.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     IMGPickerAlbumsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FYAlbumsCell"];
-    PHAssetCollection *collection = _assetCollections[indexPath.row];
+    PHAssetCollection *collection = self.assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
-    cell.accessoryType = (collection==_selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    PHFetchOptions *options = [PHFetchOptions new];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-    cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)result.count];
+    cell.accessoryType = (collection==self.selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    NSArray *assets = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].mediaType inAssetColelction:collection];
+    cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)assets.count];
     
     // 设置封面图
     __weak typeof(cell) weakCell = cell;
-    [[IMGPhotoManager shareManager] getImageForAsset:result.firstObject targetSize:self.imageSize resultBlock:^(UIImage *image) {
+    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGImageType type) {
         weakCell.iconView.image = image;
     }];
     
@@ -395,18 +386,18 @@ UIViewControllerPreviewingDelegate
 {
     if (selectedTableViewIndexPath == indexPath) return;
     
-    _assets = nil;
-    [_selectedAssets removeAllObjects];
+    self.assets = nil;
+    [self.selectedAssets removeAllObjects];
     countOverflow = NO;
     
     // topbar 和 bottombar 联动
-    self.topBar.doneButton.enabled = _selectedAssets.count;
-    self.topBar.numberButton.hidden = !_selectedAssets.count;
-    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)_selectedAssets.count] forState:UIControlStateNormal];
-    self.bottomBar.previewButton.enabled = _selectedAssets.count;
+    self.topBar.doneButton.enabled = self.selectedAssets.count;
+    self.topBar.numberButton.hidden = !self.selectedAssets.count;
+    [self.topBar.numberButton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)self.selectedAssets.count] forState:UIControlStateNormal];
+    self.bottomBar.previewButton.enabled = self.selectedAssets.count;
 
-    PHAssetCollection *collection = _assetCollections[indexPath.row];
-    _selectedAssetCollection = collection;
+    PHAssetCollection *collection = self.assetCollections[indexPath.row];
+    self.selectedAssetCollection = collection;
     
     // tableview 刷新
     selectedTableViewIndexPath ? [self.tableView reloadRowsAtIndexPaths:@[selectedTableViewIndexPath] withRowAnimation:UITableViewRowAnimationNone] : nil;
@@ -419,7 +410,7 @@ UIViewControllerPreviewingDelegate
     // 收起弹窗
     [self titleViewAction:nil];
     
-    self.topBar.titleLabel.text = _selectedAssetCollection.localizedTitle;
+    self.topBar.titleLabel.text = self.selectedAssetCollection.localizedTitle;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -447,17 +438,43 @@ UIViewControllerPreviewingDelegate
     return nil;
 }
 
+#pragma mark - IMGPickerThumbCellDelegate
+
+- (void)pickerThumbCellDidClickButton:(IMGPickerThumbCell *)cell
+{
+    PHAsset *asset = cell.asset;
+    asset.select = !asset.select;
+    [cell setButtonSelected:asset.select];
+    
+    // 保存或移除对应的 asset
+    asset.select ? [self.selectedAssets addObject:asset] : [self.selectedAssets removeObject:asset];
+    
+    [self reloadCollectionViewData];
+}
+
 #pragma mark - UIViewControllerPreviewingDelegate
+
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location{
     UICollectionViewCell *cell = (UICollectionViewCell* )[previewingContext sourceView];
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+    PHAsset *asset = self.assets[indexPath.item-1];
     
     IMGPreviewController *previewController = [IMGPreviewController new];
-    previewController.assets = _assets;
-    previewController.originalSelectedAssets = _selectedAssets;
-    previewController.selectIndexPath = indexPath;
-    previewController.preferredContentSize = CGSizeMake(0.0f,500.0f);
+    previewController.assets = self.assets;
+    previewController.originalSelectedAssets = self.selectedAssets;
+    previewController.selectIndexPath = [NSIndexPath indexPathForRow:(indexPath.row-1) inSection:indexPath.section];
     
+    __weak typeof(previewController) weakController = previewController;
+    [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData,IMGImageType imageType) {
+        UIImage *image = [[UIImage alloc] initWithData:imageData];
+        CGFloat width = CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds) - 40;
+        CGFloat maxHeight = 500;
+        CGFloat height = image.size.height/image.size.width * width;
+        if (height>maxHeight) {
+            height = maxHeight;
+        }
+        weakController.preferredContentSize = CGSizeMake(width, height);
+    }];
     previewingContext.sourceRect = cell.bounds;
     
     return previewController;
@@ -465,6 +482,31 @@ UIViewControllerPreviewingDelegate
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit{
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo{
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - ImageSavedPhotosAlbumCompletionHander
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (!error) {
+        NSLog(@"imageSaveSuccess");
+    } else {
+        NSLog(@"imageSaveError:%@",error.localizedDescription);
+    }
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+    ///刷新视图
+    [self fetchAssets];
 }
 
 //MARK: -  setter and getter
@@ -487,6 +529,7 @@ UIViewControllerPreviewingDelegate
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[IMGPickerThumbCell class] forCellWithReuseIdentifier:@"FYThumbCell"];
+        [_collectionView registerClass:[IMGCameraCell class] forCellWithReuseIdentifier:@"IMGCameraCell"];
     }
     return _collectionView;
 }

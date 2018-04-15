@@ -30,6 +30,9 @@
 
 - (IBAction)chooseAction:(id)sender {
     
+    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeImage;
+//    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeVideo;
+    
     [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
         if (!error) {
             NSLog(@"user chosse %@",results);
