@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
+#import "IMGConfigManager.h"
 
 static IMGPlayerManager *_shareManager = nil;
 
@@ -114,6 +115,10 @@ PHLivePhotoViewDelegate
 
 #pragma mark - play livePhoto
 - (void)playLivePhoto:(PHLivePhoto *)livePhoto contentView:(UIView *)contentView{
+    if (![IMGConfigManager shareManager].allowLivePhoto) {
+        return;
+    }
+    
     if (self.livePhotoView) {
         [self stopPlayLivePhoto];
     }

@@ -55,7 +55,6 @@ static CGFloat kButtonWidth = 22;
         durationLabel.textColor = [UIColor whiteColor];
         durationLabel.font = [UIFont boldSystemFontOfSize:10];
         durationLabel.textAlignment = NSTextAlignmentRight;
-//        durationLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.4];
         durationLabel.frame = CGRectMake(0, frame.size.height-14, frame.size.width-4, 14);
         [self.contentView addSubview:durationLabel];
         _durationLabel = durationLabel;
@@ -89,7 +88,7 @@ static CGFloat kButtonWidth = 22;
         weakSelf.thumbView.image = image;
         if (imageType==IMGImageTypeGif) {
             weakSelf.durationLabel.text = @"Gif";
-        } else if (imageType==IMGImageTypeLivePhoto) {
+        } else if (imageType==IMGImageTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
             weakSelf.durationLabel.text = @"Live";
         } else {
             weakSelf.durationLabel.text = @"";

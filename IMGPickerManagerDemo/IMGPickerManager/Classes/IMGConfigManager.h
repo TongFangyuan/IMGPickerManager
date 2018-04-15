@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, IMGAssetMediaType) {
     IMGAssetMediaTypeUnknown = 0,
     IMGAssetMediaTypeImage   = 1,
     IMGAssetMediaTypeVideo   = 2,
-    IMGAssetMediaTypeAudio   = 3,
+    IMGAssetMediaTypeAudio   = IMGAssetMediaTypeUnknown,
 };
 
 @interface IMGConfigManager : NSObject
@@ -24,13 +24,12 @@ typedef NS_ENUM(NSInteger, IMGAssetMediaType) {
 @property (nonatomic,assign) NSInteger maxCount;
 /// IMGAssetMediaTypeImage default
 @property (nonatomic,assign) IMGAssetMediaType mediaType;
-/// 
+/// default NO
 @property(nonatomic,assign) BOOL allowsEditing;
-
-//TODO: 属性
-//1.相机拍完照之后是否可编辑
-//2.颜色主题
-//...
+/// default NO, will show 'live' tag and play LivePhoto if YES
+@property(nonatomic,assign) BOOL allowLivePhoto;
+/// default YES
+@property(nonatomic,assign) BOOL allowGif;
 
 @end
 

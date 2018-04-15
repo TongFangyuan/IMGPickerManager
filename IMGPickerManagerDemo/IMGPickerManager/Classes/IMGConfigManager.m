@@ -27,6 +27,8 @@ static IMGConfigManager *_shareManager = nil;
         self.maxCount = 9;
         self.mediaType = IMGAssetMediaTypeImage;
         self.allowsEditing = NO;
+        self.allowGif = YES;
+        self.allowLivePhoto = NO;
     }
     return self;
 }
