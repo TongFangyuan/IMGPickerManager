@@ -315,11 +315,12 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     BOOL show = countOverflow&&!asset.select;
     [cell updateMaskViewStatus:show];
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_0
     // 3Dtouch
     if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
         [self registerForPreviewingWithDelegate:self sourceView:cell];
     }
-    
+#endif
     return cell;
     
     
@@ -452,8 +453,9 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self reloadCollectionViewData];
 }
 
-#pragma mark - UIViewControllerPreviewingDelegate
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_0
 
+#pragma mark - UIViewControllerPreviewingDelegate
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location{
     UICollectionViewCell *cell = (UICollectionViewCell* )[previewingContext sourceView];
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
@@ -483,6 +485,8 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit{
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
+
+#endif
 
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo{

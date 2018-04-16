@@ -108,9 +108,12 @@ static IMGPhotoManager *_shareManager = nil;
 //            NSLog(@"%@",typeIdentifier);
             if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
                 imageType = IMGImageTypeGif;
-            } else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && IOS9_1) {
+            }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+            else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
                 imageType = IMGImageTypeLivePhoto;
             }
+#endif
             handler(result,imageType);
         }
     }];
@@ -134,15 +137,21 @@ static IMGPhotoManager *_shareManager = nil;
             IMGImageType imageType = IMGImageTypeDefault;
             if ([dataUTI isEqualToString:@"com.compuserve.gif"]) {
                 imageType = IMGImageTypeGif;
-            } else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && IOS9_1) {
+            }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+            else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
                 imageType = IMGImageTypeLivePhoto;
             }
+#endif
             handler(imageData,imageType);
         }
     }];
 }
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
 
 #pragma mark LivePhoto
 + (void)requestLivePhotoForAsset:(PHAsset *)asset targetSize:(CGSize)size handler:(void(^)(PHLivePhoto * livePhoto))handler
@@ -154,6 +163,8 @@ static IMGPhotoManager *_shareManager = nil;
     }];
 }
 
+#pragma clang diagnostic pop
+#endif
 
 
 #pragma mark request video
@@ -189,7 +200,7 @@ static IMGPhotoManager *_shareManager = nil;
 + (PHFetchOptions *)defaultFetchOptions
 {
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    if (IOS9) {
+    if (@available(iOS 9.0, *)) {
         options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     }
     return options;

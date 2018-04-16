@@ -122,6 +122,10 @@ IMGPlayerDelegate
         self.operationView.numberButton.hidden = YES;
     }
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
     __weak typeof(self) weakSelf = self;
     IMGPreviewCell *cell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && cell.iconView) {
@@ -132,6 +136,10 @@ IMGPlayerDelegate
             });
         }];
     }
+
+#pragma clang diagnostic pop
+#endif
+    
 }
 
 - (void)userClickedSelectedButton:(UIButton *)button

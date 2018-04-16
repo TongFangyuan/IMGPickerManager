@@ -44,10 +44,18 @@ typedef enum : NSInteger {
                  synchronous:(BOOL)synchronous
                      handler:(void(^)(NSData *imageData,IMGImageType imageType))handler;
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 #pragma mark - request LivePhoto
 + (void)requestLivePhotoForAsset:(PHAsset *)asset
                       targetSize:(CGSize)size
                          handler:(void(^)(PHLivePhoto * livePhoto))handler;
+
+
+#pragma clang diagnostic pop
+#endif
 
 #pragma mark - requset video
 //TODO: 获取视频

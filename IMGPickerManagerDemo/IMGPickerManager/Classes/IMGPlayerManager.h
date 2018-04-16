@@ -31,9 +31,10 @@
 - (void)pause;
 - (void)stop;
 
-
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
 #pragma mark - play LivePhoto
 - (void)playLivePhoto:(PHLivePhoto *)livePhoto contentView:(UIView *)contentView;
 - (void)stopPlayLivePhoto;
+#endif
 
 @end

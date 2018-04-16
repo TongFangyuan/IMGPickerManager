@@ -22,7 +22,14 @@ PHLivePhotoViewDelegate
 @property (nonatomic,strong) AVPlayer *player;
 @property (nonatomic,strong) AVPlayerLayer *playerLayer;
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 @property (nonatomic,strong) PHLivePhotoView *livePhotoView;
+
+#pragma clang diagnostic pop
+#endif
 
 @end
 
@@ -113,6 +120,10 @@ PHLivePhotoViewDelegate
 }
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 #pragma mark - play livePhoto
 - (void)playLivePhoto:(PHLivePhoto *)livePhoto contentView:(UIView *)contentView{
     if (![IMGConfigManager shareManager].allowLivePhoto) {
@@ -127,6 +138,7 @@ PHLivePhotoViewDelegate
         NSLog(@"play livephoto error: livePhoto is nil");
         return;
     }
+    
     
     self.livePhotoView = [[PHLivePhotoView alloc] initWithFrame:contentView.bounds];
     [contentView addSubview:self.livePhotoView];
@@ -150,5 +162,8 @@ PHLivePhotoViewDelegate
 - (void)livePhotoView:(PHLivePhotoView *)livePhotoView didEndPlaybackWithStyle:(PHLivePhotoViewPlaybackStyle)playbackStyle{
     [self stopPlayLivePhoto];
 }
+
+#pragma clang diagnostic pop
+#endif
 
 @end
