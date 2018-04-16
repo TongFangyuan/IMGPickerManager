@@ -210,9 +210,14 @@ static IMGPhotoManager *_shareManager = nil;
 + (PHFetchOptions *)defaultFetchOptions
 {
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    if (@available(iOS 9.0, *)) {
-        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-    }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    
+    options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    
+#pragma clang diagnostic pop
+#endif
     return options;
 }
 
