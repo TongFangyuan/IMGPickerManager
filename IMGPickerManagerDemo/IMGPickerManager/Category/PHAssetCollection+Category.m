@@ -9,12 +9,12 @@
 #import "PHAssetCollection+Category.h"
 #import <objc/runtime.h>
 
-static NSString *kAssetCountKey = @"kAssetCountKey";
+static const NSString *kAssetCountKey = @"kAssetCountKey";
 
 @implementation PHAssetCollection (Category)
 
 - (void)setAssetCount:(NSUInteger)assetCount{
-    objc_setAssociatedObject(self, &kAssetCountKey, [NSNumber numberWithUnsignedInteger:assetCount], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &kAssetCountKey, [NSNumber numberWithUnsignedInteger:assetCount], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSUInteger)assetCount{

@@ -38,6 +38,8 @@
 		8424FA602071D01E007E5B36 /* ic_photo_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */; };
 		8424FA6320720363007E5B36 /* take_photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6120720363007E5B36 /* take_photo@3x.png */; };
 		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
+		84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB22084A531001AA758 /* SaveFileViewController.m */; };
+		84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB52084A7EF001AA758 /* SettingViewController.m */; };
 		DA159D97208338640080C50A /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D95208338640080C50A /* play@2x.png */; };
 		DA159D98208338640080C50A /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D96208338640080C50A /* play@3x.png */; };
 		DA159D9B20833C850080C50A /* IMGPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA159D9A20833C850080C50A /* IMGPlayerManager.m */; };
@@ -119,6 +121,10 @@
 		8424FA4A2071D01E007E5B36 /* ic_photo_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@3x.png"; sourceTree = "<group>"; };
 		8424FA6120720363007E5B36 /* take_photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@3x.png"; sourceTree = "<group>"; };
 		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
+		84AC1CB12084A531001AA758 /* SaveFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveFileViewController.h; sourceTree = "<group>"; };
+		84AC1CB22084A531001AA758 /* SaveFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveFileViewController.m; sourceTree = "<group>"; };
+		84AC1CB42084A7EF001AA758 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		84AC1CB52084A7EF001AA758 /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		DA159D95208338640080C50A /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
 		DA159D96208338640080C50A /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
 		DA159D9920833C850080C50A /* IMGPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPlayerManager.h; sourceTree = "<group>"; };
@@ -182,6 +188,10 @@
 				8424F9EB2071CF61007E5B36 /* AppDelegate.m */,
 				8424F9ED2071CF61007E5B36 /* ViewController.h */,
 				8424F9EE2071CF61007E5B36 /* ViewController.m */,
+				84AC1CB42084A7EF001AA758 /* SettingViewController.h */,
+				84AC1CB52084A7EF001AA758 /* SettingViewController.m */,
+				84AC1CB12084A531001AA758 /* SaveFileViewController.h */,
+				84AC1CB22084A531001AA758 /* SaveFileViewController.m */,
 				8424F9F02071CF61007E5B36 /* Main.storyboard */,
 				8424F9F32071CF61007E5B36 /* Assets.xcassets */,
 				8424F9F52071CF61007E5B36 /* LaunchScreen.storyboard */,
@@ -465,9 +475,11 @@
 				8424FA542071D01E007E5B36 /* IMGPickerFlowLayout.m in Sources */,
 				DA159D9B20833C850080C50A /* IMGPlayerManager.m in Sources */,
 				8424FA582071D01E007E5B36 /* IMGPickerTopBar.m in Sources */,
+				84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */,
 				8424FA592071D01E007E5B36 /* IMGPreviewCell.m in Sources */,
 				8424FA512071D01E007E5B36 /* IMGConfigManager.m in Sources */,
 				8424FA4B2071D01E007E5B36 /* PHAsset+IMGProperty.m in Sources */,
+				84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */,
 				8424F9FA2071CF61007E5B36 /* main.m in Sources */,
 				8424FA572071D01E007E5B36 /* IMGPickerThumbCell.m in Sources */,
 				8424F9EC2071CF61007E5B36 /* AppDelegate.m in Sources */,

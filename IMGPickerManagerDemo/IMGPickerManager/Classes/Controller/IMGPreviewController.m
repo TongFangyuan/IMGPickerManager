@@ -123,23 +123,19 @@ IMGPlayerDelegate
         self.operationView.numberButton.hidden = YES;
     }
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-    
-    __weak typeof(self) weakSelf = self;
-    IMGPreviewCell *cell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && cell.iconView) {
-        [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:cell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:cell.iconView];
-                weakSelf.playLiveCell = cell;
-            });
-        }];
+    if (@available(iOS 9.1, *)) {
+        __weak typeof(self) weakSelf = self;
+        IMGPreviewCell *cell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && cell.iconView) {
+            [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:cell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:cell.iconView];
+                    weakSelf.playLiveCell = cell;
+                });
+            }];
+        }
     }
 
-#pragma clang diagnostic pop
-#endif
     
 }
 

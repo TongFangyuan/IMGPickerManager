@@ -17,7 +17,7 @@ static NSString *overflowWithSetterGetterKey = @"overflowWithSetterGetterKey";
 
 @dynamic select;
 - (void)setSelect:(BOOL)select {
-    objc_setAssociatedObject(self, &selectWithSetterGetterKey, [NSNumber numberWithBool:select], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &selectWithSetterGetterKey, [NSNumber numberWithBool:select], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)select{
@@ -26,7 +26,7 @@ static NSString *overflowWithSetterGetterKey = @"overflowWithSetterGetterKey";
 
 @dynamic overflow;
 - (void)setOverflow:(BOOL)overflow {
-    objc_setAssociatedObject(self, &overflowWithSetterGetterKey, [NSNumber numberWithBool:overflow], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &overflowWithSetterGetterKey, [NSNumber numberWithBool:overflow], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)overflow {

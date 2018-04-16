@@ -18,15 +18,17 @@
     _model = model;
     __weak typeof(self) weakSelf = self;
     [IMGPhotoManager requestImageDataForAsset:model handler:^(NSData *imageData, IMGImageType imageType) {
-        UIImage *result = [UIImage imageWithData:imageData];
-        CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
-        CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-        weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-        if (imageType==IMGImageTypeGif) {
-            weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-        } else {
-            weakSelf.iconView.image = result;
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIImage *result = [UIImage imageWithData:imageData];
+            CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
+            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
+            weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+            if (imageType==IMGImageTypeGif) {
+                weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+            } else {
+                weakSelf.iconView.image = result;
+            }
+        });
     }];
     
     

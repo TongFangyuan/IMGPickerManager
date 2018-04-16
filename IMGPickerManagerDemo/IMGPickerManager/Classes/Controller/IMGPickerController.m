@@ -308,15 +308,12 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     BOOL show = countOverflow&&!asset.select;
     [cell updateMaskViewStatus:show];
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_0
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
     // 3Dtouch
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        [self registerForPreviewingWithDelegate:self sourceView:cell];
+    if (@available(iOS 9.0, *)) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            [self registerForPreviewingWithDelegate:self sourceView:cell];
+        }
     }
-#pragma clang diagnostic pop
-#endif
     return cell;
     
     

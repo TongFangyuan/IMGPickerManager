@@ -109,16 +109,12 @@ static IMGPhotoManager *_shareManager = nil;
             if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
                 imageType = IMGImageTypeGif;
             }
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-            
-            else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-                imageType = IMGImageTypeLivePhoto;
+            if (@available(iOS 9.1, *)) {
+                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+                    imageType = IMGImageTypeLivePhoto;
+                }
             }
             
-#pragma clang diagnostic pop
-#endif
             handler(result,imageType);
         }
     }];
@@ -143,23 +139,17 @@ static IMGPhotoManager *_shareManager = nil;
             if ([dataUTI isEqualToString:@"com.compuserve.gif"]) {
                 imageType = IMGImageTypeGif;
             }
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-            
-            else if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-                imageType = IMGImageTypeLivePhoto;
+            if (@available(iOS 9.1, *)) {
+                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+                    imageType = IMGImageTypeLivePhoto;
+                }
             }
-            
-#pragma clang diagnostic pop
-#endif
             handler(imageData,imageType);
         }
     }];
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
@@ -174,7 +164,6 @@ static IMGPhotoManager *_shareManager = nil;
 }
 
 #pragma clang diagnostic pop
-#endif
 
 
 #pragma mark request video
@@ -210,14 +199,9 @@ static IMGPhotoManager *_shareManager = nil;
 + (PHFetchOptions *)defaultFetchOptions
 {
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-    
-    options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-    
-#pragma clang diagnostic pop
-#endif
+    if (@available(iOS 9.0, *)) {
+        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    }
     return options;
 }
 

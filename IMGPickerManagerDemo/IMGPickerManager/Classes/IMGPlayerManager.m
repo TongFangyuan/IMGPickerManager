@@ -120,7 +120,6 @@ PHLivePhotoViewDelegate
 }
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_1
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
@@ -164,6 +163,5 @@ PHLivePhotoViewDelegate
 }
 
 #pragma clang diagnostic pop
-#endif
 
 @end

@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, IMGAssetMediaType) {
     IMGAssetMediaTypeImage   = 1,
     IMGAssetMediaTypeVideo   = 2,
     IMGAssetMediaTypeAudio   = IMGAssetMediaTypeUnknown,
+    IMGAssetMediaTypeAll
 };
 
 @interface IMGConfigManager : NSObject

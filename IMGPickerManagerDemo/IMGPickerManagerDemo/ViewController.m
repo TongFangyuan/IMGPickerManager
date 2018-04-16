@@ -18,8 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-    self.view.backgroundColor = [UIColor greenColor];
 }
 
 
@@ -29,9 +27,6 @@
 }
 
 - (IBAction)chooseAction:(id)sender {
-    
-    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeImage;
-//    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeVideo;
     
     [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
         if (!error) {
