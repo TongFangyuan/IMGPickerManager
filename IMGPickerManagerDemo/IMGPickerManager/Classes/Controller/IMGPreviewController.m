@@ -12,6 +12,7 @@
 #import "UIViewController+FYAlert.h"
 #import "IMGPlayerManager.h"
 #import "IMGPhotoManager.h"
+#import "IMGPickerManager.h"
 
 @interface IMGPreviewController ()
 <
@@ -187,11 +188,7 @@ IMGPlayerDelegate
 
 - (void)doneButtonAction:(UIButton *)button
 {
-    if (self.completeBlock) {
-        self.completeBlock(self.selectedAssets, nil);
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IMGPickerManagerWillPickCompleteNotification object:nil userInfo:@{@"data":self.selectedAssets}];
 }
 
 - (BOOL)prefersStatusBarHidden

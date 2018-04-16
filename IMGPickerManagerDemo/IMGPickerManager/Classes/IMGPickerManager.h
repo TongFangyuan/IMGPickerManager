@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class PHAsset;
-
-typedef void(^IMGCompleteBlock)(NSArray<PHAsset *> *results,NSError *error);
-
 @interface IMGPickerManager : NSObject
 
-+ (void)startChoose:(IMGCompleteBlock)completeBlock;
++ (void)startChoose:(void(^)(NSArray<PHAsset *> *results,NSError *error))completeBlock;
 
 @end
+
+extern NSNotificationName const IMGPickerManagerWillPickCompleteNotification;
+extern NSNotificationName const IMGPickerManagerCancelPickNotification;
+

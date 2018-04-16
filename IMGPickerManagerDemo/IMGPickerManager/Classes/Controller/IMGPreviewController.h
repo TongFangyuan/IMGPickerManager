@@ -11,7 +11,6 @@
 #import "IMGConfigManager.h"
 #import <Photos/Photos.h>
 
-typedef void(^IMGPrivewCompleteBlock)(NSArray *result,NSError *error);
 typedef void(^IMGPrivewCancelBlock)(NSArray *result);
 
 
@@ -23,8 +22,6 @@ typedef void(^IMGPrivewCancelBlock)(NSArray *result);
 @property (nonatomic,strong) NSMutableArray<PHAsset *> *originalSelectedAssets;
 /// 当前选中的 indexPath
 @property (nonatomic,strong) NSIndexPath *selectIndexPath;
-/// 选择完成
-@property (nonatomic,copy) IMGPrivewCompleteBlock completeBlock;
 /// 取消选择
 @property (nonatomic,copy) IMGPrivewCancelBlock cancelBlock;
 

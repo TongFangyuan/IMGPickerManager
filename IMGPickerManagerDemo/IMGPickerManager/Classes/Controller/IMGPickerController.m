@@ -7,6 +7,7 @@
 //
 
 #import "IMGPickerController.h"
+#import "IMGPickerManager.h"
 
 #import "IMGConfigManager.h"
 #import "IMGPhotoManager.h"
@@ -166,19 +167,13 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 
 - (void)closedButtonAction:(UIButton *)button
 {
-    if (self.completeBlock) {
-        NSError *error = [NSError errorWithDomain:@"user cancel" code:100 userInfo:@{NSLocalizedDescriptionKey:@"用户取消"}];
-        self.completeBlock(nil, error);
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSError *error = [NSError errorWithDomain:@"user cancel" code:100 userInfo:@{NSLocalizedDescriptionKey:@"用户取消"}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IMGPickerManagerCancelPickNotification object:nil userInfo:@{@"error":error}];
 }
 
 - (void)doneButtonAction:(UIButton *)button
 {
-    if (self.completeBlock) {
-        self.completeBlock(self.selectedAssets, nil);
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IMGPickerManagerWillPickCompleteNotification object:nil userInfo:@{@"data":self.selectedAssets}];
 }
 
 - (void)titleViewAction:(UITapGestureRecognizer *)tap
@@ -229,8 +224,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     IMGPreviewController *previewController = [IMGPreviewController new];
     previewController.assets = self.selectedAssets;
     previewController.originalSelectedAssets = self.selectedAssets;
-    
-    [previewController setCompleteBlock:self.completeBlock];
     
     __weak typeof(self) weakSelf = self;
     [previewController setCancelBlock:^(NSArray<PHAsset *> *asstes) {
@@ -316,10 +309,13 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [cell updateMaskViewStatus:show];
     
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_0
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
     // 3Dtouch
     if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
         [self registerForPreviewingWithDelegate:self sourceView:cell];
     }
+#pragma clang diagnostic pop
 #endif
     return cell;
     
@@ -348,8 +344,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     previewController.assets = self.assets;
     previewController.originalSelectedAssets = self.selectedAssets;
     previewController.selectIndexPath = [NSIndexPath indexPathForRow:(indexPath.row-1) inSection:indexPath.section];
-    [previewController setCompleteBlock:self.completeBlock];
-
+    
     __weak typeof(self) weakSelf = self;
     [previewController setCancelBlock:^(NSArray<PHAsset *> *asstes) {
         weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
@@ -454,6 +449,8 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_9_0
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
 
 #pragma mark - UIViewControllerPreviewingDelegate
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location{
@@ -486,6 +483,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self.navigationController pushViewController:viewControllerToCommit animated:YES];
 }
 
+#pragma clang diagnostic pop
 #endif
 
 #pragma mark - UIImagePickerControllerDelegate
