@@ -16,29 +16,60 @@
 - (void)setModel:(PHAsset *)model
 {
     _model = model;
-    __weak typeof(self) weakSelf = self;
-    [IMGPhotoManager requestImageDataForAsset:model handler:^(NSData *imageData, IMGImageType imageType) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIImage *result = [UIImage imageWithData:imageData];
-            CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
-            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-            weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-            if (imageType==IMGImageTypeGif) {
-                weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-            } else {
-                weakSelf.iconView.image = result;
-            }
-        });
-    }];
-    
-    
+
     if (model.mediaType == PHAssetMediaTypeVideo) {
         self.playButton.hidden = NO;
     } else {
         self.playButton.hidden = YES;
     }
-
     
+    
+}
+
+- (void)loadImage {
+    
+    [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGImageType imageType) {
+        NSLog(@"image:%@",image);
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.iconView.image = image;
+        });
+    }];
+    
+//    if ([IMGPhotoManager getImageTypeForAsset:self.model]==IMGImageTypeGif) {
+//        [self displayGifImage];
+//    } else {
+//        [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGImageType imageType) {
+//            NSLog(@"image:%@",image);
+//            __weak typeof(self) weakSelf = self;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                weakSelf.iconView.image = image;
+//            });
+//        }];
+//    }
+    
+}
+
+- (void)displayGifImage {
+    __weak typeof(self) weakSelf = self;
+    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+        [IMGPhotoManager requestImageDataForAsset:self.model handler:^(NSData *imageData, IMGImageType imageType) {
+            UIImage *gifImage = [UIImage animatedImageWithAnimatedGIFData:imageData];
+            NSLog(@"gifImage:%@",gifImage);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.iconView.image = gifImage;
+                //            CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
+                //            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
+                //            weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+                //            if (imageType==IMGImageTypeGif) {
+                //                weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
+                //            } else {
+                //                weakSelf.iconView.image = result;
+                //            }
+            });
+        }];
+    });
+
 }
 
 - (void)setPlayButtonHidden:(BOOL)hidden {
@@ -54,7 +85,6 @@
     });
     
 }
-
 
 
 - (instancetype)initWithFrame:(CGRect)frame

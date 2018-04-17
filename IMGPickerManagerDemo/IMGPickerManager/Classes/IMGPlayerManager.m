@@ -144,6 +144,7 @@ PHLivePhotoViewDelegate
     self.livePhotoView.livePhoto = livePhoto;
     self.livePhotoView.delegate = self;
     self.livePhotoView.muted = YES;
+    self.livePhotoView.contentMode = UIViewContentModeScaleAspectFit;
     
     [self.livePhotoView startPlaybackWithStyle:PHLivePhotoViewPlaybackStyleFull];
 }

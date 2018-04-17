@@ -27,6 +27,10 @@
 }
 
 - (IBAction)chooseAction:(id)sender {
+   
+    [IMGConfigManager shareManager].allowLivePhoto = YES;
+    [IMGConfigManager shareManager].allowGif = YES;
+    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeAll;
     
     [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
         if (!error) {

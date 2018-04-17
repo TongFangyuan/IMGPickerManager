@@ -98,6 +98,20 @@ static IMGPhotoManager *_shareManager = nil;
     [(PHCachingImageManager *)[PHCachingImageManager defaultManager] startCachingImagesForAssets:assets targetSize:targetSzie contentMode:PHImageContentModeAspectFill options:[self defaultImageRequestOPtions]];
 }
 
++ (IMGImageType)getImageTypeForAsset:(PHAsset *)asset{
+    IMGImageType imageType = IMGImageTypeDefault;
+    NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
+    if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+        imageType = IMGImageTypeGif;
+    }
+    if (@available(iOS 9.1, *)) {
+        if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+            imageType = IMGImageTypeLivePhoto;
+        }
+    }
+    return imageType;
+}
+
 #pragma mark - request imageData
 + (void)requestImageForAsset:(PHAsset *)asset
               targetSize:(CGSize)targetSize
@@ -116,20 +130,20 @@ static IMGPhotoManager *_shareManager = nil;
     
     [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (handler) {
-            IMGImageType imageType = IMGImageTypeDefault;
+//            IMGImageType imageType = IMGImageTypeDefault;
+//
+//            NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
+////            NSLog(@"%@",typeIdentifier);
+//            if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+//                imageType = IMGImageTypeGif;
+//            }
+//            if (@available(iOS 9.1, *)) {
+//                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
+//                    imageType = IMGImageTypeLivePhoto;
+//                }
+//            }
             
-            NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
-//            NSLog(@"%@",typeIdentifier);
-            if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-                imageType = IMGImageTypeGif;
-            }
-            if (@available(iOS 9.1, *)) {
-                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-                    imageType = IMGImageTypeLivePhoto;
-                }
-            }
-            
-            handler(result,imageType);
+            handler(result,[IMGPhotoManager getImageTypeForAsset:asset]);
         }
     }];
 }

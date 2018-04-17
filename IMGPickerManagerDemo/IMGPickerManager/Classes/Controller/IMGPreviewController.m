@@ -63,7 +63,13 @@ IMGPlayerDelegate
     if (self.selectIndexPath && self.isNeedScroll) {
         [self.collectionView setContentOffset:CGPointMake((self.flowLayout.minimumLineSpacing+self.flowLayout.itemSize.width)*self.selectIndexPath.item, 0) animated:NO];
     }
-    [self showCellAtIndexPath:self.selectIndexPath];
+    [self needShowCellAtIndexPath:self.selectIndexPath];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self needShowCellAtIndexPath:self.selectIndexPath];
 }
 
 - (void)initSubviews
@@ -107,11 +113,34 @@ IMGPlayerDelegate
     isCollectionViewTop = !isCollectionViewTop;
 }
 
-- (void)showCellAtIndexPath:(NSIndexPath *)indexPath
+- (void)needShowCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    PHAsset *asset = self.assets[indexPath.item];
+    if (!indexPath) {
+        return;
+    }
     
-    // 底部按钮选中状态
+    PHAsset *asset = self.assets[indexPath.item];
+    IMGPreviewCell *displayCell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    
+    // 播放livePhoto
+    if ( @available(iOS 9.1, *)) {
+        __weak typeof(self) weakSelf = self;
+        if (self.playLiveCell && asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && displayCell.iconView) {
+            [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:displayCell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:displayCell.iconView];
+                    weakSelf.playLiveCell = displayCell;
+                });
+            }];
+        }
+    }
+    
+    // 加载gif图片
+    if ([IMGPhotoManager getImageTypeForAsset:displayCell.model]==IMGImageTypeGif) {
+        [displayCell displayGifImage];
+    }
+
+    //// 底部按钮选中状态
     [self.operationView setButtonSelected:[self.selectedAssets containsObject:asset]];
     [self.operationView.doneButton setEnabled:self.selectedAssets.count];
     
@@ -123,19 +152,7 @@ IMGPlayerDelegate
         self.operationView.numberButton.hidden = YES;
     }
     
-    if (@available(iOS 9.1, *)) {
-        __weak typeof(self) weakSelf = self;
-        IMGPreviewCell *cell = (IMGPreviewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && cell.iconView) {
-            [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:cell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:cell.iconView];
-                    weakSelf.playLiveCell = cell;
-                });
-            }];
-        }
-    }
-
+    self.selectIndexPath = indexPath;
     
 }
 
@@ -160,7 +177,7 @@ IMGPlayerDelegate
         [asset setSelect:YES];
     }
     
-    [self showCellAtIndexPath:self.selectIndexPath];
+    [self needShowCellAtIndexPath:self.selectIndexPath];
 }
 
 - (void)closedButtonAction:(UIButton *)button
@@ -255,13 +272,32 @@ IMGPlayerDelegate
     
     if ([cell isKindOfClass:[IMGPreviewCell class]]) {
         [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+        [(IMGPreviewCell *)cell loadImage];
     }
+    NSLog(@"willDisplayCellAtIndexPath:%@",indexPath);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[IMGPreviewCell class]]) {
-        [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
+        IMGPreviewCell *preivewCell = (IMGPreviewCell *)cell;
+        [[preivewCell scrollView] setZoomScale:1.0 animated:NO];
+        
+        // stop play live photo
+        if (@available(iOS 9.1, *)) {
+            if (preivewCell.model.mediaSubtypes==PHAssetMediaSubtypePhotoLive) {
+                [[IMGPlayerManager shareManager] stopPlayLivePhoto];
+                self.playLiveCell = nil;
+            }
+        }
+        
+        // stop play video
+        if (preivewCell.model.mediaType==PHAssetMediaTypeVideo) {
+            [self.playCell setPlayButtonHidden:NO];
+            self.playCell = nil;
+            [[IMGPlayerManager shareManager] stop];
+        }
     }
+    NSLog(@"didEndDisplayingCell:%@",indexPath);
 }
 
 
@@ -272,19 +308,12 @@ IMGPlayerDelegate
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
         
-        if (self.selectIndexPath==indexPath) {
-            return;
-        }
         
-        ///
-        [self.playCell setPlayButtonHidden:NO];
-        self.playCell = nil;
-        
-        [[IMGPlayerManager shareManager] stop];
         
         //  NSLog(@"%@",indexPath);
-        [self showCellAtIndexPath:indexPath];
-        self.selectIndexPath = indexPath;
+        [self needShowCellAtIndexPath:indexPath];
+        
+        
     }
 }
 

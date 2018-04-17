@@ -48,14 +48,20 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)chooseVideo:(id)sender {
-    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeVideo;
+- (IBAction)chooseVideo:(UISwitch *)sender {
+    if (sender.isOn) {
+        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeVideo;
+    }
 }
-- (IBAction)chooseImage:(id)sender {
-    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeImage;
+- (IBAction)chooseImage:(UISwitch *)sender {
+    if (sender.isOn) { 
+        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeImage;
+    }
 }
-- (IBAction)chooseAllType:(id)sender {
-    [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeAll;
+- (IBAction)chooseAllType:(UISwitch *)sender {
+    if (sender.isOn) {
+        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeAll;
+    }
 }
 - (IBAction)doneButtonAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

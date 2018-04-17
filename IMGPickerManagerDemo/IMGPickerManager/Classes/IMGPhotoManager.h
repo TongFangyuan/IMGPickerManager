@@ -30,6 +30,8 @@ typedef enum : NSInteger {
 /// 缓存图片
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
 
++ (IMGImageType)getImageTypeForAsset:(PHAsset *)asset;
+
 #pragma mark - Request Data
 //MARK: Image
 + (void)requestImageForAsset:(PHAsset *)asset

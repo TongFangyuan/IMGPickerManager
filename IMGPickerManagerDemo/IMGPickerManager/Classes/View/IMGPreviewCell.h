@@ -28,5 +28,6 @@ UIScrollViewDelegate
 @property (nonatomic,strong) UIButton *playButton;
 
 - (void)setPlayButtonHidden:(BOOL)hidden;
-
+- (void)loadImage;
+- (void)displayGifImage;
 @end
