@@ -66,12 +66,26 @@ static IMGPhotoManager *_shareManager = nil;
     PHFetchOptions *options = [self defaultFetchOptions];
     //按创建时间逆序
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
-    
+    if (mediaType==IMGAssetMediaTypeAll) {
+        NSLog(@"options.predicate: %@",options.predicate);
+    } else {
+        options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
+        NSLog(@"options.predicate: %@",options.predicate);
+    }
+        
     PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
     NSMutableArray *results = [NSMutableArray array];
     [fetchResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [results addObject:obj];
+        if (![IMGConfigManager shareManager].allowGif) {
+            NSString *typeIdentifier = [obj valueForKey:@"uniformTypeIdentifier"];
+            if (![typeIdentifier isEqualToString:@"com.compuserve.gif"]){
+                [results addObject:obj];
+            } else {
+                NSLog(@"Filter out the GIF images.");
+            }
+        } else {
+            [results addObject:obj];
+        }
     }];
     
     collection.assetCount = fetchResult.count;

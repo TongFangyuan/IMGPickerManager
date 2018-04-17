@@ -30,7 +30,8 @@ typedef enum : NSInteger {
 /// 缓存图片
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
 
-#pragma mark - request image
+#pragma mark - Request Data
+//MARK: Image
 + (void)requestImageForAsset:(PHAsset *)asset
                   targetSize:(CGSize)targetSize
                  handler:(void(^)(UIImage *image,IMGImageType imageType))handler;
@@ -47,7 +48,7 @@ typedef enum : NSInteger {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-#pragma mark - request LivePhoto
+//MARK: LivePhoto
 + (void)requestLivePhotoForAsset:(PHAsset *)asset
                       targetSize:(CGSize)size
                          handler:(void(^)(PHLivePhoto * livePhoto))handler;
@@ -55,8 +56,7 @@ typedef enum : NSInteger {
 
 #pragma clang diagnostic pop
 
-#pragma mark - requset video
-//TODO: 获取视频
+//MARK:  Video
 + (void)requestPlayerItemForVideo:(PHAsset *)asset handler:(void(^)(AVPlayerItem *playerItem))handler;
 
 + (void)requestAVAssetForVideo:(PHAsset *)asset handler:(void(^)(AVAsset *avsset))handler;

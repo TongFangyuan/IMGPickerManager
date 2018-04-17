@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 typedef NS_ENUM(NSInteger, IMGAssetMediaType) {
-    IMGAssetMediaTypeUnknown = 0,
-    IMGAssetMediaTypeImage   = 1,
-    IMGAssetMediaTypeVideo   = 2,
-    IMGAssetMediaTypeAudio   = IMGAssetMediaTypeUnknown,
-    IMGAssetMediaTypeAll
+    IMGAssetMediaTypeUnknown = PHAssetMediaTypeUnknown,
+    IMGAssetMediaTypeImage   = PHAssetMediaTypeImage,
+    IMGAssetMediaTypeVideo   = PHAssetMediaTypeVideo,
+    IMGAssetMediaTypeAudio   = PHAssetMediaTypeAudio,
+    IMGAssetMediaTypeAll 
 };
 
 @interface IMGConfigManager : NSObject
