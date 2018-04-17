@@ -350,7 +350,7 @@ IMGPlayerDelegate
 {
     if (!_flowLayout) {
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.itemSize = [UIScreen mainScreen].bounds.size;
+        _flowLayout.itemSize = self.view.frame.size;
         _flowLayout.minimumInteritemSpacing = 0;
         _flowLayout.minimumLineSpacing = 10;
         _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
