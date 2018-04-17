@@ -125,7 +125,7 @@ IMGPlayerDelegate
     // 播放livePhoto
     if ( @available(iOS 9.1, *)) {
         __weak typeof(self) weakSelf = self;
-        if (self.playLiveCell && asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && displayCell.iconView) {
+        if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive && displayCell.iconView) {
             [IMGPhotoManager requestLivePhotoForAsset:asset targetSize:displayCell.iconView.frame.size handler:^(PHLivePhoto *livePhoto) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[IMGPlayerManager shareManager] playLivePhoto:livePhoto contentView:displayCell.iconView];
