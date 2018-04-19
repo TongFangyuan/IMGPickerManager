@@ -63,10 +63,10 @@
 效果图
 ------
 
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.jpg width="235" height="417" "/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg width="235" height="417" "/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg width="235" height="417" "/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/1.GIF width="235" height="417" "/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.jpg" width="235" height="417"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg" width="235" height="417"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg" width="235" height="417"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/1.GIF" width="235" height="417"/>
 Licenses
 ----
 All source code is licensed under the [MIT License](https://github.com/TongFangyuan/IMGPickerManager/blob/master/LICENSE).
