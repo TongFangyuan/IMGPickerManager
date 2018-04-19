@@ -329,7 +329,25 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.allowsEditing = [IMGConfigManager shareManager].allowsEditing;
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [imagePicker setDelegate:self];
+            imagePicker.delegate = self;
+            
+            switch ([IMGConfigManager shareManager].mediaType) {
+                case IMGAssetMediaTypeImage: {
+                    imagePicker.mediaTypes = @[@"public.image"];
+                } break;
+                case IMGAssetMediaTypeVideo:{
+                    imagePicker.mediaTypes = @[@"public.movie"];
+                    imagePicker.videoQuality = (UIImagePickerControllerQualityType)[IMGConfigManager shareManager].videoQuality;
+                    imagePicker.videoMaximumDuration = [IMGConfigManager shareManager].videoMaximumDuration;
+                }break;
+                case IMGAssetMediaTypeAll:{
+                    imagePicker.mediaTypes = @[@"public.image",@"public.movie"];
+                    imagePicker.videoQuality = (UIImagePickerControllerQualityType)[IMGConfigManager shareManager].videoQuality;
+                    imagePicker.videoMaximumDuration = [IMGConfigManager shareManager].videoMaximumDuration;
+                }break;
+                default:
+                    break;
+            }
             self.imagePicker = imagePicker;
         }
         [self presentViewController:self.imagePicker animated:YES completion:nil];
@@ -368,7 +386,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     
     // 设置封面图
     __weak typeof(cell) weakCell = cell;
-    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGImageType type) {
+    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGMediaType type) {
         weakCell.iconView.image = image;
     }];
     
@@ -461,7 +479,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     previewController.selectIndexPath = [NSIndexPath indexPathForRow:(indexPath.row-1) inSection:indexPath.section];
     
     __weak typeof(previewController) weakController = previewController;
-    [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData,IMGImageType imageType) {
+    [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData,IMGMediaType imageType) {
         UIImage *image = [[UIImage alloc] initWithData:imageData];
         CGFloat width = CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds) - 40;
         CGFloat maxHeight = 500;
@@ -484,13 +502,22 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 #endif
 
 #pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo{
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    NSString *mediaType = info[UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:@"public.image"]) {
+        UIImage *image = info[UIImagePickerControllerEditedImage];
+        if (!image) {
+            image = info[UIImagePickerControllerOriginalImage];
+        }
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    } else if ([mediaType isEqualToString:@"public.movie"]){
+        NSURL *fileURL = info[UIImagePickerControllerMediaURL];
+        if(UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(fileURL.path))
+        {
+            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path,self,@selector(video:didFinishSavingWithError:contextInfo:),nil);
+        }
+
+    }
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -504,7 +531,16 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         NSLog(@"imageSaveError:%@",error.localizedDescription);
     }
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
-    ///刷新视图
+    [self fetchAssets];
+}
+
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (!error) {
+        NSLog(@"videoSaveSuccess");
+    } else {
+        NSLog(@"videoSaveError:%@",error.localizedDescription);
+    }
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     [self fetchAssets];
 }
 

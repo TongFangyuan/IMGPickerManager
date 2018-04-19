@@ -29,6 +29,8 @@ static IMGConfigManager *_shareManager = nil;
         self.allowsEditing = NO;
         self.allowGif = YES;
         self.allowLivePhoto = NO;
+        self.videoQuality = IMGVideoQualityTypeMedium;
+        self.videoMaximumDuration = 10;
     }
     return self;
 }

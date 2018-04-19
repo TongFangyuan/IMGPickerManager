@@ -17,7 +17,10 @@
         iconView.image = [UIImage imageNamed:@"take_photo"];
         [self.contentView addSubview:iconView];
         self.iconView = iconView;
-        self.contentView.backgroundColor = [UIColor lightGrayColor];
+//        self.contentView.backgroundColor = [UIColor lightGrayColor];
+        
+//        self.layer.borderWidth = 1;
+//        self.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:1.0].CGColor;
     }
     return self;
 }

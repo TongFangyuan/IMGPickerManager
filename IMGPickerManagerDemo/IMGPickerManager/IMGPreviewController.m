@@ -136,7 +136,7 @@ IMGPlayerDelegate
     }
     
     // 加载gif图片
-    if ([IMGPhotoManager getImageTypeForAsset:displayCell.model]==IMGImageTypeGif) {
+    if ([IMGPhotoManager getMediaTypeForAsset:displayCell.model]==IMGMediaTypeGif) {
         [displayCell displayGifImage];
     }
 
@@ -274,7 +274,7 @@ IMGPlayerDelegate
         [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
         [(IMGPreviewCell *)cell loadImage];
     }
-    NSLog(@"willDisplayCellAtIndexPath:%@",indexPath);
+//    NSLog(@"willDisplayCellAtIndexPath:%@",indexPath);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -297,7 +297,7 @@ IMGPlayerDelegate
             [[IMGPlayerManager shareManager] stop];
         }
     }
-    NSLog(@"didEndDisplayingCell:%@",indexPath);
+//    NSLog(@"didEndDisplayingCell:%@",indexPath);
 }
 
 

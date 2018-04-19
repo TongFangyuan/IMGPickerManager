@@ -7,7 +7,7 @@
 //
 
 #import "SettingViewController.h"
-#import "IMGPickerManagerHeader.h"
+#import "IMGPickerManager.h"
 
 @interface SettingViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *videoSwitch;

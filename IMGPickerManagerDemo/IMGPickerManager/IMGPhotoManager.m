@@ -67,10 +67,10 @@ static IMGPhotoManager *_shareManager = nil;
     //按创建时间逆序
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     if (mediaType==IMGAssetMediaTypeAll) {
-        NSLog(@"options.predicate: %@",options.predicate);
+//        NSLog(@"options.predicate: %@",options.predicate);
     } else {
         options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
-        NSLog(@"options.predicate: %@",options.predicate);
+//        NSLog(@"options.predicate: %@",options.predicate);
     }
         
     PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
@@ -98,24 +98,54 @@ static IMGPhotoManager *_shareManager = nil;
     [(PHCachingImageManager *)[PHCachingImageManager defaultManager] startCachingImagesForAssets:assets targetSize:targetSzie contentMode:PHImageContentModeAspectFill options:[self defaultImageRequestOPtions]];
 }
 
-+ (IMGImageType)getImageTypeForAsset:(PHAsset *)asset{
-    IMGImageType imageType = IMGImageTypeDefault;
-    NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
-    if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-        imageType = IMGImageTypeGif;
-    }
++ (IMGMediaType)getMediaTypeForAsset:(PHAsset *)asset{
+    
     if (@available(iOS 9.1, *)) {
         if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-            imageType = IMGImageTypeLivePhoto;
+            return IMGMediaTypeLivePhoto;
         }
     }
-    return imageType;
+
+
+    if (asset.mediaType==PHAssetMediaTypeVideo) {
+        return IMGMediaTypeVideo;
+    }
+    
+    IMGMediaType mediaType = IMGMediaTypeImage;
+    
+    NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
+    if (asset.mediaType==PHAssetMediaTypeImage) {
+        mediaType = IMGMediaTypeImage;
+        if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
+            mediaType = IMGMediaTypeGif;
+        }
+    }
+    
+    if (mediaType==IMGMediaTypeUnknow) {
+        NSLog(@"----------------[IMGMediaTypeUnknow] typeIdentifier is %@",typeIdentifier);
+    }
+    return mediaType;
+}
+
++ (void)requestDataForAsset:(PHAsset *)asset handler:(void(^)(NSData *mediaData, IMGMediaType mediaType))handler
+{
+    IMGMediaType mediaType = [IMGPhotoManager getMediaTypeForAsset:asset];
+    if (mediaType==IMGMediaTypeImage || mediaType==IMGMediaTypeGif || mediaType==IMGMediaTypeLivePhoto) {
+        [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData, IMGMediaType imageType) {
+            handler(imageData,imageType);
+        }];
+    } else if(mediaType==IMGMediaTypeVideo ) {
+        [IMGPhotoManager requestAVAssetForVideo:asset handler:^(AVAsset *avsset) {
+            NSData *data = [NSData dataWithContentsOfURL:[avsset valueForKey:@"URL"]];
+            handler(data,mediaType);
+        }];
+    }
 }
 
 #pragma mark - request imageData
 + (void)requestImageForAsset:(PHAsset *)asset
               targetSize:(CGSize)targetSize
-             handler:(void(^)(UIImage *image,IMGImageType imageType))handler
+             handler:(void(^)(UIImage *image,IMGMediaType imageType))handler
 {
     [self requestImageForAsset:asset targetSize:targetSize synchronous:YES handler:handler];
 }
@@ -123,56 +153,34 @@ static IMGPhotoManager *_shareManager = nil;
 + (void)requestImageForAsset:(PHAsset *)asset
                   targetSize:(CGSize)targetSize
                  synchronous:(BOOL)synchronous
-                     handler:(void(^)(UIImage *image,IMGImageType imageType))handler
+                     handler:(void(^)(UIImage *image,IMGMediaType imageType))handler
 {
     PHImageRequestOptions *options = [self defaultImageRequestOPtions];
     options.synchronous = synchronous;
     
     [[PHCachingImageManager defaultManager] requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (handler) {
-//            IMGImageType imageType = IMGImageTypeDefault;
-//
-//            NSString *typeIdentifier = [asset valueForKey:@"uniformTypeIdentifier"];
-////            NSLog(@"%@",typeIdentifier);
-//            if ([typeIdentifier isEqualToString:@"com.compuserve.gif"]) {
-//                imageType = IMGImageTypeGif;
-//            }
-//            if (@available(iOS 9.1, *)) {
-//                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-//                    imageType = IMGImageTypeLivePhoto;
-//                }
-//            }
-            
-            handler(result,[IMGPhotoManager getImageTypeForAsset:asset]);
+            handler(result,[IMGPhotoManager getMediaTypeForAsset:asset]);
         }
     }];
 }
 
 + (void)requestImageDataForAsset:(PHAsset *)asset
-                     handler:(void(^)(NSData *imageData,IMGImageType imageType))handler
+                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
 {
     [self requestImageDataForAsset:asset synchronous:NO handler:handler];
 }
 
 + (void)requestImageDataForAsset:(PHAsset *)asset
                  synchronous:(BOOL)synchronous
-                     handler:(void(^)(NSData *imageData,IMGImageType imageType))handler
+                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
 {
     PHImageRequestOptions *options = [self defaultImageRequestOPtions];
     options.synchronous = synchronous;
     
     [[PHCachingImageManager defaultManager] requestImageDataForAsset:asset  options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (handler) {
-            IMGImageType imageType = IMGImageTypeDefault;
-            if ([dataUTI isEqualToString:@"com.compuserve.gif"]) {
-                imageType = IMGImageTypeGif;
-            }
-            if (@available(iOS 9.1, *)) {
-                if (asset.mediaSubtypes == PHAssetMediaSubtypePhotoLive) {
-                    imageType = IMGImageTypeLivePhoto;
-                }
-            }
-            handler(imageData,imageType);
+            handler(imageData,[self getMediaTypeForAsset:asset]);
         }
     }];
 }

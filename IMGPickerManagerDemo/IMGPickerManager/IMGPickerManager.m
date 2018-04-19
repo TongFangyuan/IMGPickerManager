@@ -57,6 +57,13 @@ static IMGPickerManager *_shareManager = nil;
     if (self.completeBlock) {
         NSArray<PHAsset *> *assets = [sender.userInfo objectForKey:@"data"];
         self.completeBlock(assets, nil);
+        
+//        [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            __block PHAsset *block_asset = obj;
+//            [IMGPhotoManager requestDataForAsset:obj handler:^(NSData *mediaData, IMGMediaType mediaType) {
+//                NSLog(@"mediaData:%ld type:%ld",mediaData.length,mediaType);
+//            }];
+//        }];
     }
     
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;

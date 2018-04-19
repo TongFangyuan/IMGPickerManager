@@ -84,11 +84,11 @@ static CGFloat kButtonWidth = 22;
     [self setButtonSelected:asset.select];
     
     __weak typeof(self) weakSelf = self;
-    [IMGPhotoManager requestImageForAsset:asset targetSize:self.bounds.size handler:^(UIImage *image, IMGImageType imageType) {
+    [IMGPhotoManager requestImageForAsset:asset targetSize:self.bounds.size handler:^(UIImage *image, IMGMediaType imageType) {
         weakSelf.thumbView.image = image;
-        if (imageType==IMGImageTypeGif) {
+        if (imageType==IMGMediaTypeGif) {
             weakSelf.durationLabel.text = @"Gif";
-        } else if (imageType==IMGImageTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
+        } else if (imageType==IMGMediaTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
             weakSelf.durationLabel.text = @"Live";
         } else {
             weakSelf.durationLabel.text = @"";

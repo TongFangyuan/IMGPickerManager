@@ -11,10 +11,12 @@
 #import "IMGConfigManager.h"
 
 typedef enum : NSInteger {
-    IMGImageTypeDefault,
-    IMGImageTypeGif,
-    IMGImageTypeLivePhoto
-} IMGImageType;
+    IMGMediaTypeUnknow,
+    IMGMediaTypeImage,
+    IMGMediaTypeGif,
+    IMGMediaTypeLivePhoto,
+    IMGMediaTypeVideo
+} IMGMediaType;
 
 @interface IMGPhotoManager : NSObject
 
@@ -30,22 +32,27 @@ typedef enum : NSInteger {
 /// 缓存图片
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
 
-+ (IMGImageType)getImageTypeForAsset:(PHAsset *)asset;
++ (IMGMediaType)getMediaTypeForAsset:(PHAsset *)asset;
 
 #pragma mark - Request Data
+
+//MARK: MediaData
++ (void)requestDataForAsset:(PHAsset *)asset
+                    handler:(void(^)(NSData *mediaData, IMGMediaType mediaType))handler;
+
 //MARK: Image
 + (void)requestImageForAsset:(PHAsset *)asset
                   targetSize:(CGSize)targetSize
-                 handler:(void(^)(UIImage *image,IMGImageType imageType))handler;
+                 handler:(void(^)(UIImage *image,IMGMediaType imageType))handler;
 
 /// 任意线程调用,handler在主线程回调
 + (void)requestImageDataForAsset:(PHAsset *)asset
-                     handler:(void(^)(NSData *imageData,IMGImageType imageType))handler;
+                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler;
 
 /// synchronous:是否同步调用 handler在主线程回调
 + (void)requestImageDataForAsset:(PHAsset *)asset
                  synchronous:(BOOL)synchronous
-                     handler:(void(^)(NSData *imageData,IMGImageType imageType))handler;
+                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"

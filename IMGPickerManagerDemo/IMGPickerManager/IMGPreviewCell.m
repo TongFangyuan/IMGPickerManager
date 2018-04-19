@@ -28,44 +28,24 @@
 
 - (void)loadImage {
     
-    [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGImageType imageType) {
-        NSLog(@"image:%@",image);
+    [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGMediaType imageType) {
+//        NSLog(@"image:%@",image);
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.iconView.image = image;
         });
     }];
     
-//    if ([IMGPhotoManager getImageTypeForAsset:self.model]==IMGImageTypeGif) {
-//        [self displayGifImage];
-//    } else {
-//        [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGImageType imageType) {
-//            NSLog(@"image:%@",image);
-//            __weak typeof(self) weakSelf = self;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                weakSelf.iconView.image = image;
-//            });
-//        }];
-//    }
-    
 }
 
 - (void)displayGifImage {
     __weak typeof(self) weakSelf = self;
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-        [IMGPhotoManager requestImageDataForAsset:self.model handler:^(NSData *imageData, IMGImageType imageType) {
+        [IMGPhotoManager requestImageDataForAsset:self.model handler:^(NSData *imageData, IMGMediaType imageType) {
             UIImage *gifImage = [UIImage animatedImageWithAnimatedGIFData:imageData];
-            NSLog(@"gifImage:%@",gifImage);
+//            NSLog(@"gifImage:%@",gifImage);
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.iconView.image = gifImage;
-                //            CGFloat imageHeight = result.size.height/result.size.width * [UIScreen mainScreen].bounds.size.width;
-                //            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-                //            weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
-                //            if (imageType==IMGImageTypeGif) {
-                //                weakSelf.iconView.image = [UIImage animatedImageWithAnimatedGIFData:imageData];
-                //            } else {
-                //                weakSelf.iconView.image = result;
-                //            }
             });
         }];
     });

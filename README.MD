@@ -6,10 +6,7 @@
 
 一个集成简单、无依赖、高效、轻量级、持续更新的第三方图片选择框架
 
-效果图
-------
-<!-- <img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.jpeg" width="235" height="417"/> -->
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/image_01.jpeg"/>
+
 
 特性
 -----
@@ -33,9 +30,9 @@
 
 如何使用
 ----
-
+### 调用`IMGPickerManager`工具
 ```objective-c
-#import "IMGPickerManagerHeader.h"
+#import "IMGPickerManager.h"
 ...
 [IMGPickerManager startChoose:^(NSArray<PHAsset *> *results, NSError *error) {
     if (!error) {
@@ -45,6 +42,10 @@
     }
 }];
 ```
+### `IMGPhotoManager`管理获取数据
+===
+获取`NSData`对象调用`requestDataForAsset:handler:`方法
+获取封面图用`requestImageForAsset:targetSize:handler:`方法
 
 安装
 ----
@@ -58,7 +59,12 @@
 ### cocopods集成
 功能上架中...
 
-
+效果图
+------
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.jpg"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/1.GIF"/>
 Licenses
 ----
 All source code is licensed under the [MIT License](https://github.com/TongFangyuan/IMGPickerManager/blob/master/LICENSE).

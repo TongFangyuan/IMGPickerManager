@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "IMGConfigManager.h"
+#import "IMGPhotoManager.h"
 
 @class PHAsset;
 @interface IMGPickerManager : NSObject
