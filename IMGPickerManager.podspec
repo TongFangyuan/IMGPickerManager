@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IMGPickerManager"
-  s.version      = "0.1.0"
+  s.version      = "0.1.1"
   s.summary      = " Picture video selection framework."
 
   # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/TongFangyuan/IMGPickerManager.git", :tag => "0.1.0" }
+  s.source       = { :git => "https://github.com/TongFangyuan/IMGPickerManager.git", :tag => "0.1.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
