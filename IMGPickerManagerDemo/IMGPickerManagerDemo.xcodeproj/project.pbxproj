@@ -45,6 +45,7 @@
 		DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA32C3472088C9270080A8CA /* IMGPickerAlbumsCell.m */; };
 		DA32C35C2088C9340080A8CA /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = DA32C3582088C9330080A8CA /* UIImage+animatedGIF.m */; };
 		DA32C35D2088C9340080A8CA /* UIViewController+FYAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = DA32C35A2088C9330080A8CA /* UIViewController+FYAlert.m */; };
+		DA797DB32089C63400B187D1 /* IMGPickerManager.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DA797DB22089C63400B187D1 /* IMGPickerManager.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		DA32C3592088C9330080A8CA /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		DA32C35A2088C9330080A8CA /* UIViewController+FYAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FYAlert.m"; sourceTree = "<group>"; };
 		DA32C35B2088C9330080A8CA /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
+		DA797DB22089C63400B187D1 /* IMGPickerManager.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = IMGPickerManager.podspec; path = ../IMGPickerManager.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 		8424F9DE2071CF61007E5B36 = {
 			isa = PBXGroup;
 			children = (
+				DA797DB22089C63400B187D1 /* IMGPickerManager.podspec */,
 				8424FA1C2071D01D007E5B36 /* IMGPickerManager */,
 				8424F9E92071CF61007E5B36 /* IMGPickerManagerDemo */,
 				8424FA022071CF61007E5B36 /* IMGPickerManagerDemoTests */,
@@ -221,10 +224,10 @@
 		8424FA1C2071D01D007E5B36 /* IMGPickerManager */ = {
 			isa = PBXGroup;
 			children = (
-				DA32C3342088C9250080A8CA /* IMGCameraCell.h */,
-				DA32C33B2088C9250080A8CA /* IMGCameraCell.m */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
+				DA32C3342088C9250080A8CA /* IMGCameraCell.h */,
+				DA32C33B2088C9250080A8CA /* IMGCameraCell.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,
 				DA32C32B2088C9240080A8CA /* IMGPhotoManager.m */,
 				DA32C32A2088C9240080A8CA /* IMGPickerAlbumsCell.h */,
@@ -398,6 +401,7 @@
 				8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */,
 				8424FA5E2071D01E007E5B36 /* ic_photo_choosesel@3x.png in Resources */,
 				8424FA5B2071D01E007E5B36 /* ic_close_white@2x.png in Resources */,
+				DA797DB32089C63400B187D1 /* IMGPickerManager.podspec in Resources */,
 				8424FA5D2071D01E007E5B36 /* ic_photo_choosesel@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
