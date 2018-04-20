@@ -108,7 +108,8 @@
 - (UIButton *)playButton{
     if (!_playButton) {
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"play@2x.png" ofType:nil]];
+        [_playButton setImage:image forState:UIControlStateNormal];
         [_playButton addTarget:self action:@selector(playButtonCliked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _playButton;

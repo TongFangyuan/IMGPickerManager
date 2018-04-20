@@ -15,7 +15,8 @@
     if (self=[super init]) {
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [closedButton setImage:[UIImage imageNamed:@"ic_close_white"] forState:UIControlStateNormal];
+        UIImage *closedButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ic_close_white@2x.png" ofType:nil]];
+        [closedButton setImage:closedButtonImage forState:UIControlStateNormal];
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
@@ -45,7 +46,8 @@
         selectedButton.layer.borderColor = [UIColor whiteColor].CGColor;
         selectedButton.layer.cornerRadius = 15;
         [selectedButton setBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-        [selectedButton setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
+        UIImage *selectedButtonImage = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ic_photo_choosesel@2x.png" ofType:nil]];
+        [selectedButton setBackgroundImage:selectedButtonImage forState:UIControlStateSelected];
         [self addSubview:selectedButton];
         _selectedButton = selectedButton;
         

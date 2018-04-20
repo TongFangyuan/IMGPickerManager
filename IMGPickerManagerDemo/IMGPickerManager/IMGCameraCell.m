@@ -14,13 +14,9 @@
     if (self=[super initWithFrame:frame]) {
         UIImageView *iconView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
         iconView.contentMode = UIViewContentModeCenter;
-        iconView.image = [UIImage imageNamed:@"take_photo"];
+        iconView.image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"take_photo@2x.png" ofType:nil]];
         [self.contentView addSubview:iconView];
         self.iconView = iconView;
-//        self.contentView.backgroundColor = [UIColor lightGrayColor];
-        
-//        self.layer.borderWidth = 1;
-//        self.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:1.0].CGColor;
     }
     return self;
 }

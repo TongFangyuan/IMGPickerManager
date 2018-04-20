@@ -38,7 +38,8 @@ static CGFloat kButtonWidth = 22;
         button.layer.borderColor = [UIColor whiteColor].CGColor;
         button.frame = CGRectMake(frame.size.width-kButtonWidth-2, 2, kButtonWidth, kButtonWidth);
         button.layer.cornerRadius = kButtonWidth*0.5;
-        [button setBackgroundImage:[UIImage imageNamed:@"ic_photo_choosesel"] forState:UIControlStateSelected];
+        UIImage *btnImage = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ic_photo_choosesel@2x.png" ofType:nil]];
+        [button setBackgroundImage:btnImage forState:UIControlStateSelected];
         [button addTarget:self action:@selector(buttionClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:button];

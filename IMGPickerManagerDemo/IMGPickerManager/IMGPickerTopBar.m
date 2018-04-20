@@ -34,7 +34,8 @@
         
         
         UIButton *closedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [closedButton setImage:[UIImage imageNamed:@"ic_photo_close"] forState:UIControlStateNormal];
+        UIImage *closedBtnImage = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ic_photo_close@2x.png" ofType:nil]];
+        [closedButton setImage:closedBtnImage forState:UIControlStateNormal];
         [self addSubview:closedButton];
         _closedButton = closedButton;
         
