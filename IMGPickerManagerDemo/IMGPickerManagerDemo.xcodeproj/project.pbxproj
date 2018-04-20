@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F075BF0F98BA0965CFECDC8 /* Pods_IMGPickerManagerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB366CD5C271A3A3E2A2B53 /* Pods_IMGPickerManagerDemo.framework */; };
 		8424F9EC2071CF61007E5B36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424F9EB2071CF61007E5B36 /* AppDelegate.m */; };
 		8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424F9EE2071CF61007E5B36 /* ViewController.m */; };
 		8424F9F22071CF61007E5B36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8424F9F02071CF61007E5B36 /* Main.storyboard */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7BB366CD5C271A3A3E2A2B53 /* Pods_IMGPickerManagerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IMGPickerManagerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8424F9E72071CF61007E5B36 /* IMGPickerManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMGPickerManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8424F9EA2071CF61007E5B36 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8424F9EB2071CF61007E5B36 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 		84AC1CB22084A531001AA758 /* SaveFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveFileViewController.m; sourceTree = "<group>"; };
 		84AC1CB42084A7EF001AA758 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		84AC1CB52084A7EF001AA758 /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		BA62300CF67A17135CC3F63F /* Pods-IMGPickerManagerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMGPickerManagerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-IMGPickerManagerDemo/Pods-IMGPickerManagerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		DA159D95208338640080C50A /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
 		DA32C3272088C9240080A8CA /* IMGConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGConfigManager.m; sourceTree = "<group>"; };
 		DA32C3282088C9240080A8CA /* IMGPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerController.h; sourceTree = "<group>"; };
@@ -108,7 +111,6 @@
 		DA32C33A2088C9250080A8CA /* IMGPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPreviewController.h; sourceTree = "<group>"; };
 		DA32C33B2088C9250080A8CA /* IMGCameraCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGCameraCell.m; sourceTree = "<group>"; };
 		DA32C33C2088C9260080A8CA /* IMGPickerFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPickerFlowLayout.m; sourceTree = "<group>"; };
-		DA32C33D2088C9260080A8CA /* IMGPickerConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerConstant.h; sourceTree = "<group>"; };
 		DA32C33E2088C9260080A8CA /* IMGPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGPickerController.m; sourceTree = "<group>"; };
 		DA32C33F2088C9260080A8CA /* IMGPickerTopBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerTopBar.h; sourceTree = "<group>"; };
 		DA32C3402088C9260080A8CA /* IMGPickerFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGPickerFlowLayout.h; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		DA32C35A2088C9330080A8CA /* UIViewController+FYAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FYAlert.m"; sourceTree = "<group>"; };
 		DA32C35B2088C9330080A8CA /* UIViewController+FYAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FYAlert.h"; sourceTree = "<group>"; };
 		DA797DB22089C63400B187D1 /* IMGPickerManager.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = IMGPickerManager.podspec; path = ../IMGPickerManager.podspec; sourceTree = "<group>"; };
+		FA75A19E00CEE7D4A73F8833 /* Pods-IMGPickerManagerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMGPickerManagerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IMGPickerManagerDemo/Pods-IMGPickerManagerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F075BF0F98BA0965CFECDC8 /* Pods_IMGPickerManagerDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +155,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		779905BA3CF66D15A6E69EF5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FA75A19E00CEE7D4A73F8833 /* Pods-IMGPickerManagerDemo.debug.xcconfig */,
+				BA62300CF67A17135CC3F63F /* Pods-IMGPickerManagerDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		8424F9DE2071CF61007E5B36 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +173,8 @@
 				8424FA022071CF61007E5B36 /* IMGPickerManagerDemoTests */,
 				8424FA0D2071CF61007E5B36 /* IMGPickerManagerDemoUITests */,
 				8424F9E82071CF61007E5B36 /* Products */,
+				779905BA3CF66D15A6E69EF5 /* Pods */,
+				91FDBEFEF429656478BFF6E6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,31 +231,30 @@
 			children = (
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
-				DA32C3342088C9250080A8CA /* IMGCameraCell.h */,
-				DA32C33B2088C9250080A8CA /* IMGCameraCell.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,
 				DA32C32B2088C9240080A8CA /* IMGPhotoManager.m */,
+				DA32C3282088C9240080A8CA /* IMGPickerController.h */,
+				DA32C33E2088C9260080A8CA /* IMGPickerController.m */,
+				DA32C33A2088C9250080A8CA /* IMGPreviewController.h */,
+				DA32C3412088C9260080A8CA /* IMGPreviewController.m */,
+				DA32C3342088C9250080A8CA /* IMGCameraCell.h */,
+				DA32C33B2088C9250080A8CA /* IMGCameraCell.m */,
+				DA32C3372088C9250080A8CA /* IMGPickerThumbCell.h */,
+				DA32C3422088C9260080A8CA /* IMGPickerThumbCell.m */,
 				DA32C32A2088C9240080A8CA /* IMGPickerAlbumsCell.h */,
 				DA32C3472088C9270080A8CA /* IMGPickerAlbumsCell.m */,
 				DA32C32E2088C9240080A8CA /* IMGPickerBottomBar.h */,
 				DA32C32D2088C9240080A8CA /* IMGPickerBottomBar.m */,
-				DA32C33D2088C9260080A8CA /* IMGPickerConstant.h */,
-				DA32C3282088C9240080A8CA /* IMGPickerController.h */,
-				DA32C33E2088C9260080A8CA /* IMGPickerController.m */,
 				DA32C3402088C9260080A8CA /* IMGPickerFlowLayout.h */,
 				DA32C33C2088C9260080A8CA /* IMGPickerFlowLayout.m */,
 				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
 				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
-				DA32C3372088C9250080A8CA /* IMGPickerThumbCell.h */,
-				DA32C3422088C9260080A8CA /* IMGPickerThumbCell.m */,
 				DA32C33F2088C9260080A8CA /* IMGPickerTopBar.h */,
 				DA32C32F2088C9240080A8CA /* IMGPickerTopBar.m */,
 				DA32C32C2088C9240080A8CA /* IMGPlayerManager.h */,
 				DA32C3382088C9250080A8CA /* IMGPlayerManager.m */,
 				DA32C3292088C9240080A8CA /* IMGPreviewCell.h */,
 				DA32C3362088C9250080A8CA /* IMGPreviewCell.m */,
-				DA32C33A2088C9250080A8CA /* IMGPreviewController.h */,
-				DA32C3412088C9260080A8CA /* IMGPreviewController.m */,
 				DA32C3432088C9270080A8CA /* IMGPreviewOperationView.h */,
 				DA32C3462088C9270080A8CA /* IMGPreviewOperationView.m */,
 				DA32C3592088C9330080A8CA /* UIImage+animatedGIF.h */,
@@ -268,6 +282,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		91FDBEFEF429656478BFF6E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BB366CD5C271A3A3E2A2B53 /* Pods_IMGPickerManagerDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -275,9 +297,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8424FA132071CF61007E5B36 /* Build configuration list for PBXNativeTarget "IMGPickerManagerDemo" */;
 			buildPhases = (
+				4D92364E8D72B864B09C54EA /* [CP] Check Pods Manifest.lock */,
 				8424F9E32071CF61007E5B36 /* Sources */,
 				8424F9E42071CF61007E5B36 /* Frameworks */,
 				8424F9E52071CF61007E5B36 /* Resources */,
+				C47FBD6B7505B2B631777FD2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -401,6 +425,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D92364E8D72B864B09C54EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IMGPickerManagerDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C47FBD6B7505B2B631777FD2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-IMGPickerManagerDemo/Pods-IMGPickerManagerDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IMGPickerManagerDemo/Pods-IMGPickerManagerDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8424F9E32071CF61007E5B36 /* Sources */ = {
@@ -590,6 +653,7 @@
 		};
 		8424FA142071CF61007E5B36 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA75A19E00CEE7D4A73F8833 /* Pods-IMGPickerManagerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -605,6 +669,7 @@
 		};
 		8424FA152071CF61007E5B36 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA62300CF67A17135CC3F63F /* Pods-IMGPickerManagerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

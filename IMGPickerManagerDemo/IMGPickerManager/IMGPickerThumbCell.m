@@ -7,9 +7,9 @@
 //
 
 #import "IMGPickerThumbCell.h"
-#import "IMGPickerConstant.h"
 #import "PHAsset+IMGProperty.h"
 #import "IMGPhotoManager.h"
+#import <Masonry/Masonry.h>
 
 static CGFloat kButtonWidth = 22;
 
@@ -27,16 +27,17 @@ static CGFloat kButtonWidth = 22;
         
         UIImageView *imageView = [UIImageView new];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         imageView.clipsToBounds = YES;
         
         [self.contentView addSubview:imageView];
         _thumbView = imageView;
+        [_thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.top.equalTo(self.contentView);
+        }];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 1;
         button.layer.borderColor = [UIColor whiteColor].CGColor;
-        button.frame = CGRectMake(frame.size.width-kButtonWidth-2, 2, kButtonWidth, kButtonWidth);
         button.layer.cornerRadius = kButtonWidth*0.5;
         UIImage *btnImage = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ic_photo_choosesel@2x.png" ofType:nil]];
         [button setBackgroundImage:btnImage forState:UIControlStateSelected];
@@ -44,24 +45,40 @@ static CGFloat kButtonWidth = 22;
         
         [self.contentView addSubview:button];
         _button = button;
+        [_button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(kButtonWidth);
+            make.top.mas_equalTo(2);
+            make.right.equalTo(self.contentView.mas_right).offset(-2);
+        }];
         
         UIImageView *maskView = [UIImageView new];
         maskView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-        maskView.frame = imageView.bounds;
         maskView.userInteractionEnabled = YES;
         [self.contentView insertSubview:maskView belowSubview:imageView];
         _maskView = maskView;
+        [_maskView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.bottom.equalTo(self.thumbView);
+        }];
         
         UILabel *durationLabel = [UILabel new];
         durationLabel.textColor = [UIColor whiteColor];
         durationLabel.font = [UIFont boldSystemFontOfSize:10];
         durationLabel.textAlignment = NSTextAlignmentRight;
-        durationLabel.frame = CGRectMake(0, frame.size.height-14, frame.size.width-4, 14);
         [self.contentView addSubview:durationLabel];
         _durationLabel = durationLabel;
-        
+        [_durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentView);
+            make.height.mas_equalTo(14);
+            make.bottom.equalTo(self.contentView);
+            make.width.equalTo(self.contentView).offset(-4);
+        }];
+        [self setupConstraints];
     }
     return self;
+}
+
+- (void)setupConstraints {
+    
 }
 
 - (void)setButtonSelected:(BOOL)selected

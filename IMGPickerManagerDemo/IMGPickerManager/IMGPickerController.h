@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IMGPickerConstant.h"
 
 @interface IMGPickerController : UIViewController
 

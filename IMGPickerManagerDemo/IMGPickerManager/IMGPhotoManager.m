@@ -7,7 +7,6 @@
 //
 
 #import "IMGPhotoManager.h"
-#import "IMGPickerConstant.h"
 #import "PHAssetCollection+Category.h"
 #import <AVFoundation/AVFoundation.h>
 

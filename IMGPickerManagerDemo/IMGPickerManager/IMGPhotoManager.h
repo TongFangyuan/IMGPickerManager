@@ -22,14 +22,14 @@ typedef enum : NSInteger {
 
 + (instancetype)shareManager;
 
-/// 获取所有相册
+/// Get all AssetCollections for the mediaType
 + (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType;
 
-/// 获取某个相册下类型为mediaType的PHAsset
+/// Get PHAssets in a PHAssetCollection for the mediaType
 + (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
                          inAssetColelction:(PHAssetCollection *)collection;
 
-/// 缓存图片
+/// Cache images for target size
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
 
 + (IMGMediaType)getMediaTypeForAsset:(PHAsset *)asset;

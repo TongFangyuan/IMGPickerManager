@@ -7,6 +7,7 @@
 //
 
 #import "IMGCameraCell.h"
+#import <Masonry/Masonry.h>
 
 @implementation IMGCameraCell
 
@@ -17,6 +18,10 @@
         iconView.image = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"take_photo@2x.png" ofType:nil]];
         [self.contentView addSubview:iconView];
         self.iconView = iconView;
+        
+        [_iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.top.equalTo(self.contentView);
+        }];
     }
     return self;
 }

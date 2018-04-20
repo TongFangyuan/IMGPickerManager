@@ -15,15 +15,30 @@
     if (self = [super init]) {
         self.minimumLineSpacing = 1;
         self.minimumInteritemSpacing = 1;
+        self.itemSize = [self reloadItemSize];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
 
-- (CGSize)itemSize
+- (CGSize)reloadItemSize
 {
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    CGFloat column = 4.0;
+    if (UIDeviceOrientationIsLandscape(orientation)){
+        column = 6.0;
+    }
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    CGFloat width = (screenSize.width-3)/4.0;
+    CGFloat width = (screenSize.width-(column-1))/column;
     return CGSizeMake(width, width);
 }
 
+- (void)orientationDidChange:(NSNotification *)noti{
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    if (UIDeviceOrientationIsLandscape(orientation) || UIDeviceOrientationIsPortrait(orientation)){
+        self.itemSize = [self reloadItemSize];
+    }
+    
+}
 @end

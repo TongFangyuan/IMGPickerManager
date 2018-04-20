@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IMGPickerConstant.h"
 #import "IMGConfigManager.h"
 #import <Photos/Photos.h>
 

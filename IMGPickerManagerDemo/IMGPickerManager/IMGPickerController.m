@@ -8,6 +8,7 @@
 
 #import "IMGPickerController.h"
 #import "IMGPickerManager.h"
+#import <Masonry/Masonry.h>
 
 #import "IMGConfigManager.h"
 #import "IMGPhotoManager.h"
@@ -38,7 +39,6 @@ IMGPickerThumbCellDelegate
     BOOL countOverflow;
     BOOL showTableView;
     NSIndexPath *selectedTableViewIndexPath;
-    PHCachingImageManager *cachingImageManager;
 }
 
 /// 图片选择视图
@@ -63,7 +63,7 @@ IMGPickerThumbCellDelegate
 @property (nonatomic,strong) PHAssetCollection *selectedAssetCollection;
 
 /// 动态约束
-@property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
+//@property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
 
 @property (nonatomic,assign) CGSize imageSize;
 
@@ -83,7 +83,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         self.selectedAssets = [NSMutableArray array];
         self.assets = [NSArray array];
         self.assetCollections = [NSArray array];
-        cachingImageManager = [[PHCachingImageManager alloc] init];
     }
     return self;
 }
@@ -98,8 +97,12 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self fetchAssetCollections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 /// 初始化子视图
 - (void)initSubviews
 {
@@ -111,50 +114,37 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self.contentView addSubview:self.tableView];
     
     /// 约束
-    NSLayoutConstraint *constraint1 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:20.f];
-    NSLayoutConstraint *constraint2 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint3 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint4 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.f];
-    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:@[constraint1,constraint2,constraint3,constraint4]];
+    [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.mas_equalTo(20);
+    }];
     
-    NSLayoutConstraint *constraint5 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint6 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint7 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:55.f];
-    self.topBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint5,constraint6,constraint7,constraint8]];
+    [_topBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.equalTo(self.contentView);
+        make.height.mas_equalTo(55.f);
+    }];
     
-    NSLayoutConstraint *constraint13 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.f];
-    NSLayoutConstraint *constraint14 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint15 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint16 = [NSLayoutConstraint constraintWithItem:self.bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:47.f];
-    self.bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint13,constraint14,constraint15,constraint16]];
+    [self.bottomBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.left.right.equalTo(self.contentView);
+        make.height.mas_equalTo(47.f);
+    }];
     
-    NSLayoutConstraint *constraint9 = [NSLayoutConstraint constraintWithItem:self.topBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint10 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint11 = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint12 = [NSLayoutConstraint constraintWithItem:self.collectionView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomBar attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint9,constraint10,constraint11,constraint12]];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.topBar.mas_bottom);
+        make.left.right.equalTo(self.contentView);
+        make.bottom.equalTo(self.bottomBar.mas_top);
+    }];
     
     // maskview
-    NSLayoutConstraint *constraint17 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint18 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint19 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint20 = [NSLayoutConstraint constraintWithItem:self.maskView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.f];
-    self.maskView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint17,constraint18,constraint19,constraint20]];
+    [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.top.equalTo(self.collectionView);
+    }];
     
     // tableview
-    NSLayoutConstraint *constraint21 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint22 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.f];
-    NSLayoutConstraint *constraint23 = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.maskView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.f];
-    self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.f];
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addConstraints:@[constraint21,constraint22,constraint23,self.dynamicConstraint]];
-    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.equalTo(self.maskView);
+        make.height.mas_equalTo(0);
+    }];
 }
 
 
@@ -182,10 +172,10 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     
     if (show) {
         self.topBar.line.hidden = YES;
-        
-        [self.contentView removeConstraint:self.dynamicConstraint];
-        self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-120.f];
-        [self.contentView addConstraint:self.dynamicConstraint];
+        NSInteger times = CGRectGetWidth(self.view.frame)<CGRectGetHeight(self.view.frame) ? 5 : 3;
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kAlbumsCellHeight*times);
+        }];
        
         [self.maskView.superview bringSubviewToFront:self.maskView];
         [self.tableView.superview bringSubviewToFront:self.tableView];
@@ -200,11 +190,10 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         }];
         
     } else {
-        
 
-        [self.contentView removeConstraint:self.dynamicConstraint];
-        self.dynamicConstraint = [NSLayoutConstraint constraintWithItem:self.tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-        [self.contentView addConstraint:self.dynamicConstraint];
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(0);
+        }];
         
         self.contentView.userInteractionEnabled = NO;
         [UIView animateWithDuration:0.3 animations:^{
@@ -280,6 +269,35 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     
     [self fetchAssetCollections];
     [self.tableView reloadData];
+}
+
+- (void)orientationDidChange:(NSNotification *)noti{
+    UIDeviceOrientation orientation =[UIDevice currentDevice].orientation;
+    if (!UIDeviceOrientationIsPortrait(orientation) && !UIDeviceOrientationIsLandscape(orientation)) return;
+    
+    if (UIDeviceOrientationIsPortrait(orientation)){
+        [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(20);
+        }];
+        
+        [self.bottomBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(47);
+        }];
+    } else {
+        [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+        }];
+        
+        [self.bottomBar mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(35);
+        }];
+    }
+    
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionView reloadData];
+    [UIView animateWithDuration:0.25 animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 #pragma mark - UICollectionViewDelegate UICollectionViewDataSource
@@ -550,8 +568,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     if (!_contentView) {
         _contentView = [UIView new];
         _contentView.backgroundColor = [UIColor whiteColor];
-        _contentView.layer.cornerRadius = 8;
-        _contentView.layer.masksToBounds = YES;
     }
     return _contentView;
 }
@@ -609,6 +625,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 {
     if (!_bottomBar) {
         _bottomBar = [IMGPickerBottomBar new];
+        _bottomBar.backgroundColor = [UIColor whiteColor];
         [_bottomBar.previewButton addTarget:self action:@selector(previewButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomBar;
