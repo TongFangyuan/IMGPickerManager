@@ -231,7 +231,7 @@ IMGPlayerDelegate
 - (void)orientationDidChange:(NSNotification *)noti
 {
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) || UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
-//        [self.collectionView.collectionViewLayout invalidateLayout];
+        [self.collectionView.collectionViewLayout invalidateLayout];
         self.flowLayout.itemSize = self.view.frame.size;
         [self.collectionView reloadData];
         [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
@@ -323,11 +323,8 @@ IMGPlayerDelegate
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
         
-        
-        
         //  NSLog(@"%@",indexPath);
         [self needShowCellAtIndexPath:indexPath];
-        
         
     }
 }
@@ -365,12 +362,12 @@ IMGPlayerDelegate
 {
     if (!_flowLayout) {
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.itemSize = self.view.frame.size;
         _flowLayout.minimumInteritemSpacing = 0;
         _flowLayout.minimumLineSpacing = 10;
         _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
+    _flowLayout.itemSize = self.view.frame.size;
     return _flowLayout;
 }
 

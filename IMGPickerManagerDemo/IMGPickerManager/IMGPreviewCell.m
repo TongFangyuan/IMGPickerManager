@@ -17,7 +17,7 @@
 - (void)setModel:(PHAsset *)model
 {
     _model = model;
-
+    
     if (model.mediaType == PHAssetMediaTypeVideo) {
         self.playButton.hidden = NO;
     } else {
@@ -30,55 +30,100 @@
 - (void)loadImage {
     
     __weak typeof(self) weakSelf = self;
-//    __block CGFloat scale = [UIScreen mainScreen].scale;
-    __block CGFloat scale = 1;
-    __block CGSize targetSize = CGSizeMake(self.iconView.frame.size.width*scale, self.iconView.frame.size.height*scale);
-    
-    [IMGPhotoManager requestImageForAsset:self.model targetSize:targetSize handler:^(UIImage *image, IMGMediaType imageType) {
-//        NSLog(@"image:%@",image);
-        CGRect frame = CGRectZero;
-        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    __block CGFloat scale = [UIScreen mainScreen].scale;
+    __block CGSize screenSize = weakSelf.iconView.superview.bounds.size;
+    self.iconView.image = nil;
+    [IMGPhotoManager requestDataForAsset:self.model handler:^(NSData *mediaData, IMGMediaType mediaType) {
         
-        frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
-        
-        while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            UIImage *image = [[UIImage alloc] initWithData:mediaData];
+            CGRect frame = CGRectZero;
             
-            if (frame.size.width>screenSize.width) {
-                frame.size.width = screenSize.width;
-                frame.size.height = image.size.height/image.size.width * frame.size.width;
+            frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
+            
+            while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
+                
+                if (frame.size.width>screenSize.width) {
+                    frame.size.width = screenSize.width;
+                    frame.size.height = image.size.height/image.size.width * frame.size.width;
+                }
+                if (frame.size.height>screenSize.height) {
+                    frame.size.height = screenSize.height;
+                    frame.size.width = image.size.width/image.size.height * frame.size.height;
+                }
             }
-            if (frame.size.height>screenSize.height) {
-                frame.size.height = screenSize.height;
-                frame.size.width = image.size.width/image.size.height * frame.size.height;
+            
+            if (frame.size.width<screenSize.width && frame.size.height<screenSize.height) {
+                if (screenSize.width>screenSize.height) {
+                    frame.size.height = screenSize.height;
+                    frame.size.width = image.size.width/image.size.height * frame.size.height;
+                } else {
+                    frame.size.width = screenSize.width;
+                    frame.size.height = image.size.height/image.size.width * frame.size.width;
+                }
             }
-        }
-        
-        [IMGPhotoManager cacheImageForAsset:@[weakSelf.model] targetSize:image.size];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.iconView.frame = frame;
-            weakSelf.iconView.center = weakSelf.superview.center;
-            weakSelf.iconView.image = image;
+            
+            frame.origin.y = screenSize.height*0.5 - frame.size.height*0.5;
+            frame.origin.x = screenSize.width*0.5 - frame.size.width*0.5;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.iconView.frame = frame;
+                weakSelf.iconView.center = weakSelf.superview.center;
+                weakSelf.iconView.image = image;
+            });
         });
+        
     }];
     
 }
 
 - (void)displayGifImage {
+    
     __weak typeof(self) weakSelf = self;
-    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-        [IMGPhotoManager requestImageDataForAsset:self.model handler:^(NSData *imageData, IMGMediaType imageType) {
-            UIImage *gifImage = [UIImage animatedImageWithAnimatedGIFData:imageData];
-            CGFloat imageHeight = gifImage.size.height/gifImage.size.width * [UIScreen mainScreen].bounds.size.width;
-            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
-//            NSLog(@"gifImage:%@",gifImage);
+    __block CGFloat scale = [UIScreen mainScreen].scale;
+    __block CGSize screenSize = weakSelf.iconView.superview.bounds.size;
+    [IMGPhotoManager requestDataForAsset:self.model handler:^(NSData *mediaData, IMGMediaType mediaType) {
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            UIImage *image = [UIImage animatedImageWithAnimatedGIFData:mediaData];
+            CGRect frame = CGRectZero;
+            
+            frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
+            
+            while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
+                
+                if (frame.size.width>screenSize.width) {
+                    frame.size.width = screenSize.width;
+                    frame.size.height = image.size.height/image.size.width * frame.size.width;
+                }
+                if (frame.size.height>screenSize.height) {
+                    frame.size.height = screenSize.height;
+                    frame.size.width = image.size.width/image.size.height * frame.size.height;
+                }
+            }
+            
+            if (frame.size.width<screenSize.width && frame.size.height<screenSize.height) {
+                if (screenSize.width>screenSize.height) {
+                    frame.size.height = screenSize.height;
+                    frame.size.width = image.size.width/image.size.height * frame.size.height;
+                } else {
+                    frame.size.width = screenSize.width;
+                    frame.size.height = image.size.height/image.size.width * frame.size.width;
+                }
+            }
+            
+            frame.origin.y = screenSize.height*0.5 - frame.size.height*0.5;
+            frame.origin.x = screenSize.width*0.5 - frame.size.width*0.5;
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.iconView.image = gifImage;
-                weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
+                weakSelf.iconView.frame = frame;
+                weakSelf.iconView.center = weakSelf.superview.center;
+                weakSelf.iconView.image = image;
             });
-        }];
-    });
-
+        });
+        
+    }];
+    
 }
 
 - (void)setPlayButtonHidden:(BOOL)hidden {
