@@ -10,4 +10,6 @@
 
 @interface IMGPickerFlowLayout : UICollectionViewFlowLayout
 
+- (CGSize)reloadItemSize;
+
 @end

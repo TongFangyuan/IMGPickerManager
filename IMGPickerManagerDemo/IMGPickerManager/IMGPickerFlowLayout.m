@@ -16,8 +16,6 @@
         self.minimumLineSpacing = 1;
         self.minimumInteritemSpacing = 1;
         self.itemSize = [self reloadItemSize];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -34,11 +32,4 @@
     return CGSizeMake(width, width);
 }
 
-- (void)orientationDidChange:(NSNotification *)noti{
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (UIDeviceOrientationIsLandscape(orientation) || UIDeviceOrientationIsPortrait(orientation)){
-        self.itemSize = [self reloadItemSize];
-    }
-    
-}
 @end

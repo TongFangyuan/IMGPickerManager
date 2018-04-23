@@ -9,6 +9,7 @@
 #import "IMGPreviewCell.h"
 #import "UIImage+animatedGIF.h"
 #import "IMGPhotoManager.h"
+#import <Masonry/Masonry.h>
 
 @implementation IMGPreviewCell
 
@@ -28,10 +29,35 @@
 
 - (void)loadImage {
     
-    [IMGPhotoManager requestImageForAsset:self.model targetSize:self.iconView.frame.size handler:^(UIImage *image, IMGMediaType imageType) {
+    __weak typeof(self) weakSelf = self;
+//    __block CGFloat scale = [UIScreen mainScreen].scale;
+    __block CGFloat scale = 1;
+    __block CGSize targetSize = CGSizeMake(self.iconView.frame.size.width*scale, self.iconView.frame.size.height*scale);
+    
+    [IMGPhotoManager requestImageForAsset:self.model targetSize:targetSize handler:^(UIImage *image, IMGMediaType imageType) {
 //        NSLog(@"image:%@",image);
-        __weak typeof(self) weakSelf = self;
+        CGRect frame = CGRectZero;
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        
+        frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
+        
+        while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
+            
+            if (frame.size.width>screenSize.width) {
+                frame.size.width = screenSize.width;
+                frame.size.height = image.size.height/image.size.width * frame.size.width;
+            }
+            if (frame.size.height>screenSize.height) {
+                frame.size.height = screenSize.height;
+                frame.size.width = image.size.width/image.size.height * frame.size.height;
+            }
+        }
+        
+        [IMGPhotoManager cacheImageForAsset:@[weakSelf.model] targetSize:image.size];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.iconView.frame = frame;
+            weakSelf.iconView.center = weakSelf.superview.center;
             weakSelf.iconView.image = image;
         });
     }];
@@ -43,9 +69,12 @@
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
         [IMGPhotoManager requestImageDataForAsset:self.model handler:^(NSData *imageData, IMGMediaType imageType) {
             UIImage *gifImage = [UIImage animatedImageWithAnimatedGIFData:imageData];
+            CGFloat imageHeight = gifImage.size.height/gifImage.size.width * [UIScreen mainScreen].bounds.size.width;
+            CGFloat imageY = [UIScreen mainScreen].bounds.size.height*0.5 - imageHeight*0.5;
 //            NSLog(@"gifImage:%@",gifImage);
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.iconView.image = gifImage;
+                weakSelf.iconView.frame = CGRectMake(0, imageY, [UIScreen mainScreen].bounds.size.width, imageHeight);
             });
         }];
     });

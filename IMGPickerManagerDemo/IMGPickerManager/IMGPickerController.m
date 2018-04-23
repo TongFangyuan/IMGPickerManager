@@ -43,6 +43,7 @@ IMGPickerThumbCellDelegate
 
 /// 图片选择视图
 @property (nonatomic,strong) UICollectionView *collectionView;
+@property (nonatomic,strong) IMGPickerFlowLayout *layout;
 /// 相册选择视图
 @property (nonatomic,strong) UITableView *tableView;
 /// 遮罩视图(在tableView展开时显示,反之隐藏)
@@ -61,9 +62,6 @@ IMGPickerThumbCellDelegate
 @property (nonatomic,strong) NSArray<PHAssetCollection *> *assetCollections;
 /// 当前选中的 PHAssetCollection
 @property (nonatomic,strong) PHAssetCollection *selectedAssetCollection;
-
-/// 动态约束
-//@property (nonatomic,strong) NSLayoutConstraint *dynamicConstraint;
 
 @property (nonatomic,assign) CGSize imageSize;
 
@@ -100,9 +98,16 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 /// 初始化子视图
 - (void)initSubviews
 {
@@ -273,28 +278,53 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 
 - (void)orientationDidChange:(NSNotification *)noti{
     UIDeviceOrientation orientation =[UIDevice currentDevice].orientation;
+    if (orientation==UIDeviceOrientationPortraitUpsideDown) return;
     if (!UIDeviceOrientationIsPortrait(orientation) && !UIDeviceOrientationIsLandscape(orientation)) return;
     
-    if (UIDeviceOrientationIsPortrait(orientation)){
-        [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(20);
-        }];
-        
-        [self.bottomBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(47);
-        }];
-    } else {
-        [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(0);
-        }];
-        
-        [self.bottomBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(35);
-        }];
+    NSLog(@"orientation:%ld",(long)orientation);
+    CGFloat contentViewTop = CGRectGetMinY(self.contentView.frame);
+    CGFloat bottomHeight = CGRectGetHeight(self.bottomBar.frame);
+    
+    switch (orientation) {
+        case UIDeviceOrientationPortrait:
+        {
+            contentViewTop = 20;
+            bottomHeight = 47;
+        } break;
+        case UIDeviceOrientationPortraitUpsideDown:
+        {
+            contentViewTop = 20;
+            bottomHeight = 47;
+        } break;
+        case UIDeviceOrientationLandscapeLeft:
+        {
+            contentViewTop = 0;
+            bottomHeight = 35;
+        } break;
+        case UIDeviceOrientationLandscapeRight:
+        {
+            contentViewTop = 0;
+            bottomHeight = 35;
+        } break;
+        default:
+            break;
     }
     
-    [self.collectionView.collectionViewLayout invalidateLayout];
-    [self.collectionView reloadData];
+    [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(contentViewTop);
+    }];
+    
+    [self.bottomBar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(bottomHeight);
+    }];
+
+    CGSize newItemSize = [self.layout reloadItemSize];
+    if (!CGSizeEqualToSize(newItemSize, self.layout.itemSize)) {
+        [self.collectionView.collectionViewLayout invalidateLayout];
+        self.layout.itemSize = newItemSize;
+        [self.collectionView reloadData];
+    }
+    
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     }];
@@ -575,7 +605,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[IMGPickerFlowLayout new]];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -583,6 +613,14 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         [_collectionView registerClass:[IMGCameraCell class] forCellWithReuseIdentifier:@"IMGCameraCell"];
     }
     return _collectionView;
+}
+
+- (IMGPickerFlowLayout *)layout
+{
+    if (!_layout) {
+        _layout = [[IMGPickerFlowLayout alloc] init];
+    }
+    return _layout;
 }
 
 - (UITableView *)tableView

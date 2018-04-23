@@ -13,6 +13,7 @@
 #import "IMGPlayerManager.h"
 #import "IMGPhotoManager.h"
 #import "IMGPickerManager.h"
+#import <Masonry/Masonry.h>
 
 @interface IMGPreviewController ()
 <
@@ -54,6 +55,8 @@ IMGPlayerDelegate
     self.selectedAssets = [NSMutableArray arrayWithArray:self.originalSelectedAssets];
     
     [self.operationView.doneButton setEnabled:self.selectedAssets.count];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
 }
 
@@ -222,6 +225,18 @@ IMGPlayerDelegate
 //返回最优先显示的屏幕方向
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return UIInterfaceOrientationPortrait;
+}
+
+#pragma mark - notification
+- (void)orientationDidChange:(NSNotification *)noti
+{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) || UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
+//        [self.collectionView.collectionViewLayout invalidateLayout];
+        self.flowLayout.itemSize = self.view.frame.size;
+        [self.collectionView reloadData];
+        [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        NSLog(@"%@",self.view);
+    }
 }
 
 #pragma mark - IMGPreviewCellDelegate
