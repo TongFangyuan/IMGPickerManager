@@ -46,7 +46,7 @@
 
 获取`NSData`对象调用`requestDataForAsset:handler:`方法
 
-获取缩略图`requestImageForAsset:targetSize:handler:`方法
+获取缩略图`requestImageForAsset:targetSize:handler:`方法
 
 获取原图`requestImageDataForAsset:handler:`方法
 
