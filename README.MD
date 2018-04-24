@@ -60,12 +60,14 @@
 将`IMGPickerManager`文件夹直接拖到项目中就可以了
 
 ### cocopods集成
-platform :ios, '8.0'
-use_frameworks!
 
-target 'MyApp' do
-pod 'IMGPickerManager'
+```
+platform :ios, '8.0'
+    use_frameworks!
+    target 'MyApp' do
+    pod 'IMGPickerManager'
 end
+```
 
 效果图
 ------
