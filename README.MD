@@ -4,7 +4,7 @@
 ![liscense](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 ![Language](https://img.shields.io/badge/Language-%20Objective%20C%20-blue.svg)
 
-一个集成简单、无依赖、高效、轻量级、持续更新的第三方图片选择框架
+一个集成简单、高效、轻量级、持续更新的第三方图片选择框架
 
 
 
@@ -69,6 +69,10 @@ platform :ios, '8.0'
     pod 'IMGPickerManager'
 end
 ```
+
+依赖
+------
+依赖第三方框架`Mansory`
 
 效果图
 ------
