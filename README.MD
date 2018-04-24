@@ -11,11 +11,11 @@
 特性
 -----
 
-- [x] 多选图片，包括普通图片、gif图片选择
+- [x] 支持选择图片（普通图片，GIF格式图片等）
 - [x] 支持选择LivePhoto
 - [x] 支持选择Video
-- [x] 实时预览
-- [x] 3D Touch
+- [x] 支持3D Touch预览
+- [x] 集成简单高效
 
 ### 更多特性
 
@@ -31,6 +31,7 @@
 如何使用
 ----
 ### 调用`IMGPickerManager`工具
+
 ```objective-c
 #import "IMGPickerManager.h"
 ...
