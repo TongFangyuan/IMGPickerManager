@@ -54,7 +54,7 @@
 ----
 
 - [x] 手动
-- [ x] cocopods集成
+- [x] cocopods集成
 
 ### 手动集成
 将`IMGPickerManager`文件夹直接拖到项目中就可以了
@@ -70,7 +70,7 @@ end
 效果图
 ------
 
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.PNG" width="235" height="417"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.png"/>
 <!--<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg" width="235" height="417"/>-->
 <!--<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg" width="235" height="417"/>-->
 <img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/1.GIF" width="235" height="417"/>
