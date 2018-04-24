@@ -46,26 +46,33 @@
 
 获取`NSData`对象调用`requestDataForAsset:handler:`方法
 
-获取封面图用`requestImageForAsset:targetSize:handler:`方法
+获取缩略图`requestImageForAsset:targetSize:handler:`方法
+
+获取原图`requestImageDataForAsset:handler:`方法
 
 安装
 ----
 
 - [x] 手动
-- [ ] cocopods集成
+- [ x] cocopods集成
 
 ### 手动集成
 将`IMGPickerManager`文件夹直接拖到项目中就可以了
 
 ### cocopods集成
-功能上架中...
+platform :ios, '8.0'
+use_frameworks!
+
+target 'MyApp' do
+pod 'IMGPickerManager'
+end
 
 效果图
 ------
 
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.jpg" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg" width="235" height="417"/>
-<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg" width="235" height="417"/>
+<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/2.PNG" width="235" height="417"/>
+<!--<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/3.jpg" width="235" height="417"/>-->
+<!--<img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/4.jpg" width="235" height="417"/>-->
 <img src="https://github.com/TongFangyuan/IMGPickerManager/blob/master/images/1.GIF" width="235" height="417"/>
 
 Licenses
