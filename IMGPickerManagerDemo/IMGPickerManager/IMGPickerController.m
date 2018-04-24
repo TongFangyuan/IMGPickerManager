@@ -519,7 +519,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     UICollectionViewCell *cell = (UICollectionViewCell* )[previewingContext sourceView];
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
     PHAsset *asset = self.assets[indexPath.item-1];
-    previewingContext.sourceRect = cell.bounds;
     
     IMG3DTouchViewController *previewController = [IMG3DTouchViewController new];
     previewController.asset = asset;
@@ -528,15 +527,14 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         UIImage *image = [[UIImage alloc] initWithData:imageData];
         CGFloat width = CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds) - 40;
         CGFloat maxHeight = 500;
-        CGFloat height = image.size.height/image.size.width * width;
-        if (height>maxHeight) {
-            height = maxHeight;
-        }
         weakController.imageView.image = imageType==IMGMediaTypeGif ? [UIImage animatedImageWithAnimatedGIFData:imageData]:image;
-        weakController.preferredContentSize = CGSizeMake(width, height);
+        weakController.preferredContentSize = [UIView fitSize:image.size toSize:CGSizeMake(width, maxHeight)];
     }];
     
+    previewingContext.sourceRect = cell.bounds;
+
     self.selectedIndexPath = indexPath;
+    
     return previewController;
 }
 
