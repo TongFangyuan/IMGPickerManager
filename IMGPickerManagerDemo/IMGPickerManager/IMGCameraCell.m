@@ -6,8 +6,9 @@
 //  Copyright © 2018年 tongfangyuan. All rights reserved.
 //
 
+#import "IMGPikcerHeader.h"
+
 #import "IMGCameraCell.h"
-#import <Masonry/Masonry.h>
 
 @implementation IMGCameraCell
 

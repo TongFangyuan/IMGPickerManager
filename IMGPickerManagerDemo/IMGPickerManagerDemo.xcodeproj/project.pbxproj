@@ -20,6 +20,8 @@
 		8424FA5D2071D01E007E5B36 /* ic_photo_choosesel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA472071D01E007E5B36 /* ic_photo_choosesel@2x.png */; };
 		8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */; };
 		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
+		84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */; };
+		84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */; };
 		84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB22084A531001AA758 /* SaveFileViewController.m */; };
 		84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB52084A7EF001AA758 /* SettingViewController.m */; };
 		DA159D97208338640080C50A /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D95208338640080C50A /* play@2x.png */; };
@@ -83,6 +85,12 @@
 		8424FA472071D01E007E5B36 /* ic_photo_choosesel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosesel@2x.png"; sourceTree = "<group>"; };
 		8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@2x.png"; sourceTree = "<group>"; };
 		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
+		8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPikcerHeader.h; sourceTree = "<group>"; };
+		84903DB9208F081900269B51 /* IMGRotateProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGRotateProtocol.h; sourceTree = "<group>"; };
+		84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SuitableSize.h"; sourceTree = "<group>"; };
+		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
+		84903DC0208F239D00269B51 /* IMG3DTouchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMG3DTouchViewController.h; sourceTree = "<group>"; };
+		84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMG3DTouchViewController.m; sourceTree = "<group>"; };
 		84AC1CB12084A531001AA758 /* SaveFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveFileViewController.h; sourceTree = "<group>"; };
 		84AC1CB22084A531001AA758 /* SaveFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveFileViewController.m; sourceTree = "<group>"; };
 		84AC1CB42084A7EF001AA758 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -229,12 +237,16 @@
 		8424FA1C2071D01D007E5B36 /* IMGPickerManager */ = {
 			isa = PBXGroup;
 			children = (
+				8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */,
+				84903DB9208F081900269B51 /* IMGRotateProtocol.h */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,
 				DA32C32B2088C9240080A8CA /* IMGPhotoManager.m */,
 				DA32C3282088C9240080A8CA /* IMGPickerController.h */,
 				DA32C33E2088C9260080A8CA /* IMGPickerController.m */,
+				84903DC0208F239D00269B51 /* IMG3DTouchViewController.h */,
+				84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */,
 				DA32C33A2088C9250080A8CA /* IMGPreviewController.h */,
 				DA32C3412088C9260080A8CA /* IMGPreviewController.m */,
 				DA32C3342088C9250080A8CA /* IMGCameraCell.h */,
@@ -259,6 +271,8 @@
 				DA32C3462088C9270080A8CA /* IMGPreviewOperationView.m */,
 				DA32C3592088C9330080A8CA /* UIImage+animatedGIF.h */,
 				DA32C3582088C9330080A8CA /* UIImage+animatedGIF.m */,
+				84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */,
+				84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */,
 				DA32C35B2088C9330080A8CA /* UIViewController+FYAlert.h */,
 				DA32C35A2088C9330080A8CA /* UIViewController+FYAlert.m */,
 				DA32C3332088C9250080A8CA /* PHAsset+IMGProperty.h */,
@@ -483,6 +497,7 @@
 				DA32C34A2088C9270080A8CA /* IMGPickerBottomBar.m in Sources */,
 				8424F9FA2071CF61007E5B36 /* main.m in Sources */,
 				DA32C3502088C9270080A8CA /* IMGCameraCell.m in Sources */,
+				84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */,
 				DA32C34B2088C9270080A8CA /* IMGPickerTopBar.m in Sources */,
 				DA32C3492088C9270080A8CA /* IMGPhotoManager.m in Sources */,
 				DA32C3542088C9270080A8CA /* IMGPickerThumbCell.m in Sources */,
@@ -492,6 +507,7 @@
 				DA32C3522088C9270080A8CA /* IMGPickerController.m in Sources */,
 				DA32C35C2088C9340080A8CA /* UIImage+animatedGIF.m in Sources */,
 				DA32C3562088C9270080A8CA /* IMGPreviewOperationView.m in Sources */,
+				84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */,
 				DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

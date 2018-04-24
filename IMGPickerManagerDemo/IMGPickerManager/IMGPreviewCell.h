@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PHAsset+IMGProperty.h"
+#import "IMGPikcerHeader.h"
 
 @class IMGPreviewCell;
 
@@ -16,9 +17,11 @@
 - (void)previewCellDidClickPlayButton:(IMGPreviewCell *)cell;
 
 @end
+
 @interface IMGPreviewCell : UICollectionViewCell
 <
-UIScrollViewDelegate
+UIScrollViewDelegate,
+IMGViewRotate
 >
 
 @property (nonatomic,weak) id<IMGPreviewCellDelegate> delegate;
@@ -30,4 +33,7 @@ UIScrollViewDelegate
 - (void)setPlayButtonHidden:(BOOL)hidden;
 - (void)loadImage;
 - (void)displayGifImage;
+
+- (void)updateUI;
+
 @end

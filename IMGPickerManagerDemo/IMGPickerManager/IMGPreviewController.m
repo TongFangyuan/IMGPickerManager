@@ -6,6 +6,8 @@
 //  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
+#import "IMGPikcerHeader.h"
+
 #import "IMGPreviewController.h"
 #import "IMGPreviewCell.h"
 #import "IMGPreviewOperationView.h"
@@ -13,7 +15,7 @@
 #import "IMGPlayerManager.h"
 #import "IMGPhotoManager.h"
 #import "IMGPickerManager.h"
-#import <Masonry/Masonry.h>
+
 
 @interface IMGPreviewController ()
 <
@@ -55,9 +57,6 @@ IMGPlayerDelegate
     self.selectedAssets = [NSMutableArray arrayWithArray:self.originalSelectedAssets];
     
     [self.operationView.doneButton setEnabled:self.selectedAssets.count];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
 }
 
 - (void)viewWillLayoutSubviews {
@@ -71,8 +70,12 @@ IMGPlayerDelegate
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
     [self needShowCellAtIndexPath:self.selectIndexPath];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 - (void)initSubviews
@@ -96,6 +99,26 @@ IMGPlayerDelegate
     [self.collectionView.superview sendSubviewToBack:self.collectionView];
     
 }
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    self.flowLayout.itemSize = size;
+    [self.flowLayout invalidateLayout];
+
+    NSArray<id<IMGViewRotate>> *cells = [self.collectionView visibleCells];
+    [cells enumerateObjectsUsingBlock:^(id<IMGViewRotate>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj viewWillTransitionToSize:size];
+    }];
+    
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 
 - (void)dealloc {
     [[IMGPlayerManager shareManager] stop];
@@ -207,37 +230,7 @@ IMGPlayerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:IMGPickerManagerWillPickCompleteNotification object:nil userInfo:@{@"data":self.selectedAssets}];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-//返回最优先显示的屏幕方向
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
 #pragma mark - notification
-- (void)orientationDidChange:(NSNotification *)noti
-{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) || UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation)) {
-        [self.collectionView.collectionViewLayout invalidateLayout];
-        self.flowLayout.itemSize = self.view.frame.size;
-        [self.collectionView reloadData];
-        [self.collectionView scrollToItemAtIndexPath:self.selectIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-        NSLog(@"%@",self.view);
-    }
-}
 
 #pragma mark - IMGPreviewCellDelegate
 - (void)previewCellDidClickPlayButton:(IMGPreviewCell *)cell {
@@ -285,17 +278,17 @@ IMGPlayerDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([cell isKindOfClass:[IMGPreviewCell class]]) {
-        [[(IMGPreviewCell *)cell scrollView] setZoomScale:1.0 animated:NO];
-        [(IMGPreviewCell *)cell loadImage];
-    }
-//    NSLog(@"willDisplayCellAtIndexPath:%@",indexPath);
+//    if ([cell isKindOfClass:[IMGPreviewCell class]]) {
+//        IMGPreviewCell *preivewCell = (IMGPreviewCell *)cell;
+//        [preivewCell updateUI];
+//    }
+//    NSLog(@"%@",indexPath);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[IMGPreviewCell class]]) {
         IMGPreviewCell *preivewCell = (IMGPreviewCell *)cell;
-        [[preivewCell scrollView] setZoomScale:1.0 animated:NO];
+        [preivewCell.scrollView setZoomScale:1.0];
         
         // stop play live photo
         if (@available(iOS 9.1, *)) {
@@ -312,7 +305,6 @@ IMGPlayerDelegate
             [[IMGPlayerManager shareManager] stop];
         }
     }
-//    NSLog(@"didEndDisplayingCell:%@",indexPath);
 }
 
 
@@ -320,12 +312,13 @@ IMGPlayerDelegate
 {
     if (scrollView==self.collectionView) {
         
+        NSArray *cells = [self.collectionView visibleCells];
+        [cells makeObjectsPerformSelector:@selector(updateUI)];
+        
         CGPoint point = [self.collectionView convertPoint:self.operationView.center fromView:self.operationView.superview];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
         
-        //  NSLog(@"%@",indexPath);
         [self needShowCellAtIndexPath:indexPath];
-        
     }
 }
 
@@ -366,8 +359,8 @@ IMGPlayerDelegate
         _flowLayout.minimumLineSpacing = 10;
         _flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _flowLayout.itemSize = self.view.frame.size;
     }
-    _flowLayout.itemSize = self.view.frame.size;
     return _flowLayout;
 }
 

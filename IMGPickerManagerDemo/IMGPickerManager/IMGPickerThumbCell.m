@@ -6,10 +6,11 @@
 //  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
+#import "IMGPikcerHeader.h"
+
 #import "IMGPickerThumbCell.h"
 #import "PHAsset+IMGProperty.h"
 #import "IMGPhotoManager.h"
-#import <Masonry/Masonry.h>
 
 static CGFloat kButtonWidth = 22;
 

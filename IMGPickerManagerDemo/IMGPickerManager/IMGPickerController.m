@@ -6,10 +6,10 @@
 //  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
+#import "IMGPikcerHeader.h"
+
 #import "IMGPickerController.h"
 #import "IMGPickerManager.h"
-#import <Masonry/Masonry.h>
-
 #import "IMGConfigManager.h"
 #import "IMGPhotoManager.h"
 #import "IMGPickerAlbumsCell.h"
@@ -20,6 +20,7 @@
 #import "IMGPickerBottomBar.h"
 #import "IMGPreviewController.h"
 #import "PHAsset+IMGProperty.h"
+#import "IMG3DTouchViewController.h"
 
 static CGFloat kAlbumsCellHeight = 70;
 
@@ -64,6 +65,7 @@ IMGPickerThumbCellDelegate
 @property (nonatomic,strong) PHAssetCollection *selectedAssetCollection;
 
 @property (nonatomic,assign) CGSize imageSize;
+@property (nonatomic,strong) NSIndexPath *selectedIndexPath;
 
 @end
 
@@ -95,13 +97,15 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self fetchAssetCollections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)dealloc{
@@ -287,11 +291,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     
     switch (orientation) {
         case UIDeviceOrientationPortrait:
-        {
-            contentViewTop = 20;
-            bottomHeight = 47;
-        } break;
-        case UIDeviceOrientationPortraitUpsideDown:
         {
             contentViewTop = 20;
             bottomHeight = 47;
@@ -520,12 +519,10 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     UICollectionViewCell *cell = (UICollectionViewCell* )[previewingContext sourceView];
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
     PHAsset *asset = self.assets[indexPath.item-1];
+    previewingContext.sourceRect = cell.bounds;
     
-    IMGPreviewController *previewController = [IMGPreviewController new];
-    previewController.assets = self.assets;
-    previewController.originalSelectedAssets = self.selectedAssets;
-    previewController.selectIndexPath = [NSIndexPath indexPathForRow:(indexPath.row-1) inSection:indexPath.section];
-    
+    IMG3DTouchViewController *previewController = [IMG3DTouchViewController new];
+    previewController.asset = asset;
     __weak typeof(previewController) weakController = previewController;
     [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData,IMGMediaType imageType) {
         UIImage *image = [[UIImage alloc] initWithData:imageData];
@@ -535,15 +532,27 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         if (height>maxHeight) {
             height = maxHeight;
         }
+        weakController.imageView.image = imageType==IMGMediaTypeGif ? [UIImage animatedImageWithAnimatedGIFData:imageData]:image;
         weakController.preferredContentSize = CGSizeMake(width, height);
     }];
-    previewingContext.sourceRect = cell.bounds;
     
+    self.selectedIndexPath = indexPath;
     return previewController;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit{
-    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+
+    IMGPreviewController *previewController = [IMGPreviewController new];
+    previewController.assets = self.assets;
+    previewController.originalSelectedAssets = self.selectedAssets;
+    previewController.selectIndexPath = [NSIndexPath indexPathForRow:(self.selectedIndexPath.row-1) inSection:self.selectedIndexPath.section];
+    
+    __weak typeof(self) weakSelf = self;
+    [previewController setCancelBlock:^(NSArray<PHAsset *> *asstes) {
+        weakSelf.selectedAssets = [NSMutableArray arrayWithArray:asstes];
+        [weakSelf reloadCollectionViewData];
+    }];
+    [self.navigationController pushViewController:previewController animated:YES];
 }
 
 #pragma clang diagnostic pop

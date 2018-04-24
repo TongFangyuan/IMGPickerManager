@@ -6,10 +6,10 @@
 //  Copyright © 2017年 tongfangyuan. All rights reserved.
 //
 
+
 #import "IMGPreviewCell.h"
 #import "UIImage+animatedGIF.h"
 #import "IMGPhotoManager.h"
-#import <Masonry/Masonry.h>
 
 @implementation IMGPreviewCell
 
@@ -24,45 +24,46 @@
         self.playButton.hidden = YES;
     }
     
+    [self loadImage];
+    
+    
+}
+- (void)updateFrame
+{
+    if (CGSizeEqualToSize(self.scrollView.bounds.size, self.contentView.bounds.size)) {
+        return;
+    }
+    
+    self.scrollView.frame = self.contentView.bounds;
+    self.playButton.center = self.contentView.center;
+    
+    CGSize size = self.scrollView.frame.size;
+    CGRect iconFrame = CGRectZero;
+    CGSize fitSize =  [UIView fitSize:self.iconView.image.size toSize:size];
+    iconFrame.size = fitSize;
+    iconFrame.origin.y = size.height*0.5 - fitSize.height*0.5;
+    iconFrame.origin.x = size.width*0.5 - fitSize.width*0.5;
+    self.iconView.frame = iconFrame;
+}
+
+- (void)updateUI {
+
+    //initUI
+    [self updateFrame];
     
 }
 
 - (void)loadImage {
-    
     __weak typeof(self) weakSelf = self;
     __block CGFloat scale = [UIScreen mainScreen].scale;
-    __block CGSize screenSize = weakSelf.iconView.superview.bounds.size;
-    self.iconView.image = nil;
-    [IMGPhotoManager requestDataForAsset:self.model handler:^(NSData *mediaData, IMGMediaType mediaType) {
-        
+    __block CGSize screenSize = self.contentView.bounds.size;
+    __block CGSize targetSize = CGSizeMake(self.iconView.frame.size.width*scale, self.iconView.frame.size.height*scale);
+    [IMGPhotoManager requestImageForAsset:self.model targetSize:targetSize handler:^(UIImage *image, IMGMediaType imageType) {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            UIImage *image = [[UIImage alloc] initWithData:mediaData];
+            
             CGRect frame = CGRectZero;
-            
-            frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
-            
-            while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
-                
-                if (frame.size.width>screenSize.width) {
-                    frame.size.width = screenSize.width;
-                    frame.size.height = image.size.height/image.size.width * frame.size.width;
-                }
-                if (frame.size.height>screenSize.height) {
-                    frame.size.height = screenSize.height;
-                    frame.size.width = image.size.width/image.size.height * frame.size.height;
-                }
-            }
-            
-            if (frame.size.width<screenSize.width && frame.size.height<screenSize.height) {
-                if (screenSize.width>screenSize.height) {
-                    frame.size.height = screenSize.height;
-                    frame.size.width = image.size.width/image.size.height * frame.size.height;
-                } else {
-                    frame.size.width = screenSize.width;
-                    frame.size.height = image.size.height/image.size.width * frame.size.width;
-                }
-            }
-            
+            CGSize oriSize = CGSizeMake(image.size.width/scale, image.size.height/scale);
+            frame.size = [UIView fitSize:oriSize toSize:screenSize];
             frame.origin.y = screenSize.height*0.5 - frame.size.height*0.5;
             frame.origin.x = screenSize.width*0.5 - frame.size.width*0.5;
             
@@ -72,7 +73,6 @@
                 weakSelf.iconView.image = image;
             });
         });
-        
     }];
     
 }
@@ -81,37 +81,14 @@
     
     __weak typeof(self) weakSelf = self;
     __block CGFloat scale = [UIScreen mainScreen].scale;
-    __block CGSize screenSize = weakSelf.iconView.superview.bounds.size;
+    __block CGSize screenSize = self.contentView.bounds.size;
     [IMGPhotoManager requestDataForAsset:self.model handler:^(NSData *mediaData, IMGMediaType mediaType) {
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             UIImage *image = [UIImage animatedImageWithAnimatedGIFData:mediaData];
             CGRect frame = CGRectZero;
-            
-            frame.size = CGSizeMake(image.size.width/scale, image.size.height/scale);
-            
-            while (frame.size.width>screenSize.width || frame.size.height>screenSize.height) {
-                
-                if (frame.size.width>screenSize.width) {
-                    frame.size.width = screenSize.width;
-                    frame.size.height = image.size.height/image.size.width * frame.size.width;
-                }
-                if (frame.size.height>screenSize.height) {
-                    frame.size.height = screenSize.height;
-                    frame.size.width = image.size.width/image.size.height * frame.size.height;
-                }
-            }
-            
-            if (frame.size.width<screenSize.width && frame.size.height<screenSize.height) {
-                if (screenSize.width>screenSize.height) {
-                    frame.size.height = screenSize.height;
-                    frame.size.width = image.size.width/image.size.height * frame.size.height;
-                } else {
-                    frame.size.width = screenSize.width;
-                    frame.size.height = image.size.height/image.size.width * frame.size.width;
-                }
-            }
-            
+            CGSize oriSize = CGSizeMake(image.size.width/scale, image.size.height/scale);
+            frame.size = [UIView fitSize:oriSize toSize:screenSize];
             frame.origin.y = screenSize.height*0.5 - frame.size.height*0.5;
             frame.origin.x = screenSize.width*0.5 - frame.size.width*0.5;
             
@@ -153,6 +130,8 @@
         self.playButton.frame = CGRectMake(0, 0, 80, 80);
         self.playButton.center = self.contentView.center;
         
+        self.clipsToBounds = YES;
+        
     }
     return self;
 }
@@ -162,7 +141,7 @@
     if (!_scrollView) {
         _scrollView = [UIScrollView new];
         _scrollView.minimumZoomScale = 1;
-        _scrollView.maximumZoomScale = 2.5;
+        _scrollView.maximumZoomScale = 3;
         _scrollView.delegate = self;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
@@ -225,5 +204,29 @@
     }
 }
 
+#pragma mark -
+#pragma mark IMGViewRotate
+- (void)viewWillTransitionToSize:(CGSize)size{
+    
+    if (CGSizeEqualToSize(self.scrollView.frame.size, size)) {
+        return;
+    }
+    
+    if (!self.iconView.image) {
+        return;
+    }
+    
+    self.scrollView.frame = CGRectMake(0, 0, size.width, size.height);
+    
+    CGRect iconFrame = CGRectZero;
+    CGSize fitSize =  [UIView fitSize:self.iconView.image.size toSize:size];
+    iconFrame.size = fitSize;
+    iconFrame.origin.y = size.height*0.5 - fitSize.height*0.5;
+    iconFrame.origin.x = size.width*0.5 - fitSize.width*0.5;
+    self.iconView.frame = iconFrame;
+    
+    self.playButton.center = self.scrollView.center;
+
+}
 
 @end
