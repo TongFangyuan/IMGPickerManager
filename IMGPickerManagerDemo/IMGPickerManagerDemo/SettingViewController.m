@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *allowLivePhoto;
 @property (weak, nonatomic) IBOutlet UISwitch *allowGif;
 @property (weak, nonatomic) IBOutlet UISwitch *allowEditing;
+@property (weak, nonatomic) IBOutlet UITextField *maxCountTextField;
 
 @end
 
@@ -41,6 +42,7 @@
     self.allowGif.on = [IMGConfigManager shareManager].allowGif;
     self.allowLivePhoto.on = [IMGConfigManager shareManager].allowLivePhoto;
     self.allowEditing.on = [IMGConfigManager shareManager].allowsEditing;
+    self.maxCountTextField.text = [NSString stringWithFormat:@"%ld",[IMGConfigManager shareManager].maxCount];
     
 }
 
@@ -75,6 +77,30 @@
 }
 - (IBAction)allowEditingAction:(UISwitch *)sender {
     [IMGConfigManager shareManager].allowsEditing = sender.isOn;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)textFieldDidChange:(NSNotification *)noti
+{
+    UITextField *textField = noti.object;
+    if (textField!=self.maxCountTextField) {
+        return;
+    }
+    
+    [IMGConfigManager shareManager].maxCount = [textField.text integerValue];
 }
 
 /*

@@ -258,7 +258,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 - (void)reloadCollectionViewData {
     
     //// 是否显示 cell 的 maskview
-    countOverflow =  self.selectedAssets.count >= 9;
+    countOverflow =  self.selectedAssets.count >= [IMGConfigManager shareManager].maxCount;
     
     //// topbar 选中图片数字和title颜色
     self.topBar.doneButton.enabled = self.selectedAssets.count;
