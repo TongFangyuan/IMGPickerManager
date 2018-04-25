@@ -86,7 +86,6 @@
 		8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@2x.png"; sourceTree = "<group>"; };
 		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
 		8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPikcerHeader.h; sourceTree = "<group>"; };
-		84903DB9208F081900269B51 /* IMGRotateProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGRotateProtocol.h; sourceTree = "<group>"; };
 		84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SuitableSize.h"; sourceTree = "<group>"; };
 		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
 		84903DC0208F239D00269B51 /* IMG3DTouchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMG3DTouchViewController.h; sourceTree = "<group>"; };
@@ -238,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */,
-				84903DB9208F081900269B51 /* IMGRotateProtocol.h */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,

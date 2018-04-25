@@ -20,8 +20,7 @@
 
 @interface IMGPreviewCell : UICollectionViewCell
 <
-UIScrollViewDelegate,
-IMGViewRotate
+UIScrollViewDelegate
 >
 
 @property (nonatomic,weak) id<IMGPreviewCellDelegate> delegate;

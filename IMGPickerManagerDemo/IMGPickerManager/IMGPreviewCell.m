@@ -26,8 +26,11 @@
     
     [self loadImage];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"viewWillTransitionToSize" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewWillTransitionToSize:) name:@"viewWillTransitionToSize" object:nil];
     
 }
+
 - (void)updateFrame
 {
     if (CGSizeEqualToSize(self.scrollView.bounds.size, self.contentView.bounds.size)) {
@@ -204,14 +207,21 @@
     }
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark -
-#pragma mark IMGViewRotate
-- (void)viewWillTransitionToSize:(CGSize)size{
+#pragma mark Notification
+- (void)viewWillTransitionToSize:(NSNotification *)noti{
+    
+    CGSize size = CGSizeFromString(noti.userInfo[@"size"]);
     
     if (CGSizeEqualToSize(self.scrollView.frame.size, size)) {
         return;
     }
-    
+
     if (!self.iconView.image) {
         return;
     }

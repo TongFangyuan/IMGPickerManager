@@ -21,7 +21,6 @@
 
 
 #import <Masonry/Masonry.h>
-#import "IMGRotateProtocol.h"
 #import "UIView+SuitableSize.h"
 #import "UIImage+animatedGIF.h"
 

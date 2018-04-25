@@ -106,11 +106,8 @@ IMGPlayerDelegate
     
     self.flowLayout.itemSize = size;
     [self.flowLayout invalidateLayout];
-
-    NSArray<id<IMGViewRotate>> *cells = [self.collectionView visibleCells];
-    [cells enumerateObjectsUsingBlock:^(id<IMGViewRotate>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj viewWillTransitionToSize:size];
-    }];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"viewWillTransitionToSize" object:nil userInfo:@{@"size":NSStringFromCGSize(size)}];
     
 }
 
