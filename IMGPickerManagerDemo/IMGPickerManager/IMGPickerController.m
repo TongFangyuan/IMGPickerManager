@@ -236,7 +236,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 /// 获取相册数据
 - (void)fetchAssetCollections
 {
-    self.assetCollections = [IMGPhotoManager fetchAssetCollectionsForMediaType:[IMGConfigManager shareManager].mediaType];
+    self.assetCollections = [IMGPhotoManager fetchAssetCollectionsForMediaType:[IMGConfigManager shareManager].targetMediaType];
     self.selectedAssetCollection = self.assetCollections.firstObject;
     selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     self.topBar.titleLabel.text = self.selectedAssetCollection.localizedTitle;
@@ -247,7 +247,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 /// 获取某个相册中的所有照片
 - (void)fetchAssets
 {
-    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].mediaType inAssetColelction:self.selectedAssetCollection];
+    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:self.selectedAssetCollection];
     [IMGPhotoManager cacheImageForAsset:results targetSize:self.imageSize];
     
     self.assets = [NSArray arrayWithArray:results];
@@ -378,7 +378,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePicker.delegate = self;
             
-            switch ([IMGConfigManager shareManager].mediaType) {
+            switch ([IMGConfigManager shareManager].targetMediaType) {
                 case IMGAssetMediaTypeImage: {
                     imagePicker.mediaTypes = @[@"public.image"];
                 } break;
@@ -428,7 +428,7 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     PHAssetCollection *collection = self.assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==self.selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    NSArray *assets = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].mediaType inAssetColelction:collection];
+    NSArray *assets = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)assets.count];
     
     // 设置封面图

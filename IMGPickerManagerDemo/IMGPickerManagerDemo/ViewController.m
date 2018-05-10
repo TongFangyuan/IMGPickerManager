@@ -41,24 +41,24 @@
             if(results.count){
                 PHAsset *asset = results.firstObject;
                 weakSelf.asset = asset;
-                
+
                 CGFloat scale = [UIScreen mainScreen].scale;
                 CGSize targetSize = CGSizeMake(weakSelf.imageView.frame.size.width*scale, weakSelf.imageView.frame.size.height*scale);
-                
+
                 /// request image for targetSize
                 [IMGPhotoManager requestImageForAsset:asset targetSize:targetSize handler:^(UIImage *image, IMGMediaType imageType) {
                     weakSelf.imageView.image = image;
                     weakSelf.imageView.hidden = NO;
                     weakSelf.playButton.hidden = imageType!=IMGMediaTypeVideo;
                 }];
-                
+
                 /// request original size image
 //                [IMGPhotoManager requestImageDataForAsset:asset handler:^(NSData *imageData, IMGMediaType imageType) {
 //                    weakSelf.imageView.image = [[UIImage alloc] initWithData:imageData];
 //                    weakSelf.imageView.hidden = NO;
 //                    weakSelf.playButton.hidden = imageType!=IMGMediaTypeVideo;
 //                }];
-                
+
                 /// request data for asset
                 [IMGPhotoManager requestDataForAsset:asset handler:^(NSData *mediaData, IMGMediaType mediaType) {
                     NSLog(@"mediaType=%ld dataLength=%lu",(long)mediaType,(unsigned long)mediaData.length);
@@ -66,6 +66,10 @@
             }
         }
     }];
+    
+//    [IMGPickerManager startChooseForType:IMGAssetMediaTypeAll block:^(NSArray<PHAsset *> *results, NSError *error) {
+//        NSLog(@"%@",results);
+//    }];
 
 }
 

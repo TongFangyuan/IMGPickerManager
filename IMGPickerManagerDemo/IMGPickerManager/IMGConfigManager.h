@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, IMGVideoQualityType) {
 /// 最多能选几张图片,默认9张
 @property (nonatomic,assign) NSInteger maxCount;
 /// IMGAssetMediaTypeImage default
-@property (nonatomic,assign) IMGAssetMediaType mediaType;
+@property (nonatomic,assign) IMGAssetMediaType targetMediaType;
 /// default NO, only effect when maxCount equal to 1 if YES
 @property(nonatomic,assign) BOOL allowsEditing;
 /// default NO, will show 'live' tag and play LivePhoto if YES

@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    switch ([IMGConfigManager shareManager].mediaType) {
+    switch ([IMGConfigManager shareManager].targetMediaType) {
         case IMGAssetMediaTypeImage:
             self.imageSwitch.on = YES;
             break;
@@ -52,17 +52,17 @@
 }
 - (IBAction)chooseVideo:(UISwitch *)sender {
     if (sender.isOn) {
-        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeVideo;
+        [IMGConfigManager shareManager].targetMediaType = IMGAssetMediaTypeVideo;
     }
 }
 - (IBAction)chooseImage:(UISwitch *)sender {
     if (sender.isOn) { 
-        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeImage;
+        [IMGConfigManager shareManager].targetMediaType = IMGAssetMediaTypeImage;
     }
 }
 - (IBAction)chooseAllType:(UISwitch *)sender {
     if (sender.isOn) {
-        [IMGConfigManager shareManager].mediaType = IMGAssetMediaTypeAll;
+        [IMGConfigManager shareManager].targetMediaType = IMGAssetMediaTypeAll;
     }
 }
 - (IBAction)doneButtonAction:(id)sender {

@@ -237,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */,
+				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
+				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,
@@ -257,8 +259,6 @@
 				DA32C32D2088C9240080A8CA /* IMGPickerBottomBar.m */,
 				DA32C3402088C9260080A8CA /* IMGPickerFlowLayout.h */,
 				DA32C33C2088C9260080A8CA /* IMGPickerFlowLayout.m */,
-				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
-				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
 				DA32C33F2088C9260080A8CA /* IMGPickerTopBar.h */,
 				DA32C32F2088C9240080A8CA /* IMGPickerTopBar.m */,
 				DA32C32C2088C9240080A8CA /* IMGPlayerManager.h */,

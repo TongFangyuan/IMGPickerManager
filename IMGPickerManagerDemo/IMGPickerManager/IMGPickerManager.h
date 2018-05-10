@@ -14,6 +14,7 @@
 @interface IMGPickerManager : NSObject
 
 + (void)startChoose:(void(^)(NSArray<PHAsset *> *results,NSError *error))completeBlock;
++ (void)startChooseForType:(IMGAssetMediaType)type block:(void(^)(NSArray<PHAsset *> *results,NSError *error))completeBlock;
 
 @end
 

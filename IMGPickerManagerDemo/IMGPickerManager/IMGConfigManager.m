@@ -25,7 +25,7 @@ static IMGConfigManager *_shareManager = nil;
     self = [super init];
     if (self) {
         self.maxCount = 9;
-        self.mediaType = IMGAssetMediaTypeImage;
+        self.targetMediaType = IMGAssetMediaTypeImage;
         self.allowsEditing = NO;
         self.allowGif = YES;
         self.allowLivePhoto = NO;

@@ -24,15 +24,18 @@ static IMGPickerManager *_shareManager = nil;
 @implementation IMGPickerManager
 
 + (void)startChoose:(IMGCompleteBlock)completeBlock {
-    
+    [self startChooseForType:[IMGConfigManager shareManager].targetMediaType block:completeBlock];
+}
+
++ (void)startChooseForType:(IMGAssetMediaType)type block:(void(^)(NSArray<PHAsset *> *results,NSError *error))completeBlock {
+    [IMGConfigManager shareManager].targetMediaType = type;
     [IMGPickerManager shareManager].completeBlock = completeBlock;
     
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[NSClassFromString(@"IMGPickerController") alloc] init]];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:NSClassFromString(@"IMGPickerController").new];
     [navController setNavigationBarHidden:YES animated:NO];
     [rootCtr presentViewController:navController animated:YES completion:nil];
 }
-
 
 #pragma mark - private
 + (instancetype)shareManager{
@@ -57,13 +60,6 @@ static IMGPickerManager *_shareManager = nil;
     if (self.completeBlock) {
         NSArray<PHAsset *> *assets = [sender.userInfo objectForKey:@"data"];
         self.completeBlock(assets, nil);
-        
-//        [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            __block PHAsset *block_asset = obj;
-//            [IMGPhotoManager requestDataForAsset:obj handler:^(NSData *mediaData, IMGMediaType mediaType) {
-//                NSLog(@"mediaData:%ld type:%ld",mediaData.length,mediaType);
-//            }];
-//        }];
     }
     
     UIViewController *rootCtr = [UIApplication sharedApplication].keyWindow.rootViewController;
