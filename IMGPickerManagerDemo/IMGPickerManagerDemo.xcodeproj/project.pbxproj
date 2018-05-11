@@ -22,6 +22,9 @@
 		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
 		84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */; };
 		84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */; };
+		84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8020A58D8B00551237 /* YYFPSLabel.m */; };
+		84A94B8420A58D8B00551237 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8220A58D8B00551237 /* YYWeakProxy.m */; };
+		84A94B8820A590A300551237 /* UIWindow+category.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8720A590A300551237 /* UIWindow+category.m */; };
 		84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB22084A531001AA758 /* SaveFileViewController.m */; };
 		84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AC1CB52084A7EF001AA758 /* SettingViewController.m */; };
 		DA159D97208338640080C50A /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA159D95208338640080C50A /* play@2x.png */; };
@@ -90,6 +93,12 @@
 		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
 		84903DC0208F239D00269B51 /* IMG3DTouchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMG3DTouchViewController.h; sourceTree = "<group>"; };
 		84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMG3DTouchViewController.m; sourceTree = "<group>"; };
+		84A94B7F20A58D8B00551237 /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		84A94B8020A58D8B00551237 /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		84A94B8120A58D8B00551237 /* YYWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWeakProxy.h; sourceTree = "<group>"; };
+		84A94B8220A58D8B00551237 /* YYWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWeakProxy.m; sourceTree = "<group>"; };
+		84A94B8620A590A300551237 /* UIWindow+category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWindow+category.h"; sourceTree = "<group>"; };
+		84A94B8720A590A300551237 /* UIWindow+category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+category.m"; sourceTree = "<group>"; };
 		84AC1CB12084A531001AA758 /* SaveFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveFileViewController.h; sourceTree = "<group>"; };
 		84AC1CB22084A531001AA758 /* SaveFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveFileViewController.m; sourceTree = "<group>"; };
 		84AC1CB42084A7EF001AA758 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -206,6 +215,7 @@
 				84AC1CB52084A7EF001AA758 /* SettingViewController.m */,
 				84AC1CB12084A531001AA758 /* SaveFileViewController.h */,
 				84AC1CB22084A531001AA758 /* SaveFileViewController.m */,
+				84A94B7E20A58D8B00551237 /* Other */,
 				8424F9F02071CF61007E5B36 /* Main.storyboard */,
 				8424F9F32071CF61007E5B36 /* Assets.xcassets */,
 				8424F9F52071CF61007E5B36 /* LaunchScreen.storyboard */,
@@ -292,6 +302,19 @@
 				8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		84A94B7E20A58D8B00551237 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				84A94B7F20A58D8B00551237 /* YYFPSLabel.h */,
+				84A94B8020A58D8B00551237 /* YYFPSLabel.m */,
+				84A94B8120A58D8B00551237 /* YYWeakProxy.h */,
+				84A94B8220A58D8B00551237 /* YYWeakProxy.m */,
+				84A94B8620A590A300551237 /* UIWindow+category.h */,
+				84A94B8720A590A300551237 /* UIWindow+category.m */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		91FDBEFEF429656478BFF6E6 /* Frameworks */ = {
@@ -483,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA32C34F2088C9270080A8CA /* IMGPickerManager.m in Sources */,
+				84A94B8820A590A300551237 /* UIWindow+category.m in Sources */,
 				8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */,
 				DA32C3482088C9270080A8CA /* IMGConfigManager.m in Sources */,
 				DA32C3512088C9270080A8CA /* IMGPickerFlowLayout.m in Sources */,
@@ -504,6 +528,8 @@
 				8424F9EC2071CF61007E5B36 /* AppDelegate.m in Sources */,
 				DA32C3522088C9270080A8CA /* IMGPickerController.m in Sources */,
 				DA32C35C2088C9340080A8CA /* UIImage+animatedGIF.m in Sources */,
+				84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */,
+				84A94B8420A58D8B00551237 /* YYWeakProxy.m in Sources */,
 				DA32C3562088C9270080A8CA /* IMGPreviewOperationView.m in Sources */,
 				84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */,
 				DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */,
