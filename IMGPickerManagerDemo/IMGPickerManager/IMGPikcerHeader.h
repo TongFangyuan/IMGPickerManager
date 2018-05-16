@@ -19,9 +19,9 @@
     } while (0)
 #endif
 
-
 #import <Masonry/Masonry.h>
 #import "UIView+SuitableSize.h"
 #import "UIImage+animatedGIF.h"
+#import "IMGPickerCompat.h"
 
 #endif /* IMGPikcerHeader_h */

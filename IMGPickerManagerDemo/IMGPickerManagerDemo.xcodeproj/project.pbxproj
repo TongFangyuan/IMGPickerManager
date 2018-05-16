@@ -20,6 +20,10 @@
 		8424FA5D2071D01E007E5B36 /* ic_photo_choosesel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA472071D01E007E5B36 /* ic_photo_choosesel@2x.png */; };
 		8424FA5F2071D01E007E5B36 /* ic_photo_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */; };
 		8424FA6420720363007E5B36 /* take_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8424FA6220720363007E5B36 /* take_photo@2x.png */; };
+		843C83A520ABCE9200016641 /* IMGPickerCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83A420ABCE9200016641 /* IMGPickerCompat.m */; };
+		843C83A820ABD6C100016641 /* IMGImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83A720ABD6C100016641 /* IMGImageCache.m */; };
+		843C83AB20AC01FD00016641 /* IMGImageCacheConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */; };
+		843C83AE20AC0DF500016641 /* UIImage+IMGMultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */; };
 		84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */; };
 		84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */; };
 		84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8020A58D8B00551237 /* YYFPSLabel.m */; };
@@ -88,6 +92,14 @@
 		8424FA472071D01E007E5B36 /* ic_photo_choosesel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_choosesel@2x.png"; sourceTree = "<group>"; };
 		8424FA492071D01E007E5B36 /* ic_photo_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo_close@2x.png"; sourceTree = "<group>"; };
 		8424FA6220720363007E5B36 /* take_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "take_photo@2x.png"; sourceTree = "<group>"; };
+		843C83A320ABCE9200016641 /* IMGPickerCompat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPickerCompat.h; sourceTree = "<group>"; };
+		843C83A420ABCE9200016641 /* IMGPickerCompat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGPickerCompat.m; sourceTree = "<group>"; };
+		843C83A620ABD6C100016641 /* IMGImageCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGImageCache.h; sourceTree = "<group>"; };
+		843C83A720ABD6C100016641 /* IMGImageCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGImageCache.m; sourceTree = "<group>"; };
+		843C83A920AC01FD00016641 /* IMGImageCacheConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGImageCacheConfig.h; sourceTree = "<group>"; };
+		843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGImageCacheConfig.m; sourceTree = "<group>"; };
+		843C83AC20AC0DF500016641 /* UIImage+IMGMultiFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+IMGMultiFormat.h"; sourceTree = "<group>"; };
+		843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IMGMultiFormat.m"; sourceTree = "<group>"; };
 		8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPikcerHeader.h; sourceTree = "<group>"; };
 		84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SuitableSize.h"; sourceTree = "<group>"; };
 		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
@@ -247,6 +259,12 @@
 			isa = PBXGroup;
 			children = (
 				8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */,
+				843C83A320ABCE9200016641 /* IMGPickerCompat.h */,
+				843C83A420ABCE9200016641 /* IMGPickerCompat.m */,
+				843C83A620ABD6C100016641 /* IMGImageCache.h */,
+				843C83A720ABD6C100016641 /* IMGImageCache.m */,
+				843C83A920AC01FD00016641 /* IMGImageCacheConfig.h */,
+				843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */,
 				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
 				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
@@ -279,6 +297,8 @@
 				DA32C3462088C9270080A8CA /* IMGPreviewOperationView.m */,
 				DA32C3592088C9330080A8CA /* UIImage+animatedGIF.h */,
 				DA32C3582088C9330080A8CA /* UIImage+animatedGIF.m */,
+				843C83AC20AC0DF500016641 /* UIImage+IMGMultiFormat.h */,
+				843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */,
 				84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */,
 				84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */,
 				DA32C35B2088C9330080A8CA /* UIViewController+FYAlert.h */,
@@ -511,7 +531,9 @@
 				DA32C3482088C9270080A8CA /* IMGConfigManager.m in Sources */,
 				DA32C3512088C9270080A8CA /* IMGPickerFlowLayout.m in Sources */,
 				DA32C3552088C9270080A8CA /* PHAsset+IMGProperty.m in Sources */,
+				843C83A820ABD6C100016641 /* IMGImageCache.m in Sources */,
 				DA32C34E2088C9270080A8CA /* IMGPlayerManager.m in Sources */,
+				843C83AB20AC01FD00016641 /* IMGImageCacheConfig.m in Sources */,
 				84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */,
 				84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */,
 				DA32C34D2088C9270080A8CA /* IMGPreviewCell.m in Sources */,
@@ -519,6 +541,7 @@
 				DA32C34A2088C9270080A8CA /* IMGPickerBottomBar.m in Sources */,
 				8424F9FA2071CF61007E5B36 /* main.m in Sources */,
 				DA32C3502088C9270080A8CA /* IMGCameraCell.m in Sources */,
+				843C83AE20AC0DF500016641 /* UIImage+IMGMultiFormat.m in Sources */,
 				84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */,
 				DA32C34B2088C9270080A8CA /* IMGPickerTopBar.m in Sources */,
 				DA32C3492088C9270080A8CA /* IMGPhotoManager.m in Sources */,
@@ -532,6 +555,7 @@
 				84A94B8420A58D8B00551237 /* YYWeakProxy.m in Sources */,
 				DA32C3562088C9270080A8CA /* IMGPreviewOperationView.m in Sources */,
 				84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */,
+				843C83A520ABCE9200016641 /* IMGPickerCompat.m in Sources */,
 				DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
