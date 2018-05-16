@@ -9,6 +9,14 @@
 #import <TargetConditionals.h>
 #import <UIKit/UIKit.h>
 
+// iOS and tvOS are very similar, UIKit exists on both platforms
+// Note: watchOS also has UIKit, but it's very limited
+#if TARGET_OS_IOS || TARGET_OS_TV
+#define IMG_UIKIT 1
+#else
+#define IMG_UIKIT 0
+#endif
+
 FOUNDATION_EXPORT UIImage *IMGScaledImageForKey(NSString *key, UIImage *image);
 
 typedef void(^IMGPickerNoParamsBlock)(void);

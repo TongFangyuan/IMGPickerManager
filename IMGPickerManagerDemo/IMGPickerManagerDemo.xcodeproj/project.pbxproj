@@ -24,6 +24,13 @@
 		843C83A820ABD6C100016641 /* IMGImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83A720ABD6C100016641 /* IMGImageCache.m */; };
 		843C83AB20AC01FD00016641 /* IMGImageCacheConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */; };
 		843C83AE20AC0DF500016641 /* UIImage+IMGMultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */; };
+		843C83B120AC1D2900016641 /* IMGWebImageCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83B020AC1D2900016641 /* IMGWebImageCoder.m */; };
+		843C83B420AC1F8A00016641 /* NSData+IMGImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83B320AC1F8A00016641 /* NSData+IMGImageContentType.m */; };
+		843C83B720AC237900016641 /* IMGWebImageCodersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83B620AC237900016641 /* IMGWebImageCodersManager.m */; };
+		843C83BA20AC274200016641 /* IMGWebImageGIFCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83B920AC274200016641 /* IMGWebImageGIFCoder.m */; };
+		843C83BD20AC27A400016641 /* IMGWebImageImageIOCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83BC20AC27A400016641 /* IMGWebImageImageIOCoder.m */; };
+		843C83C020AC2C9A00016641 /* IMGWebImageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83BF20AC2C9A00016641 /* IMGWebImageFrame.m */; };
+		843C83C320AC2D0A00016641 /* IMGWebImageCoderHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83C220AC2D0A00016641 /* IMGWebImageCoderHelper.m */; };
 		84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */; };
 		84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */; };
 		84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8020A58D8B00551237 /* YYFPSLabel.m */; };
@@ -100,6 +107,20 @@
 		843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGImageCacheConfig.m; sourceTree = "<group>"; };
 		843C83AC20AC0DF500016641 /* UIImage+IMGMultiFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+IMGMultiFormat.h"; sourceTree = "<group>"; };
 		843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IMGMultiFormat.m"; sourceTree = "<group>"; };
+		843C83AF20AC1D2900016641 /* IMGWebImageCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageCoder.h; sourceTree = "<group>"; };
+		843C83B020AC1D2900016641 /* IMGWebImageCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageCoder.m; sourceTree = "<group>"; };
+		843C83B220AC1F8A00016641 /* NSData+IMGImageContentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+IMGImageContentType.h"; sourceTree = "<group>"; };
+		843C83B320AC1F8A00016641 /* NSData+IMGImageContentType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+IMGImageContentType.m"; sourceTree = "<group>"; };
+		843C83B520AC237900016641 /* IMGWebImageCodersManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageCodersManager.h; sourceTree = "<group>"; };
+		843C83B620AC237900016641 /* IMGWebImageCodersManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageCodersManager.m; sourceTree = "<group>"; };
+		843C83B820AC274200016641 /* IMGWebImageGIFCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageGIFCoder.h; sourceTree = "<group>"; };
+		843C83B920AC274200016641 /* IMGWebImageGIFCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageGIFCoder.m; sourceTree = "<group>"; };
+		843C83BB20AC27A400016641 /* IMGWebImageImageIOCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageImageIOCoder.h; sourceTree = "<group>"; };
+		843C83BC20AC27A400016641 /* IMGWebImageImageIOCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageImageIOCoder.m; sourceTree = "<group>"; };
+		843C83BE20AC2C9A00016641 /* IMGWebImageFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageFrame.h; sourceTree = "<group>"; };
+		843C83BF20AC2C9A00016641 /* IMGWebImageFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageFrame.m; sourceTree = "<group>"; };
+		843C83C120AC2D0A00016641 /* IMGWebImageCoderHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageCoderHelper.h; sourceTree = "<group>"; };
+		843C83C220AC2D0A00016641 /* IMGWebImageCoderHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageCoderHelper.m; sourceTree = "<group>"; };
 		8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPikcerHeader.h; sourceTree = "<group>"; };
 		84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SuitableSize.h"; sourceTree = "<group>"; };
 		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
@@ -265,6 +286,18 @@
 				843C83A720ABD6C100016641 /* IMGImageCache.m */,
 				843C83A920AC01FD00016641 /* IMGImageCacheConfig.h */,
 				843C83AA20AC01FD00016641 /* IMGImageCacheConfig.m */,
+				843C83AF20AC1D2900016641 /* IMGWebImageCoder.h */,
+				843C83B020AC1D2900016641 /* IMGWebImageCoder.m */,
+				843C83C120AC2D0A00016641 /* IMGWebImageCoderHelper.h */,
+				843C83C220AC2D0A00016641 /* IMGWebImageCoderHelper.m */,
+				843C83B520AC237900016641 /* IMGWebImageCodersManager.h */,
+				843C83B620AC237900016641 /* IMGWebImageCodersManager.m */,
+				843C83BE20AC2C9A00016641 /* IMGWebImageFrame.h */,
+				843C83BF20AC2C9A00016641 /* IMGWebImageFrame.m */,
+				843C83B820AC274200016641 /* IMGWebImageGIFCoder.h */,
+				843C83B920AC274200016641 /* IMGWebImageGIFCoder.m */,
+				843C83BB20AC27A400016641 /* IMGWebImageImageIOCoder.h */,
+				843C83BC20AC27A400016641 /* IMGWebImageImageIOCoder.m */,
 				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
 				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
@@ -307,6 +340,8 @@
 				DA32C3442088C9270080A8CA /* PHAsset+IMGProperty.m */,
 				DA32C3302088C9240080A8CA /* PHAssetCollection+Category.h */,
 				DA32C3312088C9240080A8CA /* PHAssetCollection+Category.m */,
+				843C83B220AC1F8A00016641 /* NSData+IMGImageContentType.h */,
+				843C83B320AC1F8A00016641 /* NSData+IMGImageContentType.m */,
 				8424FA442071D01E007E5B36 /* Resources */,
 			);
 			path = IMGPickerManager;
@@ -531,6 +566,7 @@
 				DA32C3482088C9270080A8CA /* IMGConfigManager.m in Sources */,
 				DA32C3512088C9270080A8CA /* IMGPickerFlowLayout.m in Sources */,
 				DA32C3552088C9270080A8CA /* PHAsset+IMGProperty.m in Sources */,
+				843C83B120AC1D2900016641 /* IMGWebImageCoder.m in Sources */,
 				843C83A820ABD6C100016641 /* IMGImageCache.m in Sources */,
 				DA32C34E2088C9270080A8CA /* IMGPlayerManager.m in Sources */,
 				843C83AB20AC01FD00016641 /* IMGImageCacheConfig.m in Sources */,
@@ -546,14 +582,20 @@
 				DA32C34B2088C9270080A8CA /* IMGPickerTopBar.m in Sources */,
 				DA32C3492088C9270080A8CA /* IMGPhotoManager.m in Sources */,
 				DA32C3542088C9270080A8CA /* IMGPickerThumbCell.m in Sources */,
+				843C83C020AC2C9A00016641 /* IMGWebImageFrame.m in Sources */,
+				843C83B420AC1F8A00016641 /* NSData+IMGImageContentType.m in Sources */,
 				DA32C35D2088C9340080A8CA /* UIViewController+FYAlert.m in Sources */,
 				DA32C3532088C9270080A8CA /* IMGPreviewController.m in Sources */,
 				8424F9EC2071CF61007E5B36 /* AppDelegate.m in Sources */,
 				DA32C3522088C9270080A8CA /* IMGPickerController.m in Sources */,
+				843C83BD20AC27A400016641 /* IMGWebImageImageIOCoder.m in Sources */,
 				DA32C35C2088C9340080A8CA /* UIImage+animatedGIF.m in Sources */,
 				84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */,
+				843C83BA20AC274200016641 /* IMGWebImageGIFCoder.m in Sources */,
 				84A94B8420A58D8B00551237 /* YYWeakProxy.m in Sources */,
 				DA32C3562088C9270080A8CA /* IMGPreviewOperationView.m in Sources */,
+				843C83B720AC237900016641 /* IMGWebImageCodersManager.m in Sources */,
+				843C83C320AC2D0A00016641 /* IMGWebImageCoderHelper.m in Sources */,
 				84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */,
 				843C83A520ABCE9200016641 /* IMGPickerCompat.m in Sources */,
 				DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */,

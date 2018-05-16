@@ -8,6 +8,7 @@
 
 #import "IMGImageCache.h"
 #import <CommonCrypto/CommonDigest.h>
+#import "IMGWebImageCodersManager.h"
 
 #define LOCK(lock) dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
 #define UNLOCK(lock) dispatch_semaphore_signal(lock);
@@ -242,7 +243,13 @@ FOUNDATION_STATIC_INLINE NSUInteger IMGCacheCostForImage(UIImage *image) {
                 NSData *data = imageData;
                 if (!data && image) {
                     // If we do not have any data to detect image format, check whether it contains alpha channel to use PNG or JPEG format
-                    //TODO: encode image to data
+                    IMGImageFormat format;
+                    if (IMGCGImageRefContainsAlpha(image.CGImage)) {
+                        format = IMGImageFormatPNG;
+                    } else {
+                        format = IMGImageFormatJPEG;
+                    }
+                    data = [[IMGWebImageCodersManager shareInstance] encodedDataWithImage:image format:format];
                 }
                 [self _storeImageDataToDisk:data forKey:key];
             }
@@ -391,9 +398,11 @@ FOUNDATION_STATIC_INLINE NSUInteger IMGCacheCostForImage(UIImage *image) {
 - (nullable UIImage *)_diskImageForKey:(nullable NSString *)key data:(nullable NSData *)data {
     if (!data || !key) return nil;
     
-    UIImage *image;
-    //TODO: decode image with data
-    
+    UIImage *image = [[IMGWebImageCodersManager shareInstance] decodedImageWithData:data];
+    image = [self _scaleImageForKey:key image:image];
+    if (self.config.shouldDecompressImages) {
+        image = [[IMGWebImageCodersManager shareInstance] decompressedImageWithImage:image data:&data options:@{IMGWebImageCoderScaleDownLargeImagesKey: @(NO)}];
+    }
     return image;
 }
 
