@@ -704,16 +704,4 @@ FOUNDATION_STATIC_INLINE NSUInteger IMGCacheCostForImage(UIImage *image) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @end

@@ -8,6 +8,7 @@
 
 #import <TargetConditionals.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/NSObjCRuntime.h>
 
 // iOS and tvOS are very similar, UIKit exists on both platforms
 // Note: watchOS also has UIKit, but it's very limited
@@ -16,6 +17,15 @@
 #else
 #define IMG_UIKIT 0
 #endif
+
+#define SYSTEM_VERSION_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+
+#define IMG_AVAILABLE_IOS(_ios) NS_AVAILABLE_IOS(_ios)
 
 FOUNDATION_EXPORT UIImage *IMGScaledImageForKey(NSString *key, UIImage *image);
 

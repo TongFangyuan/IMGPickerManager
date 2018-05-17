@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
 #import "IMGConfigManager.h"
+#import "IMGRequestOptions.h"
+
+
+typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable result, NSDictionary *__nullable info);
 
 typedef enum : NSInteger {
     IMGMediaTypeUnknow,
@@ -20,7 +24,19 @@ typedef enum : NSInteger {
 
 @interface IMGPhotoManager : NSObject
 
-+ (instancetype)shareManager;
+@property (nonatomic, weak, readonly) IMGRequestOptions * _Nullable requestOtions;
+
+
++ (nonnull instancetype)shareManager;
+
+
+#pragma mark - fetch Ops
+
+- (void)loadImageWithAsset:(PHAsset *_Nullable)asset
+                targetSize:(CGSize)targetSize
+                      mode:(PHImageContentMode)mode
+                completion:(IMGFetchCompletionBlock _Nullable)completion;
+
 
 /// Get all AssetCollections for the mediaType
 + (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType;
@@ -33,6 +49,8 @@ typedef enum : NSInteger {
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
 
 + (IMGMediaType)getMediaTypeForAsset:(PHAsset *)asset;
+
+
 
 #pragma mark - Request Data
 

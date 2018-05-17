@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7F075BF0F98BA0965CFECDC8 /* Pods_IMGPickerManagerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB366CD5C271A3A3E2A2B53 /* Pods_IMGPickerManagerDemo.framework */; };
+		8414827220AD59D7002AADAC /* IMGAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8414827120AD59D7002AADAC /* IMGAssetManager.m */; };
+		8414827920AD841C002AADAC /* IMGRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8414827820AD841C002AADAC /* IMGRequestOptions.m */; };
 		8424F9EC2071CF61007E5B36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424F9EB2071CF61007E5B36 /* AppDelegate.m */; };
 		8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8424F9EE2071CF61007E5B36 /* ViewController.m */; };
 		8424F9F22071CF61007E5B36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8424F9F02071CF61007E5B36 /* Main.storyboard */; };
@@ -79,6 +81,11 @@
 
 /* Begin PBXFileReference section */
 		7BB366CD5C271A3A3E2A2B53 /* Pods_IMGPickerManagerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IMGPickerManagerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8414826F20AD5570002AADAC /* IMGImageOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGImageOperation.h; sourceTree = "<group>"; };
+		8414827020AD59D7002AADAC /* IMGAssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGAssetManager.h; sourceTree = "<group>"; };
+		8414827120AD59D7002AADAC /* IMGAssetManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGAssetManager.m; sourceTree = "<group>"; };
+		8414827720AD841C002AADAC /* IMGRequestOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGRequestOptions.h; sourceTree = "<group>"; };
+		8414827820AD841C002AADAC /* IMGRequestOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGRequestOptions.m; sourceTree = "<group>"; };
 		8424F9E72071CF61007E5B36 /* IMGPickerManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMGPickerManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8424F9EA2071CF61007E5B36 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8424F9EB2071CF61007E5B36 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -298,12 +305,17 @@
 				843C83B920AC274200016641 /* IMGWebImageGIFCoder.m */,
 				843C83BB20AC27A400016641 /* IMGWebImageImageIOCoder.h */,
 				843C83BC20AC27A400016641 /* IMGWebImageImageIOCoder.m */,
+				8414827020AD59D7002AADAC /* IMGAssetManager.h */,
+				8414827120AD59D7002AADAC /* IMGAssetManager.m */,
+				8414826F20AD5570002AADAC /* IMGImageOperation.h */,
 				DA32C3452088C9270080A8CA /* IMGPickerManager.h */,
 				DA32C3392088C9250080A8CA /* IMGPickerManager.m */,
 				DA32C3352088C9250080A8CA /* IMGConfigManager.h */,
 				DA32C3272088C9240080A8CA /* IMGConfigManager.m */,
 				DA32C3322088C9250080A8CA /* IMGPhotoManager.h */,
 				DA32C32B2088C9240080A8CA /* IMGPhotoManager.m */,
+				8414827720AD841C002AADAC /* IMGRequestOptions.h */,
+				8414827820AD841C002AADAC /* IMGRequestOptions.m */,
 				DA32C3282088C9240080A8CA /* IMGPickerController.h */,
 				DA32C33E2088C9260080A8CA /* IMGPickerController.m */,
 				84903DC0208F239D00269B51 /* IMG3DTouchViewController.h */,
@@ -564,6 +576,7 @@
 				84A94B8820A590A300551237 /* UIWindow+category.m in Sources */,
 				8424F9EF2071CF61007E5B36 /* ViewController.m in Sources */,
 				DA32C3482088C9270080A8CA /* IMGConfigManager.m in Sources */,
+				8414827220AD59D7002AADAC /* IMGAssetManager.m in Sources */,
 				DA32C3512088C9270080A8CA /* IMGPickerFlowLayout.m in Sources */,
 				DA32C3552088C9270080A8CA /* PHAsset+IMGProperty.m in Sources */,
 				843C83B120AC1D2900016641 /* IMGWebImageCoder.m in Sources */,
@@ -590,6 +603,7 @@
 				DA32C3522088C9270080A8CA /* IMGPickerController.m in Sources */,
 				843C83BD20AC27A400016641 /* IMGWebImageImageIOCoder.m in Sources */,
 				DA32C35C2088C9340080A8CA /* UIImage+animatedGIF.m in Sources */,
+				8414827920AD841C002AADAC /* IMGRequestOptions.m in Sources */,
 				84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */,
 				843C83BA20AC274200016641 /* IMGWebImageGIFCoder.m in Sources */,
 				84A94B8420A58D8B00551237 /* YYWeakProxy.m in Sources */,

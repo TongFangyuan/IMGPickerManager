@@ -10,22 +10,49 @@
 #import "PHAssetCollection+Category.h"
 #import <AVFoundation/AVFoundation.h>
 
-static IMGPhotoManager *_shareManager = nil;
-
 @interface IMGPhotoManager()
+
+@property (nonatomic, weak) PHImageManager *imageManager;
 
 @end
 
 @implementation IMGPhotoManager
 
-+ (instancetype)shareManager{
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _shareManager = [[[self class] alloc] init];
++ (nonnull instancetype)shareManager {
+    static dispatch_once_t once;
+    static id instance;
+    dispatch_once(&once, ^{
+        instance = [self new];
     });
-    return _shareManager;
+    return instance;
 }
+
+
+- (instancetype)init{
+    if (self=[super init]) {
+        _requestOtions = [IMGRequestOptions shareOptions];
+        _imageManager = [PHImageManager defaultManager];
+    }
+    return self;
+}
+
+
+#pragma mark - fetch Ops
+
+- (void)loadImageWithAsset:(PHAsset *_Nullable)asset
+                targetSize:(CGSize)targetSize
+                      mode:(PHImageContentMode)mode
+                completion:(IMGFetchCompletionBlock _Nullable)completion {
+    
+    [self.imageManager requestImageForAsset:asset targetSize:targetSize contentMode:mode options:self.requestOtions.imageOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        if (completion) {
+            completion(result,info);
+        }
+    }];
+    
+}
+
+
 
 + (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType {
     
