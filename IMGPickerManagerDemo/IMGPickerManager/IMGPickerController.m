@@ -236,22 +236,36 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 /// 获取相册数据
 - (void)fetchAssetCollections
 {
-    self.assetCollections = [IMGPhotoManager fetchAssetCollectionsForMediaType:[IMGConfigManager shareManager].targetMediaType];
-    self.selectedAssetCollection = self.assetCollections.firstObject;
-    selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    self.topBar.titleLabel.text = self.selectedAssetCollection.localizedTitle;
+    __weak typeof(self) weakSelf = self;
+    IMGFetchCollectionsCompletionBlock completionBlock = ^(NSArray<PHAssetCollection *> * _Nullable collections){
+        weakSelf.assetCollections = [collections copy];
+        weakSelf.selectedAssetCollection = weakSelf.assetCollections.firstObject;
+        selectedTableViewIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        weakSelf.topBar.titleLabel.text = weakSelf.selectedAssetCollection.localizedTitle;
+        [weakSelf.tableView reloadData];
+        [weakSelf fetchAssets];
+    };
+        
     
-    [self fetchAssets];
+    [[IMGPhotoManager shareManager] loadCollectionsWithMediaType:[IMGConfigManager shareManager].targetMediaType completion:completionBlock];
+    
 }
 
 /// 获取某个相册中的所有照片
 - (void)fetchAssets
 {
-    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:self.selectedAssetCollection];
-    [IMGPhotoManager cacheImageForAsset:results targetSize:self.imageSize];
     
-    self.assets = [NSArray arrayWithArray:results];
-    [self.collectionView reloadData];
+    __weak typeof(self) weakSelf = self;
+    [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inCollection:self.selectedAssetCollection completion:^(NSArray<PHAsset *> * _Nullable assets) {
+        weakSelf.assets = assets.copy;
+        [weakSelf.collectionView reloadData];
+    }];
+    
+//    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:self.selectedAssetCollection];
+//
+//    NSLog(@"%@",[NSThread currentThread]);
+//    self.assets = [NSArray arrayWithArray:results];
+//    [self.collectionView reloadData];
     
 }
 
@@ -428,7 +442,8 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     PHAssetCollection *collection = self.assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==self.selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    NSArray *assets = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
+//    [IMGPhotoManager shareManager] loadAssetsWithMediaType:<#(IMGAssetMediaType)#> inCollection:<#(PHAssetCollection * _Nonnull)#> completion:<#^(NSArray<PHAsset *> * _Nullable assets)completion#>
+    NSArray *assets = [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)assets.count];
     
     // 设置封面图

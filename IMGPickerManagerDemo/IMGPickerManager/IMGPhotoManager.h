@@ -14,6 +14,10 @@
 
 typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable result, NSDictionary *__nullable info);
 
+typedef void(^IMGFetchCollectionsCompletionBlock)(NSArray<PHAssetCollection *> * _Nullable collections);
+
+typedef void(^IMGFetchAssetsCompletionBlock)(NSArray<PHAsset *> * _Nullable assets);
+
 typedef enum : NSInteger {
     IMGMediaTypeUnknow,
     IMGMediaTypeImage,
@@ -24,7 +28,7 @@ typedef enum : NSInteger {
 
 @interface IMGPhotoManager : NSObject
 
-@property (nonatomic, weak, readonly) IMGRequestOptions * _Nullable requestOtions;
+@property (nonatomic, strong, readonly) IMGRequestOptions * _Nullable requestOtions;
 
 
 + (nonnull instancetype)shareManager;
@@ -37,13 +41,23 @@ typedef enum : NSInteger {
                       mode:(PHImageContentMode)mode
                 completion:(IMGFetchCompletionBlock _Nullable)completion;
 
+- (void)loadCollectionsWithMediaType:(IMGAssetMediaType)mediaType
+                          completion:(IMGFetchCollectionsCompletionBlock _Nullable)completion;
+// Asynchronous fetch assets
+- (void)loadAssetsWithMediaType:(IMGAssetMediaType)mediaType
+                   inCollection:(PHAssetCollection * _Nonnull)collection
+                     completion:(IMGFetchAssetsCompletionBlock _Nullable)completion;
+
+// Synchronous fetch assets
+- (NSArray<PHAsset *> *)loadAssetsForMediaType:(IMGAssetMediaType)mediaType
+                             inAssetColelction:(PHAssetCollection *)collection;
 
 /// Get all AssetCollections for the mediaType
-+ (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType;
+//+ (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType;
 
 /// Get PHAssets in a PHAssetCollection for the mediaType
-+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
-                         inAssetColelction:(PHAssetCollection *)collection;
+//+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
+//                         inAssetColelction:(PHAssetCollection *)collection;
 
 /// Cache images for target size
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;

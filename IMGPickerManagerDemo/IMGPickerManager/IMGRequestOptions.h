@@ -16,7 +16,5 @@
 @property (nonatomic,strong, nonnull) PHVideoRequestOptions * videoOptions;
 @property (nonatomic,strong, nullable) PHLivePhotoRequestOptions * livePhotoOptions IMG_AVAILABLE_IOS(9_1);
 
-+ (nonnull instancetype)shareOptions;
-
 @end
 

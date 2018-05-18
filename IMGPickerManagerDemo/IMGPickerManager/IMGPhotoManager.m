@@ -10,9 +10,12 @@
 #import "PHAssetCollection+Category.h"
 #import <AVFoundation/AVFoundation.h>
 
+typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop);
+
 @interface IMGPhotoManager()
 
 @property (nonatomic, weak) PHImageManager *imageManager;
+@property (nonatomic, strong) dispatch_queue_t ioQueue;
 
 @end
 
@@ -30,8 +33,19 @@
 
 - (instancetype)init{
     if (self=[super init]) {
-        _requestOtions = [IMGRequestOptions shareOptions];
+        // Create request options
+        _requestOtions = [IMGRequestOptions new];
+        
+        // Create fetch options
+        //        _fetchOptions = [PHFetchOptions new];
+        //        if (@available(iOS 9.0, *)) {
+        //            _fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+        //        }
+        
         _imageManager = [PHImageManager defaultManager];
+        
+        // Created IO serial queue
+        _ioQueue = dispatch_queue_create("com.tongfy.IMGPhotoManager", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -43,6 +57,12 @@
                 targetSize:(CGSize)targetSize
                       mode:(PHImageContentMode)mode
                 completion:(IMGFetchCompletionBlock _Nullable)completion {
+    if (!asset) {
+        if (completion) {
+            completion(nil,nil);
+        }
+        return;
+    }
     
     [self.imageManager requestImageForAsset:asset targetSize:targetSize contentMode:mode options:self.requestOtions.imageOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (completion) {
@@ -52,53 +72,102 @@
     
 }
 
-
-
-+ (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType {
+- (void)loadCollectionsWithMediaType:(IMGAssetMediaType)mediaType
+                          completion:(IMGFetchCollectionsCompletionBlock _Nullable)completion {
     
-    PHFetchOptions *options = [self defaultFetchOptions];
-    //按创建时间逆序
+    PHFetchOptions *options = [PHFetchOptions new];
+    if (@available(iOS 9.0, *)) {
+        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"endDate" ascending:YES]];
-
-    NSMutableArray<PHAssetCollection *> *tempAssetCollections = [NSMutableArray array];
     
-    // 相机胶卷
-    PHFetchResult<PHAssetCollection *> *cameraResults = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:options];
-    [cameraResults enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.assetCollectionSubtype!=1000000201 && [self fetchAssetsForMediaType:mediaType inAssetColelction:obj].count) {
-//            NSLog(@"%@:%ld",obj.localizedTitle,(long)obj.assetCount);
-            [tempAssetCollections addObject:obj];
-        }
-    }];
+    dispatch_async(self.ioQueue, ^{
+        
+        NSMutableArray<PHAssetCollection *> *tempAssetCollections = [NSMutableArray array];
+        
+        // Create filter
+        IMGCollectionFilter filter = ^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ( (obj!=nil)
+                && (obj.assetCollectionSubtype!=1000000201)
+                && [self loadAssetsForMediaType:mediaType inAssetColelction:obj].count) {
+                [tempAssetCollections addObject:obj];
+            }
+        };
+        
+        // Fetch
+        PHFetchResult<PHAssetCollection *> *cameraResults = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:options];
+        [cameraResults enumerateObjectsUsingBlock:filter];
+        PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
+        [userLibrary enumerateObjectsUsingBlock:filter];
+        
+        // Sort
+        [tempAssetCollections sortUsingComparator:^NSComparisonResult(PHAssetCollection  *obj1, PHAssetCollection *obj2) {
+            return obj1.assetCount<obj2.assetCount;
+        }];
+        
+        dispatch_main_async_safe(^{
+            if (completion) {
+                completion([tempAssetCollections copy]);
+            }
+        });
+        
+    });
     
-    // 我的相册
-    PHFetchResult<PHAssetCollection *> *userLibrary = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:options];
-    [userLibrary enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([self fetchAssetsForMediaType:mediaType inAssetColelction:obj].count) {
-//            NSLog(@"%@:%ld",obj.localizedTitle,(long)obj.assetCount);
-            [tempAssetCollections addObject:obj];
-        }
-    }];
-    
-    [tempAssetCollections sortUsingComparator:^NSComparisonResult(PHAssetCollection  *obj1, PHAssetCollection *obj2) {
-        return obj1.assetCount<obj2.assetCount;
-    }];
-    return tempAssetCollections.copy;
 }
 
-+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
-                         inAssetColelction:(PHAssetCollection *)collection
-{
-    PHFetchOptions *options = [self defaultFetchOptions];
-    //按创建时间逆序
+// Asynchronous fetch assets
+- (void)loadAssetsWithMediaType:(IMGAssetMediaType)mediaType
+                   inCollection:(PHAssetCollection * _Nonnull)collection
+                     completion:(IMGFetchAssetsCompletionBlock _Nullable)completion {
+    PHFetchOptions *options = [PHFetchOptions new];
+    if (@available(iOS 9.0, *)) {
+        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    }
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     if (mediaType==IMGAssetMediaTypeAll) {
-//        NSLog(@"options.predicate: %@",options.predicate);
+        //        NSLog(@"options.predicate: %@",options.predicate);
     } else {
         options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
-//        NSLog(@"options.predicate: %@",options.predicate);
     }
+    
+    dispatch_async(self.ioQueue, ^{
+        PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+        NSMutableArray *results = [NSMutableArray array];
+        [fetchResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (![IMGConfigManager shareManager].allowGif) {
+                NSString *typeIdentifier = [obj valueForKey:@"uniformTypeIdentifier"];
+                if (![typeIdentifier isEqualToString:@"com.compuserve.gif"]){
+                    [results addObject:obj];
+                } else {
+                    NSLog(@"Filter out the GIF images.");
+                }
+            } else {
+                [results addObject:obj];
+            }
+        }];
         
+        collection.assetCount = fetchResult.count;
+        
+        dispatch_main_async_safe(^{
+            if (completion) {
+                completion([results copy]);
+            }
+        });
+    });
+}
+
+- (NSArray<PHAsset *> *)loadAssetsForMediaType:(IMGAssetMediaType)mediaType
+                              inAssetColelction:(PHAssetCollection *)collection {
+    PHFetchOptions *options = [PHFetchOptions new];
+    if (@available(iOS 9.0, *)) {
+        options.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+    }
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    if (mediaType==IMGAssetMediaTypeAll) {
+        //        NSLog(@"options.predicate: %@",options.predicate);
+    } else {
+        options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
+    }
     PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
     NSMutableArray *results = [NSMutableArray array];
     [fetchResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -119,6 +188,40 @@
     return results.copy;
 }
 
+
+//+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
+//                              inAssetColelction:(PHAssetCollection *)collection
+//{
+//    PHFetchOptions *options = [self defaultFetchOptions];
+//    //按创建时间逆序
+//    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+//    if (mediaType==IMGAssetMediaTypeAll) {
+//        //        NSLog(@"options.predicate: %@",options.predicate);
+//    } else {
+//        options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
+//        //        NSLog(@"options.predicate: %@",options.predicate);
+//    }
+//
+//    PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+//    NSMutableArray *results = [NSMutableArray array];
+//    [fetchResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (![IMGConfigManager shareManager].allowGif) {
+//            NSString *typeIdentifier = [obj valueForKey:@"uniformTypeIdentifier"];
+//            if (![typeIdentifier isEqualToString:@"com.compuserve.gif"]){
+//                [results addObject:obj];
+//            } else {
+//                NSLog(@"Filter out the GIF images.");
+//            }
+//        } else {
+//            [results addObject:obj];
+//        }
+//    }];
+//
+//    collection.assetCount = fetchResult.count;
+//
+//    return results.copy;
+//}
+
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie
 {
     [(PHCachingImageManager *)[PHCachingImageManager defaultManager] startCachingImagesForAssets:assets targetSize:targetSzie contentMode:PHImageContentModeAspectFill options:[self defaultImageRequestOPtions]];
@@ -131,8 +234,8 @@
             return IMGMediaTypeLivePhoto;
         }
     }
-
-
+    
+    
     if (asset.mediaType==PHAssetMediaTypeVideo) {
         return IMGMediaTypeVideo;
     }
@@ -170,8 +273,8 @@
 
 #pragma mark - request imageData
 + (void)requestImageForAsset:(PHAsset *)asset
-              targetSize:(CGSize)targetSize
-             handler:(void(^)(UIImage *image,IMGMediaType imageType))handler
+                  targetSize:(CGSize)targetSize
+                     handler:(void(^)(UIImage *image,IMGMediaType imageType))handler
 {
     [self requestImageForAsset:asset targetSize:targetSize synchronous:YES handler:handler];
 }
@@ -192,14 +295,14 @@
 }
 
 + (void)requestImageDataForAsset:(PHAsset *)asset
-                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
+                         handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
 {
     [self requestImageDataForAsset:asset synchronous:NO handler:handler];
 }
 
 + (void)requestImageDataForAsset:(PHAsset *)asset
-                 synchronous:(BOOL)synchronous
-                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
+                     synchronous:(BOOL)synchronous
+                         handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler
 {
     PHImageRequestOptions *options = [self defaultImageRequestOPtions];
     options.synchronous = synchronous;
