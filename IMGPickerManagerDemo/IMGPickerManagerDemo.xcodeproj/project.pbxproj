@@ -33,6 +33,9 @@
 		843C83BD20AC27A400016641 /* IMGWebImageImageIOCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83BC20AC27A400016641 /* IMGWebImageImageIOCoder.m */; };
 		843C83C020AC2C9A00016641 /* IMGWebImageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83BF20AC2C9A00016641 /* IMGWebImageFrame.m */; };
 		843C83C320AC2D0A00016641 /* IMGWebImageCoderHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C83C220AC2D0A00016641 /* IMGWebImageCoderHelper.m */; };
+		8448983020B5447D00E24F34 /* UIView+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8448982F20B5447D00E24F34 /* UIView+Cache.m */; };
+		8448983320B5472400E24F34 /* UIImageView+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8448983220B5472400E24F34 /* UIImageView+Cache.m */; };
+		8448983620B56B5100E24F34 /* PHAsset+contentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8448983520B56B5100E24F34 /* PHAsset+contentType.m */; };
 		84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */; };
 		84903DC2208F239D00269B51 /* IMG3DTouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84903DC1208F239D00269B51 /* IMG3DTouchViewController.m */; };
 		84A94B8320A58D8B00551237 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A94B8020A58D8B00551237 /* YYFPSLabel.m */; };
@@ -128,6 +131,12 @@
 		843C83BF20AC2C9A00016641 /* IMGWebImageFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageFrame.m; sourceTree = "<group>"; };
 		843C83C120AC2D0A00016641 /* IMGWebImageCoderHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGWebImageCoderHelper.h; sourceTree = "<group>"; };
 		843C83C220AC2D0A00016641 /* IMGWebImageCoderHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMGWebImageCoderHelper.m; sourceTree = "<group>"; };
+		8448982E20B5447D00E24F34 /* UIView+Cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Cache.h"; sourceTree = "<group>"; };
+		8448982F20B5447D00E24F34 /* UIView+Cache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Cache.m"; sourceTree = "<group>"; };
+		8448983120B5472400E24F34 /* UIImageView+Cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Cache.h"; sourceTree = "<group>"; };
+		8448983220B5472400E24F34 /* UIImageView+Cache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Cache.m"; sourceTree = "<group>"; };
+		8448983420B56B5100E24F34 /* PHAsset+contentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAsset+contentType.h"; sourceTree = "<group>"; };
+		8448983520B56B5100E24F34 /* PHAsset+contentType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+contentType.m"; sourceTree = "<group>"; };
 		8487A054208EDD3F00F290B0 /* IMGPikcerHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGPikcerHeader.h; sourceTree = "<group>"; };
 		84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SuitableSize.h"; sourceTree = "<group>"; };
 		84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SuitableSize.m"; sourceTree = "<group>"; };
@@ -344,6 +353,10 @@
 				DA32C3582088C9330080A8CA /* UIImage+animatedGIF.m */,
 				843C83AC20AC0DF500016641 /* UIImage+IMGMultiFormat.h */,
 				843C83AD20AC0DF500016641 /* UIImage+IMGMultiFormat.m */,
+				8448982E20B5447D00E24F34 /* UIView+Cache.h */,
+				8448982F20B5447D00E24F34 /* UIView+Cache.m */,
+				8448983120B5472400E24F34 /* UIImageView+Cache.h */,
+				8448983220B5472400E24F34 /* UIImageView+Cache.m */,
 				84903DBD208F0D5F00269B51 /* UIView+SuitableSize.h */,
 				84903DBE208F0D5F00269B51 /* UIView+SuitableSize.m */,
 				DA32C35B2088C9330080A8CA /* UIViewController+FYAlert.h */,
@@ -354,6 +367,8 @@
 				DA32C3312088C9240080A8CA /* PHAssetCollection+Category.m */,
 				843C83B220AC1F8A00016641 /* NSData+IMGImageContentType.h */,
 				843C83B320AC1F8A00016641 /* NSData+IMGImageContentType.m */,
+				8448983420B56B5100E24F34 /* PHAsset+contentType.h */,
+				8448983520B56B5100E24F34 /* PHAsset+contentType.m */,
 				8424FA442071D01E007E5B36 /* Resources */,
 			);
 			path = IMGPickerManager;
@@ -584,6 +599,7 @@
 				DA32C34E2088C9270080A8CA /* IMGPlayerManager.m in Sources */,
 				843C83AB20AC01FD00016641 /* IMGImageCacheConfig.m in Sources */,
 				84AC1CB62084A7EF001AA758 /* SettingViewController.m in Sources */,
+				8448983320B5472400E24F34 /* UIImageView+Cache.m in Sources */,
 				84AC1CB32084A531001AA758 /* SaveFileViewController.m in Sources */,
 				DA32C34D2088C9270080A8CA /* IMGPreviewCell.m in Sources */,
 				DA32C34C2088C9270080A8CA /* PHAssetCollection+Category.m in Sources */,
@@ -595,6 +611,7 @@
 				DA32C34B2088C9270080A8CA /* IMGPickerTopBar.m in Sources */,
 				DA32C3492088C9270080A8CA /* IMGPhotoManager.m in Sources */,
 				DA32C3542088C9270080A8CA /* IMGPickerThumbCell.m in Sources */,
+				8448983620B56B5100E24F34 /* PHAsset+contentType.m in Sources */,
 				843C83C020AC2C9A00016641 /* IMGWebImageFrame.m in Sources */,
 				843C83B420AC1F8A00016641 /* NSData+IMGImageContentType.m in Sources */,
 				DA32C35D2088C9340080A8CA /* UIViewController+FYAlert.m in Sources */,
@@ -611,6 +628,7 @@
 				843C83B720AC237900016641 /* IMGWebImageCodersManager.m in Sources */,
 				843C83C320AC2D0A00016641 /* IMGWebImageCoderHelper.m in Sources */,
 				84903DBF208F0D5F00269B51 /* UIView+SuitableSize.m in Sources */,
+				8448983020B5447D00E24F34 /* UIView+Cache.m in Sources */,
 				843C83A520ABCE9200016641 /* IMGPickerCompat.m in Sources */,
 				DA32C3572088C9270080A8CA /* IMGPickerAlbumsCell.m in Sources */,
 			);

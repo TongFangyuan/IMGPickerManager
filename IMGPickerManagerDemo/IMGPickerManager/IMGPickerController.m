@@ -21,6 +21,7 @@
 #import "IMGPreviewController.h"
 #import "PHAsset+IMGProperty.h"
 #import "IMG3DTouchViewController.h"
+#import "UIImageView+Cache.h"
 
 static CGFloat kAlbumsCellHeight = 70;
 
@@ -442,15 +443,23 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     PHAssetCollection *collection = self.assetCollections[indexPath.row];
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==self.selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-//    [IMGPhotoManager shareManager] loadAssetsWithMediaType:<#(IMGAssetMediaType)#> inCollection:<#(PHAssetCollection * _Nonnull)#> completion:<#^(NSArray<PHAsset *> * _Nullable assets)completion#>
-    NSArray *assets = [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
-    cell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)assets.count];
+    
+//    NSArray *assets = [[IMGPhotoManager shareManager] loadAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
+    
+    __weak typeof(cell) weakCell = cell;
+    __weak typeof(self) wSelf = self;
+    [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inCollection:collection completion:^(NSArray<PHAsset *> * _Nullable assets) {
+        weakCell.numberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)assets.count];
+        __strong typeof(weakCell) ssCell = weakCell;
+        [ssCell.iconView img_setImageWithAsset:assets.firstObject targetSize:wSelf.imageSize];
+        
+    }];
     
     // 设置封面图
-    __weak typeof(cell) weakCell = cell;
-    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGMediaType type) {
-        weakCell.iconView.image = image;
-    }];
+    
+//    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGMediaType type) {
+//        weakCell.iconView.image = image;
+//    }];
     
     return cell;
 }

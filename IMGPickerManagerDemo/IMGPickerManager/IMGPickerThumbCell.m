@@ -11,6 +11,7 @@
 #import "IMGPickerThumbCell.h"
 #import "PHAsset+IMGProperty.h"
 #import "IMGPhotoManager.h"
+#import "UIImageView+Cache.h"
 
 static CGFloat kButtonWidth = 22;
 
@@ -103,16 +104,31 @@ static CGFloat kButtonWidth = 22;
     [self setButtonSelected:asset.select];
     
     __weak typeof(self) weakSelf = self;
-    [IMGPhotoManager requestImageForAsset:asset targetSize:self.bounds.size handler:^(UIImage *image, IMGMediaType imageType) {
-        weakSelf.thumbView.image = image;
-        if (imageType==IMGMediaTypeGif) {
-            weakSelf.durationLabel.text = @"Gif";
-        } else if (imageType==IMGMediaTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
-            weakSelf.durationLabel.text = @"Live";
-        } else {
-            weakSelf.durationLabel.text = @"";
-        }
-    }];
+//    [IMGPhotoManager requestImageForAsset:asset targetSize:self.bounds.size handler:^(UIImage *image, IMGMediaType imageType) {
+//        weakSelf.thumbView.image = image;
+//        if (imageType==IMGMediaTypeGif) {
+//            weakSelf.durationLabel.text = @"Gif";
+//        } else if (imageType==IMGMediaTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
+//            weakSelf.durationLabel.text = @"Live";
+//        } else {
+//            weakSelf.durationLabel.text = @"";
+//        }
+//    }];
+    
+    CGSize targetSize = CGSizeZero;
+    CGSize imageViewSize = self.bounds.size;
+    CGFloat scale = [UIScreen mainScreen].scale;
+    if (CGSizeEqualToSize(imageViewSize, targetSize)) {
+        targetSize = [UIScreen mainScreen].bounds.size;
+    } else {
+        targetSize = CGSizeMake(imageViewSize.width*scale, imageViewSize.height*scale);
+    }
+    
+//    NSLog(@"targetSize:%@",NSStringFromCGSize(targetSize));
+    
+    [self.thumbView img_setImageWithAsset:asset targetSize:targetSize completed:nil];
+    
+    [PHAsset img_assetFormatForAsset:asset];
     
     if (asset.mediaType == PHAssetMediaTypeVideo) {
 
@@ -144,7 +160,6 @@ static CGFloat kButtonWidth = 22;
     } else {
         [self.maskView.superview sendSubviewToBack:self.maskView];
         [self.maskView setUserInteractionEnabled:NO];
-        
     }
 }
 

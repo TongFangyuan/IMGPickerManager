@@ -12,7 +12,7 @@
 #import "IMGRequestOptions.h"
 
 
-typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable result, NSDictionary *__nullable info);
+typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable image, NSData *__nullable imageData, NSDictionary *__nullable info);
 
 typedef void(^IMGFetchCollectionsCompletionBlock)(NSArray<PHAssetCollection *> * _Nullable collections);
 
@@ -43,21 +43,24 @@ typedef enum : NSInteger {
 
 - (void)loadCollectionsWithMediaType:(IMGAssetMediaType)mediaType
                           completion:(IMGFetchCollectionsCompletionBlock _Nullable)completion;
-// Asynchronous fetch assets
+
+/**
+ Asynchronous fetch assets
+
+ @param mediaType Target media type
+ @param completion Blcok on main queue
+ */
 - (void)loadAssetsWithMediaType:(IMGAssetMediaType)mediaType
                    inCollection:(PHAssetCollection * _Nonnull)collection
                      completion:(IMGFetchAssetsCompletionBlock _Nullable)completion;
 
-// Synchronous fetch assets
-- (NSArray<PHAsset *> *)loadAssetsForMediaType:(IMGAssetMediaType)mediaType
-                             inAssetColelction:(PHAssetCollection *)collection;
+/**
+ Synchronous fetch assets
 
-/// Get all AssetCollections for the mediaType
-//+ (NSArray<PHAssetCollection *> *)fetchAssetCollectionsForMediaType:(IMGAssetMediaType)mediaType;
-
-/// Get PHAssets in a PHAssetCollection for the mediaType
-//+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
-//                         inAssetColelction:(PHAssetCollection *)collection;
+ @param mediaType Target media type
+ */
+- (NSArray<PHAsset *> *_Nullable)loadAssetsForMediaType:(IMGAssetMediaType)mediaType
+                                      inAssetColelction:(PHAssetCollection *_Nonnull)collection;
 
 /// Cache images for target size
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;

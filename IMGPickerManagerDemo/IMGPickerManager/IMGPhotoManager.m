@@ -16,6 +16,7 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
 
 @property (nonatomic, weak) PHImageManager *imageManager;
 @property (nonatomic, strong) dispatch_queue_t ioQueue;
+@property (nonatomic, strong) PHCachingImageManager *cacheImageManager;
 
 @end
 
@@ -43,6 +44,8 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
         //        }
         
         _imageManager = [PHImageManager defaultManager];
+        _cacheImageManager = [[PHCachingImageManager alloc] init];
+        _cacheImageManager.allowsCachingHighQualityImages = NO;
         
         // Created IO serial queue
         _ioQueue = dispatch_queue_create("com.tongfy.IMGPhotoManager", DISPATCH_QUEUE_SERIAL);
@@ -53,22 +56,39 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
 
 #pragma mark - fetch Ops
 
-- (void)loadImageWithAsset:(PHAsset *_Nullable)asset
+- (void)loadImageWithAsset:(PHAsset *)asset
                 targetSize:(CGSize)targetSize
                       mode:(PHImageContentMode)mode
                 completion:(IMGFetchCompletionBlock _Nullable)completion {
     if (!asset) {
         if (completion) {
-            completion(nil,nil);
+            completion(nil,nil,nil);
         }
         return;
     }
     
-    [self.imageManager requestImageForAsset:asset targetSize:targetSize contentMode:mode options:self.requestOtions.imageOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        if (completion) {
-            completion(result,info);
-        }
-    }];
+    PHImageRequestOptions *options = self.requestOtions.imageOptions;
+    PHImageManager *imageManager = self.imageManager;
+    PHCachingImageManager *cacheManager = self.cacheImageManager;
+    
+    if (imageManager) {
+        
+        [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:mode options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            
+            if (completion) {
+                completion(result, nil,info);
+            }
+            
+            // Cache image
+            if (cacheManager && asset) {
+                dispatch_async(_ioQueue, ^{
+                    [cacheManager startCachingImagesForAssets:@[asset] targetSize:targetSize contentMode:mode options:options];
+                });
+            }
+            
+        }];
+        
+    }
     
 }
 
