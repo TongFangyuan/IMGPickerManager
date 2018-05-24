@@ -444,8 +444,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     cell.titleLabel.text = collection.localizedTitle;
     cell.accessoryType = (collection==self.selectedAssetCollection) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
-//    NSArray *assets = [[IMGPhotoManager shareManager] loadAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:collection];
-    
     __weak typeof(cell) weakCell = cell;
     __weak typeof(self) wSelf = self;
     [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inCollection:collection completion:^(NSArray<PHAsset *> * _Nullable assets) {
@@ -454,12 +452,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         [ssCell.iconView img_setImageWithAsset:assets.firstObject targetSize:wSelf.imageSize];
         
     }];
-    
-    // 设置封面图
-    
-//    [IMGPhotoManager requestImageForAsset:assets.firstObject targetSize:self.imageSize handler:^(UIImage *image,IMGMediaType type) {
-//        weakCell.iconView.image = image;
-//    }];
     
     return cell;
 }
@@ -547,14 +539,14 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     IMG3DTouchViewController *previewController = [IMG3DTouchViewController new];
     previewController.asset = asset;
     __weak typeof(previewController) weakController = previewController;
-    [IMGPhotoManager requestImageDataForAsset:asset synchronous:YES handler:^(NSData *imageData,IMGMediaType imageType) {
+    [IMGPhotoManager requestImageDataForAsset:asset synchronous:NO handler:^(NSData *imageData,IMGMediaType imageType) {
         UIImage *image = [[UIImage alloc] initWithData:imageData];
-        CGFloat width = CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds) - 40;
-        CGFloat maxHeight = 500;
         weakController.imageView.image = imageType==IMGMediaTypeGif ? [UIImage animatedImageWithAnimatedGIFData:imageData]:image;
-        weakController.preferredContentSize = [UIView fitSize:image.size toSize:CGSizeMake(width, maxHeight)];
     }];
     
+    CGFloat width = CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds) - 40;
+    CGFloat maxHeight = 500;
+    weakController.preferredContentSize = [UIView fitSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) toSize:CGSizeMake(width, maxHeight)];
     previewingContext.sourceRect = cell.bounds;
 
     self.selectedIndexPath = indexPath;

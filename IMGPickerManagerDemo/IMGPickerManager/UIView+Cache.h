@@ -10,7 +10,7 @@
 #import "IMGPhotoManager.h"
 #import "PHAsset+contentType.h"
 
-typedef void(^IMGSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable imageData);
+typedef void(^IMGSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable imageData, PHAsset * _Nullable asset);
 
 @interface UIView (Cache)
 

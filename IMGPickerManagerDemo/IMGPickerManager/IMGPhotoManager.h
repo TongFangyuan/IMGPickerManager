@@ -12,7 +12,7 @@
 #import "IMGRequestOptions.h"
 
 
-typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable image, NSData *__nullable imageData, NSDictionary *__nullable info);
+typedef void(^IMGFetchCompletionBlock)(UIImage *__nullable image, NSData *__nullable imageData, PHAsset * __nullable asset);
 
 typedef void(^IMGFetchCollectionsCompletionBlock)(NSArray<PHAssetCollection *> * _Nullable collections);
 
@@ -36,7 +36,7 @@ typedef enum : NSInteger {
 
 #pragma mark - fetch Ops
 
-- (void)loadImageWithAsset:(PHAsset *_Nullable)asset
+- (void)loadImageWithAsset:(PHAsset *_Nonnull)asset
                 targetSize:(CGSize)targetSize
                       mode:(PHImageContentMode)mode
                 completion:(IMGFetchCompletionBlock _Nullable)completion;
@@ -63,46 +63,46 @@ typedef enum : NSInteger {
                                       inAssetColelction:(PHAssetCollection *_Nonnull)collection;
 
 /// Cache images for target size
-+ (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie;
++ (void)cacheImageForAsset:(NSArray<PHAsset *> *_Nonnull)assets targetSize:(CGSize)targetSzie;
 
-+ (IMGMediaType)getMediaTypeForAsset:(PHAsset *)asset;
++ (IMGMediaType)getMediaTypeForAsset:(PHAsset *_Nonnull)asset;
 
 
 
 #pragma mark - Request Data
 
 //MARK: MediaData
-+ (void)requestDataForAsset:(PHAsset *)asset
-                    handler:(void(^)(NSData *mediaData, IMGMediaType mediaType))handler;
++ (void)requestDataForAsset:(PHAsset *_Nullable)asset
+                    handler:(void(^_Nullable)(NSData * _Nullable mediaData, IMGMediaType mediaType))handler;
 
 //MARK: Image
-+ (void)requestImageForAsset:(PHAsset *)asset
++ (void)requestImageForAsset:(PHAsset *_Nullable)asset
                   targetSize:(CGSize)targetSize
-                 handler:(void(^)(UIImage *image,IMGMediaType imageType))handler;
+                     handler:(void(^_Nullable)(UIImage * _Nullable image,IMGMediaType imageType))handler;
 
 /// 任意线程调用,handler在主线程回调
-+ (void)requestImageDataForAsset:(PHAsset *)asset
-                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler;
++ (void)requestImageDataForAsset:(PHAsset *_Nonnull)asset
+                         handler:(void(^_Nullable)(NSData * _Nullable imageData,IMGMediaType imageType))handler;
 
 /// synchronous:是否同步调用 handler在主线程回调
-+ (void)requestImageDataForAsset:(PHAsset *)asset
++ (void)requestImageDataForAsset:(PHAsset *_Nonnull)asset
                  synchronous:(BOOL)synchronous
-                     handler:(void(^)(NSData *imageData,IMGMediaType imageType))handler;
+                         handler:(void(^_Nullable)(NSData * _Nullable imageData,IMGMediaType imageType))handler;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 //MARK: LivePhoto
-+ (void)requestLivePhotoForAsset:(PHAsset *)asset
++ (void)requestLivePhotoForAsset:(PHAsset *_Nonnull)asset
                       targetSize:(CGSize)size
-                         handler:(void(^)(PHLivePhoto * livePhoto))handler;
+                         handler:(void(^_Nullable)(PHLivePhoto * _Nullable livePhoto))handler;
 
 
 #pragma clang diagnostic pop
 
 //MARK:  Video
-+ (void)requestPlayerItemForVideo:(PHAsset *)asset handler:(void(^)(AVPlayerItem *playerItem))handler;
++ (void)requestPlayerItemForVideo:(PHAsset *_Nonnull)asset handler:(void(^_Nullable)(AVPlayerItem * _Nonnull playerItem))handler;
 
-+ (void)requestAVAssetForVideo:(PHAsset *)asset handler:(void(^)(AVAsset *avsset))handler;
++ (void)requestAVAssetForVideo:(PHAsset * _Nonnull)asset handler:(void(^_Nullable)(AVAsset * _Nullable avsset))handler;
 
 @end

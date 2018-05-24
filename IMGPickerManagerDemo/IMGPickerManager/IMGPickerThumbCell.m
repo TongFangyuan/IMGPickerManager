@@ -103,18 +103,6 @@ static CGFloat kButtonWidth = 22;
     
     [self setButtonSelected:asset.select];
     
-    __weak typeof(self) weakSelf = self;
-//    [IMGPhotoManager requestImageForAsset:asset targetSize:self.bounds.size handler:^(UIImage *image, IMGMediaType imageType) {
-//        weakSelf.thumbView.image = image;
-//        if (imageType==IMGMediaTypeGif) {
-//            weakSelf.durationLabel.text = @"Gif";
-//        } else if (imageType==IMGMediaTypeLivePhoto && [IMGConfigManager shareManager].allowLivePhoto) {
-//            weakSelf.durationLabel.text = @"Live";
-//        } else {
-//            weakSelf.durationLabel.text = @"";
-//        }
-//    }];
-    
     CGSize targetSize = CGSizeZero;
     CGSize imageViewSize = self.bounds.size;
     CGFloat scale = [UIScreen mainScreen].scale;
@@ -124,11 +112,29 @@ static CGFloat kButtonWidth = 22;
         targetSize = CGSizeMake(imageViewSize.width*scale, imageViewSize.height*scale);
     }
     
-//    NSLog(@"targetSize:%@",NSStringFromCGSize(targetSize));
+    __weak typeof(self) weakSelf = self;
+    [self.thumbView img_localSetImageWithAsset:asset placeholderImage:nil targetSize:targetSize mode:PHImageContentModeAspectFill setImageBlock:^(UIImage * _Nullable image, NSData * _Nullable imageData, PHAsset * _Nullable asset) {
+        
+        weakSelf.thumbView.image = image;
+        IMGAssetFormat format = [PHAsset img_assetFormatForAsset:asset];
+        switch (format) {
+            case IMGAssetFormatGIF:{
+                weakSelf.durationLabel.text = @"GIF";
+                
+            } break;
+            case IMGAssetFormatLivePhoto:{
+                if ([IMGConfigManager shareManager].allowLivePhoto) {
+                    weakSelf.durationLabel.text = @"Live";
+                }
+            } break;
+            default: {
+                weakSelf.durationLabel.text = @"";
+            } break;
+        }
+        
+    } completed:nil];
     
-    [self.thumbView img_setImageWithAsset:asset targetSize:targetSize completed:nil];
     
-    [PHAsset img_assetFormatForAsset:asset];
     
     if (asset.mediaType == PHAssetMediaTypeVideo) {
 

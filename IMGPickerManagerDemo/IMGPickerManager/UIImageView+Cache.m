@@ -7,7 +7,6 @@
 //
 
 #import "UIImageView+Cache.h"
-#import "UIView+Cache.h"
 
 @implementation UIImageView (Cache)
 
@@ -22,7 +21,7 @@
 
 - (void)img_setImageWithAsset:(PHAsset *)asset
                    targetSize:(CGSize)targetSize
-                    completed:(nullable void(^)(UIImage * _Nullable image,  NSData * _Nullable imageData,  NSDictionary * _Nullable info))completedBlock
+                    completed:(IMGFetchCompletionBlock)completedBlock
 {
     [self img_localSetImageWithAsset:asset placeholderImage:nil targetSize:targetSize mode:PHImageContentModeAspectFill setImageBlock:nil completed:completedBlock];
 }
@@ -31,7 +30,7 @@
              placeholderImage:(UIImage *)placeholder
                    targetSize:(CGSize)targetSize
                          mode:(PHImageContentMode)mode
-                    completed:(void (^)(UIImage * _Nullable, NSData * _Nullable, NSDictionary * _Nullable))completedBlock
+                    completed:(IMGFetchCompletionBlock)completedBlock
 {
     [self img_localSetImageWithAsset:asset placeholderImage:placeholder targetSize:targetSize mode:mode setImageBlock:nil completed:completedBlock];
 }

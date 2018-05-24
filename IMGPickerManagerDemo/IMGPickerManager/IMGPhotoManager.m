@@ -59,11 +59,10 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
 - (void)loadImageWithAsset:(PHAsset *)asset
                 targetSize:(CGSize)targetSize
                       mode:(PHImageContentMode)mode
-                completion:(IMGFetchCompletionBlock _Nullable)completion {
+                completion:(IMGFetchCompletionBlock)completion {
+    // block nil
     if (!asset) {
-        if (completion) {
-            completion(nil,nil,nil);
-        }
+        if (completion) completion(nil, nil, nil);
         return;
     }
     
@@ -71,12 +70,17 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
     PHImageManager *imageManager = self.imageManager;
     PHCachingImageManager *cacheManager = self.cacheImageManager;
     
-    if (imageManager) {
-        
+    // block nil
+    if (!options || !imageManager) {
+        if (completion) completion(nil, nil, nil);
+        return;
+    }
+    
+    dispatch_async(_ioQueue, ^{
         [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:mode options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             if (completion) {
-                completion(result, nil,info);
+                completion(result, nil, asset);
             }
             
             // Cache image
@@ -87,8 +91,9 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
             }
             
         }];
+    });
+    
         
-    }
     
 }
 
@@ -207,40 +212,6 @@ typedef void(^IMGCollectionFilter)(PHAssetCollection * _Nonnull obj, NSUInteger 
     
     return results.copy;
 }
-
-
-//+ (NSArray<PHAsset *> *)fetchAssetsForMediaType:(IMGAssetMediaType)mediaType
-//                              inAssetColelction:(PHAssetCollection *)collection
-//{
-//    PHFetchOptions *options = [self defaultFetchOptions];
-//    //按创建时间逆序
-//    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-//    if (mediaType==IMGAssetMediaTypeAll) {
-//        //        NSLog(@"options.predicate: %@",options.predicate);
-//    } else {
-//        options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d",mediaType];
-//        //        NSLog(@"options.predicate: %@",options.predicate);
-//    }
-//
-//    PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-//    NSMutableArray *results = [NSMutableArray array];
-//    [fetchResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if (![IMGConfigManager shareManager].allowGif) {
-//            NSString *typeIdentifier = [obj valueForKey:@"uniformTypeIdentifier"];
-//            if (![typeIdentifier isEqualToString:@"com.compuserve.gif"]){
-//                [results addObject:obj];
-//            } else {
-//                NSLog(@"Filter out the GIF images.");
-//            }
-//        } else {
-//            [results addObject:obj];
-//        }
-//    }];
-//
-//    collection.assetCount = fetchResult.count;
-//
-//    return results.copy;
-//}
 
 + (void)cacheImageForAsset:(NSArray<PHAsset *> *)assets targetSize:(CGSize)targetSzie
 {

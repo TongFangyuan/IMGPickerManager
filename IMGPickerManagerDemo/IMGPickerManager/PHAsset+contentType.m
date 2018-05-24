@@ -31,7 +31,7 @@
     if ([uniformTypeIdentifier isEqualToString:(NSString *)kUTTypeGIF]) {
         return IMGAssetFormatGIF;
     } else {
-        NSLog(@"%@",uniformTypeIdentifier);
+//        NSLog(@"%@",uniformTypeIdentifier);
     }
     
     return IMGAssetFormatPNG;

@@ -9,7 +9,7 @@
 
 #import "IMGPreviewCell.h"
 #import "UIImage+animatedGIF.h"
-#import "IMGPhotoManager.h"
+#import "UIImageView+Cache.h"
 
 @implementation IMGPreviewCell
 
@@ -57,11 +57,15 @@
 }
 
 - (void)loadImage {
+    
     __weak typeof(self) weakSelf = self;
     __block CGFloat scale = [UIScreen mainScreen].scale;
     __block CGSize screenSize = self.contentView.bounds.size;
-    __block CGSize targetSize = CGSizeMake(self.iconView.frame.size.width*scale, self.iconView.frame.size.height*scale);
-    [IMGPhotoManager requestImageForAsset:self.model targetSize:targetSize handler:^(UIImage *image, IMGMediaType imageType) {
+    CGSize fitSize = [UIView fitSize:CGSizeMake(self.model.pixelWidth, self.model.pixelHeight) toSize:screenSize];
+    __block CGSize targetSize = CGSizeMake(fitSize.width*scale, fitSize.height*scale);
+    
+    [self.iconView img_setImageWithAsset:self.model targetSize:targetSize completed:^(UIImage * _Nullable image, NSData * _Nullable imageData, PHAsset * _Nullable asset) {
+        
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
             CGRect frame = CGRectZero;
@@ -76,6 +80,7 @@
                 weakSelf.iconView.image = image;
             });
         });
+        
     }];
     
 }

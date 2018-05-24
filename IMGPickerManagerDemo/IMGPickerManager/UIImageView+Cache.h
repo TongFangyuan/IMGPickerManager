@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Photos/Photos.h>
-#import "PHAsset+contentType.h"
+#import "UIView+Cache.h"
+#import "IMGPhotoManager.h"
 
 @interface UIImageView (Cache)
 
@@ -16,15 +16,14 @@
 
 - (void)img_setImageWithAsset:(nullable PHAsset *)asset targetSize:(CGSize)targetSize;
 
-- (void)img_setImageWithAsset:(PHAsset *)asset
+- (void)img_setImageWithAsset:(nullable PHAsset *)asset
                    targetSize:(CGSize)targetSize
-                    completed:(nullable void(^)(UIImage * _Nullable image,  NSData * _Nullable imageData,  NSDictionary * _Nullable info))completedBlock;
-;
+                    completed:(nullable IMGFetchCompletionBlock)completedBlock;
 
 - (void)img_setImageWithAsset:(nullable PHAsset *)asset
                   placeholderImage:(nullable UIImage *)placeholder
                    targetSize:(CGSize)targetSize
                          mode:(PHImageContentMode)mode
-                         completed:(nullable void(^)(UIImage * _Nullable image,  NSData * _Nullable imageData,  NSDictionary * _Nullable info))completedBlock;
+                         completed:(nullable IMGFetchCompletionBlock)completedBlock;
 
 @end
