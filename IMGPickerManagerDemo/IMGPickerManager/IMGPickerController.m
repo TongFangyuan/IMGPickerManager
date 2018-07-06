@@ -95,10 +95,21 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
     [self setNeedsStatusBarAppearanceUpdate];
    
     [self initSubviews];
-    [self fetchAssetCollections];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        if (status==PHAuthorizationStatusNotDetermined) {
+            NSLog(@"User has not yet made a choice with regards to this application");
+        } else if (status==PHAuthorizationStatusDenied) {
+            NSLog(@"User has explicitly denied this application access to photos data");
+        } else if (status==PHAuthorizationStatusAuthorized) {
+            [self fetchAssetCollections];;
+        } else if (status==PHAuthorizationStatusRestricted) {
+            NSLog(@"This application is not authorized to access photo data.");
+        }
+    }];
+    
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -246,28 +257,18 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
         [weakSelf.tableView reloadData];
         [weakSelf fetchAssets];
     };
-        
-    
     [[IMGPhotoManager shareManager] loadCollectionsWithMediaType:[IMGConfigManager shareManager].targetMediaType completion:completionBlock];
-    
+
 }
 
 /// 获取某个相册中的所有照片
 - (void)fetchAssets
 {
-    
     __weak typeof(self) weakSelf = self;
     [[IMGPhotoManager shareManager] loadAssetsWithMediaType:[IMGConfigManager shareManager].targetMediaType inCollection:self.selectedAssetCollection completion:^(NSArray<PHAsset *> * _Nullable assets) {
         weakSelf.assets = assets.copy;
         [weakSelf.collectionView reloadData];
     }];
-    
-//    NSArray *results = [IMGPhotoManager fetchAssetsForMediaType:[IMGConfigManager shareManager].targetMediaType inAssetColelction:self.selectedAssetCollection];
-//
-//    NSLog(@"%@",[NSThread currentThread]);
-//    self.assets = [NSArray arrayWithArray:results];
-//    [self.collectionView reloadData];
-    
 }
 
 - (void)reloadCollectionViewData {
@@ -289,11 +290,6 @@ static NSString *kCameraCellIdentifier = @"IMGCameraCell";
 }
 
 #pragma mark - Notification
-- (void)applicationDidBecomeActive:(NSNotification *)noti {
-    
-    [self fetchAssetCollections];
-    [self.tableView reloadData];
-}
 
 - (void)orientationDidChange:(NSNotification *)noti{
     UIDeviceOrientation orientation =[UIDevice currentDevice].orientation;
